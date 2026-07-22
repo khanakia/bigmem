@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>≥128GB-class silicon — reference table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --bg:#f6f7f8; --panel:#ffffff; --ink:#16181c; --muted:#697180; --faint:#98a0ab;
+    --line:#e4e6ea; --line2:#eef0f2; --zebra:#fafbfc;
+    --uni:#1668c8; --uni-bg:#eaf1fb; --non:#8a6212; --non-bg:#f6efdf; --sel:#e8f0fb;
+    --h-toolbar:0px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:13px;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .app{max-width:1400px;margin:0 auto;padding:0 16px}
+  .sitenav{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 18px;background:var(--ink)}
+  .sitenav .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.03em;color:#fff;text-decoration:none}
+  .sitenav .navlinks{display:flex;gap:4px}
+  .sitenav .navlinks a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#c7ccd2;padding:5px 12px;border-radius:5px;text-decoration:none}
+  .sitenav .navlinks a:hover{background:rgba(255,255,255,.12);color:#fff}
+  .sitenav .navlinks a.active{background:#fff;color:var(--ink);font-weight:600}
+
+  .bar{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:14px 0 10px;border-bottom:1px solid var(--line)}
+  .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.02em}
+  .brand b{color:var(--uni)}
+  .barmeta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
+  .barmeta span b{color:var(--ink)}
+
+  .toolbar{position:sticky;top:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;gap:8px;padding:9px 0 10px;border-bottom:1px solid var(--line)}
+  .trow{display:flex;align-items:center;gap:7px 12px;flex-wrap:wrap;width:100%}
+  .fg{display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap}
+  .fgw{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .search{position:relative;flex:1 1 260px;min-width:200px;max-width:480px}
+  .search input{width:100%;font-family:"IBM Plex Mono",monospace;font-size:12px;padding:6px 8px 6px 26px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:4px;outline:none;height:29px}
+  .search input:focus{border-color:var(--uni);box-shadow:0 0 0 2px var(--uni-bg)}
+  .search input::placeholder{color:var(--faint)}
+  .search .ic{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:12px;font-family:"IBM Plex Mono",monospace}
+  .lbl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);height:29px}
+  .seg button{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:0 9px;border:0;border-right:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .seg button:last-child{border-right:0}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .seg button:focus-visible{outline:2px solid var(--uni);outline-offset:-2px}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:11px;height:29px;padding:0 9px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;border-radius:4px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;line-height:1}
+  .chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+  .chip.uni{border-color:var(--uni);color:var(--uni)}
+  .chip.uni[aria-pressed="true"]{border-color:var(--uni);background:var(--uni);color:#fff}
+  .chip.non{border-color:var(--non);color:var(--non)}
+  .chip.non[aria-pressed="true"]{border-color:var(--non);background:var(--non);color:#fff}
+  .chip:focus-visible{outline:2px solid var(--uni);outline-offset:1px}
+  .sepv{width:1px;height:20px;background:var(--line);margin:0 2px}
+  .vsel,.vname{font-family:"IBM Plex Mono",monospace;font-size:11px;height:29px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:4px;padding:0 8px;flex:0 0 auto}
+  .vname{width:104px}
+  .vsel{max-width:160px}
+  .vsel:focus,.vname:focus{border-color:var(--uni);outline:none;box-shadow:0 0 0 2px var(--uni-bg)}
+  .vname::placeholder{color:var(--faint)}
+  .vbtn{font-family:"IBM Plex Mono",monospace;font-size:11px;height:29px;padding:0 10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;border-radius:4px;flex:0 0 auto}
+  .vbtn:hover{background:var(--sel)}
+  .vbtn:focus-visible{outline:2px solid var(--uni);outline-offset:1px}
+  .count{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+  .count b{color:var(--ink)}
+  .clear{font-family:"IBM Plex Mono",monospace;font-size:11px;background:none;border:0;color:var(--non);cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+  .clear[hidden]{display:none}
+
+  .tablewrap{overflow:visible;border:1px solid var(--line);border-radius:5px;background:var(--panel);margin-top:10px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  thead th{position:sticky;top:var(--h-toolbar);z-index:10;background:var(--panel);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;user-select:none}
+  thead th.num{text-align:right}
+  thead th.thsort{cursor:pointer}
+  thead th .car{color:var(--uni);margin-left:3px}
+  tr.grp td{position:sticky;top:calc(var(--h-toolbar) + 29px);z-index:9;background:var(--zebra);padding:5px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line2)}
+  .grp .g{display:flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .grp .g b{color:var(--ink);font-weight:600}
+  .gdot{width:7px;height:7px;border-radius:2px}
+  .gdot.u{background:var(--uni)}.gdot.n{background:var(--non)}
+
+  tbody.data tr.row{border-bottom:1px solid var(--line2);border-left:3px solid transparent;cursor:pointer;outline:none}
+  tbody.data tr.row.u{border-left-color:var(--uni)} tbody.data tr.row.n{border-left-color:var(--non)}
+  tbody.data tr.row:hover{background:var(--sel)}
+  tbody.data tr.row:focus-visible{background:var(--sel);box-shadow:inset 2px 0 0 var(--uni)}
+  tbody.data tr.row.open{background:var(--sel)}
+  tbody.data tr.row.sel{background:var(--uni-bg)}
+  tbody.data tr.row.sel .name::before{content:"✓ ";color:var(--uni);font-weight:700}
+  td{padding:6px 10px;vertical-align:middle;white-space:nowrap}
+  td.num{text-align:right;font-family:"IBM Plex Mono",monospace}
+  .name{font-weight:600;font-size:13px}
+  .vend{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--faint);margin-left:8px;text-transform:uppercase;letter-spacing:.05em}
+  .exp{color:var(--faint);font-family:"IBM Plex Mono",monospace;font-size:10px;margin-left:6px}
+  tr.row.open .exp{color:var(--uni)}
+  .utag{display:inline-flex;align-items:center;gap:6px}
+  .bars{display:flex;gap:1.5px;width:30px;height:9px}
+  .bars .b{height:100%;border-radius:1px}
+  .utag.u .b{flex:1;background:var(--uni)}
+  .utag.n .b1{flex:1;background:var(--non)} .utag.n .b2{flex:1;background:var(--non);opacity:.4}
+  .utxt{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.03em}
+  .utag.u .utxt{color:var(--uni)} .utag.n .utxt{color:var(--non)}
+  .val{font-weight:600} .dim{color:var(--muted)}
+  .ff{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:1px 6px}
+  .yr{color:var(--muted)}
+
+  tr.detail{display:none} tr.detail.open{display:table-row}
+  tr.detail td{background:var(--sel);border-bottom:1px solid var(--line);padding:2px 10px 10px 13px;white-space:normal}
+  tr.detail.n td{}
+  .dwrap{border-left:2px solid var(--uni);padding:6px 0 2px 12px;margin:2px 0}
+  tr.detail.n .dwrap{border-left-color:var(--non)}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:3px 18px;margin-bottom:6px}
+  .dgrid .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .dgrid .v{font-size:12px;color:var(--ink)}
+  .dgrid .v .mono{font-size:11.5px}
+  .dnote{font-size:12.5px;color:var(--muted);line-height:1.5;max-width:none}
+  .why{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:6px}
+
+  /* right-click context menu + copy toast */
+  .ctxmenu{position:fixed;z-index:50;background:var(--panel);border:1px solid var(--ink);border-radius:6px;box-shadow:0 6px 24px rgba(0,0,0,.16);padding:4px;min-width:196px}
+  .ctxmenu button{display:block;width:100%;text-align:left;background:none;border:0;padding:6px 10px;font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;color:var(--ink);cursor:pointer;border-radius:3px;white-space:nowrap}
+  .ctxmenu button:hover{background:var(--sel)}
+  .ctxmenu .cx-lbl{padding:5px 10px 3px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .ctxmenu .cx-lbl b{color:var(--ink)}
+  .ctxmenu .sep{height:1px;background:var(--line);margin:4px 2px}
+  .ctxmenu .k{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--faint);float:right;margin-left:14px}
+  #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;padding:9px 18px;border-radius:6px;font-family:"IBM Plex Mono",monospace;font-size:12px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .empty{padding:34px 16px;text-align:center;color:var(--muted)}
+  .empty b{color:var(--ink)}
+  .empty code{font-family:"IBM Plex Mono",monospace;background:var(--zebra);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:11px;color:var(--ink)}
+  .empty button{margin-top:12px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--non);background:none;border:0;cursor:pointer;text-decoration:underline}
+
+  footer{margin:14px 0 40px;font-size:11.5px;color:var(--muted);line-height:1.5}
+  footer details{border:1px solid var(--line);border-radius:5px;background:var(--panel)}
+  footer summary{list-style:none;cursor:pointer;padding:10px 12px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px;user-select:none}
+  footer summary::-webkit-details-marker{display:none}
+  footer summary::before{content:"▸";color:var(--faint);font-size:10px}
+  footer details[open] summary::before{content:"▾";color:var(--uni)}
+  footer summary:hover{color:var(--ink)}
+  footer summary:focus-visible{outline:2px solid var(--uni);outline-offset:-2px}
+  footer details[open] summary{border-bottom:1px solid var(--line)}
+  footer .legend-body{padding:12px 14px 6px}
+  footer .fnote{border-left:2px solid var(--line);padding-left:12px;margin-bottom:8px}
+  footer b{color:var(--ink)}
+  footer .stamp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+
+  @media (max-width:820px){
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+    tr.grp td{position:static}
+    tbody.data tr.row{display:block;padding:8px 10px}
+    tbody.data tr.row td{display:flex;justify-content:space-between;gap:14px;padding:2px 0;white-space:normal;text-align:right}
+    tbody.data tr.row td::before{content:attr(data-label);font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-align:left}
+    tbody.data tr.row td.c-name{justify-content:flex-start;text-align:left}
+    tbody.data tr.row td.c-name::before{display:none}
+    tr.detail td{display:block}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    tr.detail.open td{animation:sl .16s ease}
+    @keyframes sl{from{opacity:.3}to{opacity:1}}
+  }
+</style>
+</head>
+<body>
+<nav class="sitenav">
+  <a class="brand" href="index.html">◧ SILICON&nbsp;·&nbsp;≥128GB</a>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="table.html" class="active">Reference Table</a>
+    <a href="395-buy-guide.html">395 Buy Guide</a>
+  </div>
+</nav>
+<div class="app">
+  <div class="bar">
+    <span class="brand">≥128GB-CLASS <b>SILICON</b> — every non-Apple option</span>
+    <span class="barmeta mono">
+      <span>parts <b id="m-total">—</b></span>
+      <span>≥192GB <b id="m-192">—</b></span>
+      <span>≥1TB <b id="m-1tb">—</b></span>
+      <span>rev 2026-07-22</span>
+    </span>
+  </div>
+
+  <div class="toolbar" role="search">
+    <!-- row 1: search · views · count -->
+    <div class="trow">
+      <div class="search"><span class="ic" aria-hidden="true">⌕</span>
+        <input id="q" type="text" placeholder="filter…  chip / vendor / socket / node" aria-label="Filter table" autocomplete="off" spellcheck="false"></div>
+      <div class="fg"><span class="lbl">views</span>
+        <select id="presetSelect" class="vsel" aria-label="Apply a saved view"><option value="">— saved views —</option></select>
+        <input id="presetName" class="vname" placeholder="name…" aria-label="View name" autocomplete="off" spellcheck="false">
+        <button id="presetSave" class="vbtn" title="Save the current filters + sorts as a view (replaces if the name already exists)">Save</button>
+        <button id="presetDel" class="vbtn" title="Delete the named / selected view">Del</button>
+      </div>
+      <span class="count" id="count" style="margin-left:auto"></span>
+      <button class="clear" id="clear" hidden>clear</button>
+    </div>
+    <!-- row 2: group · memory · price · power -->
+    <div class="trow">
+      <div class="fg"><span class="lbl">group by</span>
+        <div class="seg" id="group" role="group" aria-label="Group by">
+          <button data-g="none" aria-pressed="true">none</button>
+          <button data-g="segment" aria-pressed="false">segment</button>
+          <button data-g="vendor" aria-pressed="false">vendor</button>
+          <button data-g="unified" aria-pressed="false">unified</button>
+        </div>
+      </div>
+      <div class="fg"><span class="lbl">mem min</span>
+        <div class="seg" id="minmem" role="group" aria-label="Minimum memory">
+          <button data-m="0" aria-pressed="true">any</button>
+          <button data-m="128" aria-pressed="false">≥128</button>
+          <button data-m="192" aria-pressed="false">≥192</button>
+          <button data-m="256" aria-pressed="false">≥256</button>
+          <button data-m="512" aria-pressed="false">≥512</button>
+          <button data-m="1024" aria-pressed="false">≥1TB</button>
+        </div>
+      </div>
+      <div class="fg"><span class="lbl">mem max</span>
+        <div class="seg" id="maxmem" role="group" aria-label="Maximum memory">
+          <button data-x="0" aria-pressed="true">any</button>
+          <button data-x="128" aria-pressed="false">≤128</button>
+          <button data-x="192" aria-pressed="false">≤192</button>
+          <button data-x="256" aria-pressed="false">≤256</button>
+          <button data-x="512" aria-pressed="false">≤512</button>
+          <button data-x="1024" aria-pressed="false">≤1TB</button>
+        </div>
+      </div>
+      <div class="fg"><span class="lbl">price</span>
+        <div class="seg" id="pricemax" role="group" aria-label="Maximum price">
+          <button data-p="0" aria-pressed="true">any</button>
+          <button data-p="500" aria-pressed="false">≤$500</button>
+          <button data-p="1000" aria-pressed="false">≤$1k</button>
+          <button data-p="2000" aria-pressed="false">≤$2k</button>
+          <button data-p="3000" aria-pressed="false">≤$3k</button>
+          <button data-p="4000" aria-pressed="false">≤$4k</button>
+          <button data-p="5000" aria-pressed="false">≤$5k</button>
+          <button data-p="10000" aria-pressed="false">≤$10k</button>
+        </div>
+      </div>
+      <div class="fg"><span class="lbl">power</span>
+        <div class="seg" id="tdpmax" role="group" aria-label="Maximum TDP / power">
+          <button data-w="0" aria-pressed="true">any</button>
+          <button data-w="45" aria-pressed="false">≤45W</button>
+          <button data-w="65" aria-pressed="false">≤65W</button>
+          <button data-w="125" aria-pressed="false">≤125W</button>
+          <button data-w="250" aria-pressed="false">≤250W</button>
+        </div>
+      </div>
+    </div>
+    <!-- row 3: vendor · segment -->
+    <div class="trow">
+      <div class="fgw" id="vendorChips" role="group" aria-label="Filter by vendor"></div>
+      <div class="fgw" id="segChips" role="group" aria-label="Filter by segment">
+        <button class="chip uni" id="unifiedOnly" aria-pressed="false">unified·only</button>
+        <button class="chip non" id="splitOnly" aria-pressed="false">split·only</button>
+      </div>
+    </div>
+    <!-- row 4: year -->
+    <div class="trow">
+      <div class="fgw" id="yearChips" role="group" aria-label="Filter by year"></div>
+    </div>
+  </div>
+
+  <div id="results"></div>
+
+  <footer>
+    <details>
+    <summary>How to read this table — columns · formulas · caveats</summary>
+    <div class="legend-body">
+    <div class="fnote" style="border-left-color:var(--uni)"><b>HOW TO READ THIS TABLE</b> — every non-Apple CPU / APU / SoC that supports ≥128 GB RAM. Default view is a flat, globally-sorted list; use <b>GROUP&nbsp;BY</b> to bucket by segment / vendor / unified. Click a <b>column header</b> to sort, click a <b>row</b> to expand full specs, benchmarks &amp; a why-pick/why-not note. All state deep-links to the URL so a filtered view is shareable.</div>
+    <div class="fnote"><b>Columns.</b> &nbsp;<b>Max mem</b> = vendor controller maximum (caveat below). &nbsp;<b>Chan</b> = memory channels = parallel memory pipes → sets <i>bandwidth</i>; the board decides DIMM slots (up to 2 per channel), soldered parts show "—". &nbsp;<b>BW</b> = memory bandwidth (DDR/LPDDR path). &nbsp;<b>Cores</b> = physical cores (P+E for Intel hybrids) / threads (no "/T" = no SMT). &nbsp;<b>PCIe</b> = CPU lanes × generation (expansion for GPUs/SSDs — <i>unrelated</i> to RAM). &nbsp;<b>CPU Mark</b> = PassMark <b>multi-thread</b> score — overall throughput at parallel work (compiles, containers, VMs, many tabs); higher = faster. &nbsp;<b>Value</b> = <b>CPU&nbsp;Mark&nbsp;÷&nbsp;price</b> = compute per dollar (e.g. Core Ultra 7 265K = 58,603 ÷ $394 ≈ <b>149</b>); higher = better bang-for-buck. &nbsp;<b>Price</b> = see "what price means" below.</div>
+    <div class="fnote"><b>In the row expand:</b> &nbsp;<b>Single-thread</b> = PassMark per-core rating (UI snappiness / sequential steps — a minor tiebreaker; it barely varies across modern chips). &nbsp;<b>Perf/watt</b> = <b>CPU&nbsp;Mark&nbsp;÷&nbsp;TDP</b> (efficiency, heat &amp; running cost for an always-on box). &nbsp;Plus memory bandwidth, channel config, socket/platform, TDP, process node, launch year.</div>
+    <div class="fnote"><b>What "price" means — two different things.</b> Socketed parts (desktop / HEDT / workstation / server) = <b>CPU only</b>; you still add motherboard, RAM (128–192 GB of DDR5 is a big extra), SSD, PSU, case. Soldered parts (laptop / mini-PC — Snapdragon, Strix Halo, GB10, 285H/HX, Orange Pi) = <b>whole-device estimate</b>, since the chip isn't sold on its own, and a max-RAM config costs more than the listed ballpark. So <b>Value only compares apples-to-apples within the same type</b>, and many prices are estimates — verify in the shop.</div>
+    <div class="fnote"><b>Value ≠ "best for you."</b> A cheap 4-core (i3-14100, value 113) scores high but is too weak for heavy Docker. Use Value to compare chips of <i>similar capability</i>, then confirm <b>Cores</b> &amp; <b>Max mem</b> fit your workload.</div>
+    <div class="fnote"><b>Unified vs split (MEM column).</b> &nbsp;<b style="color:var(--uni)">UNI</b> = one physical pool shared by CPU + GPU/NPU (matters for local-LLM / GPU work; caps at 128 GB on everything non-Apple except the slow Orange Pi). &nbsp;<b style="color:var(--non)">SPLIT</b> = separate CPU &amp; GPU memory, reaches 192 GB → multiple TB via standard DIMMs. For CPU/dev workloads SPLIT is what you want — no premium for GPU-shared bandwidth you won't use. <b>Core Ultra 9 285HX is SPLIT</b> — that tiny iGPU carve-out is exactly why it reaches 192 GB on standard SO-DIMMs.</div>
+    <div class="fnote"><b>Memory &amp; bandwidth caveats.</b> Max-mem &amp; bandwidth are <b>manufacturer maximums</b> (vendor spec sheet / Intel ARK) — the controller ceiling, not a guaranteed config; real capacity depends on board DIMM slots, density &amp; BIOS/AGESA. On UNI parts the GPU-allocatable share is below the total (~96/128 GB Windows, ~110 GB Linux on Strix Halo). Bandwidth shown is the DDR/LPDDR path; HBM tiers (GH200, Xeon Max) are separate &amp; far faster — see the row note.</div>
+    <div class="fnote"><b>Benchmark coverage &amp; freshness.</b> CPU Mark / single-thread from cpubenchmark.net (PassMark), ~Jul 2026. Arm/NPU superchips (GB10, GH200/GB200, Orange Pi) &amp; unreleased parts (EPYC Venice) aren't on PassMark → shown "—". Server scores are single-socket; the newest SKUs (Threadripper 9000, Granite Rapids, Turin) have thin sample sizes that drift over time; a few server parts list only single-thread, so their CPU Mark is "—".</div>
+    <div class="fnote"><b>Scope &amp; exclusions.</b> Apple M3 Ultra (512 GB / 819 GB/s unified) omitted per no-Apple rule. Meteor Lake 185H dropped (96 GB &lt; 128 GB). Snapdragon X gen-1 excluded (64 GB cap) — X2 Elite (128 GB) is in. AMD Zen3/3+ mobile (Ryzen 5 5600U, 5 7530U, 7 7735U) excluded — memory controller caps at 64 GB. Phoenix/Hawk Point (7640U → 8945HS) included: AMD-spec 256 GB max, so 128 GB via 2×64 SO-DIMM if the mini-PC has SO-DIMM slots (soldered-LPDDR boxes are locked lower). Incoming: EPYC Venice launches ~today (listed, specs partial); Ryzen AI Max 400 "Gorgon Halo" ~Q3 2026; Granite Rapids-WS. Server SKUs are representative per generation, not every OPN.</div>
+    </div>
+    </details>
+    <div class="stamp">click a row for full specs · <b>right-click</b> a row to copy (text / JSON) · <b>⌘/Ctrl-click</b> rows to multi-select then right-click → copy selected · click a header to cycle sort ▼ desc → ▲ asc → off · <b>shift-click</b> to add / cycle extra sort levels (number = priority) · plain-click any header to drop back to a single sort · <b>Views</b>: name + Save stores the current filters+sorts locally — pick one from the dropdown to re-apply, Save again with the same name to replace, Del to remove · state deep-links to URL · non-Apple / non-OEM / barebone route · HK: Golden Arcade · Wan Chai · Mong Kok</div>
+  </footer>
+</div>
+
+<script>
+/* ============================================================================
+   DATA — ~105 non-Apple chips that support >=128 GB RAM. Figures verified
+   against vendor spec sheets / ARK / press, 2026-07. Fields:
+   vendor, chip, year, segment, unified, maxMemoryGB, maxMemoryLabel,
+   memChannels, memoryType, bandwidthGBs, bandwidthLabel, cores, tdpW, socket,
+   priceUSD, node, note(why-pick/why-not). segment ∈ desktop|hedt|workstation|
+   server|mini-pc|laptop. Prices USD, many est. See footer caveats.
+   ============================================================================ */
+const DATA = [
+/* ---- AMD desktop (AM5) ---- */
+{vendor:"AMD",chip:"Ryzen 5 7600",year:2023,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T",tdpW:65,socket:"AM5",priceUSD:229,node:"TSMC 5nm (Zen4)",note:"Cheapest AM5 entry with a bundled cooler; 65W efficient 6-core, nearly matches 7600X at lower power."},
+{vendor:"AMD",chip:"Ryzen 5 7600X",year:2022,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T",tdpW:105,socket:"AM5",priceUSD:299,node:"TSMC 5nm (Zen4)",note:"Higher-clocked 6-core than the 7600 but 105W and no cooler; small gains make the 7600 better value today."},
+{vendor:"AMD",chip:"Ryzen 7 7700",year:2023,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T",tdpW:65,socket:"AM5",priceUSD:329,node:"TSMC 5nm (Zen4)",note:"65W 8-core sweet spot for balanced work/play; ships with cooler, runs cool vs the 105W 7700X."},
+{vendor:"AMD",chip:"Ryzen 7 7700X",year:2022,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T",tdpW:105,socket:"AM5",priceUSD:399,node:"TSMC 5nm (Zen4)",note:"Clocked-up 8-core; only marginally faster than the 7700 at higher power — pick it only on discount."},
+{vendor:"AMD",chip:"Ryzen 7 7800X3D",year:2023,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T",tdpW:120,socket:"AM5",priceUSD:449,node:"TSMC 5nm (Zen4)",note:"96MB 3D V-Cache made it the Zen4 gaming king; still a top pure-gaming buy, now succeeded by the 9800X3D."},
+{vendor:"AMD",chip:"Ryzen 9 7900",year:2023,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"12C/24T",tdpW:65,socket:"AM5",priceUSD:429,node:"TSMC 5nm (Zen4)",note:"65W 12-core: the efficiency pick for productivity, bundled cooler, ~90% of 7900X multithread at far lower power."},
+{vendor:"AMD",chip:"Ryzen 9 7900X",year:2022,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"12C/24T",tdpW:170,socket:"AM5",priceUSD:549,node:"TSMC 5nm (Zen4)",note:"Full-power 12-core for content creation; heavy street discounts make it a strong multithread/$ buy."},
+{vendor:"AMD",chip:"Ryzen 9 7950X",year:2022,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"16C/32T",tdpW:170,socket:"AM5",priceUSD:699,node:"TSMC 5nm (Zen4)",note:"Zen4 flagship 16-core for max multithread throughput; superseded by 9950X but cheaper now."},
+{vendor:"AMD",chip:"Ryzen 9 7900X3D",year:2023,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"12C/24T",tdpW:120,socket:"AM5",priceUSD:599,node:"TSMC 5nm (Zen4)",note:"12-core with V-Cache on one CCD; awkward middle child — worse gaming than 7800X3D, weaker MT than 7950X3D. Skip."},
+{vendor:"AMD",chip:"Ryzen 9 7950X3D",year:2023,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"16C/32T",tdpW:120,socket:"AM5",priceUSD:699,node:"TSMC 5nm (Zen4)",note:"16-core + 3D V-Cache: the do-everything Zen4 chip (gaming near 7800X3D, full 16-core MT); needs core-parking scheduler."},
+{vendor:"AMD",chip:"Ryzen 5 8500G",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T",tdpW:65,socket:"AM5",priceUSD:179,node:"TSMC 4nm (Zen4)",note:"Budget APU (2 Zen4 + 4 Zen4c) with basic Radeon 740M; iGPU shares system RAM. Only PCIe 4.0 x4 for a dGPU."},
+{vendor:"AMD",chip:"Ryzen 5 8600G",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T",tdpW:65,socket:"AM5",priceUSD:229,node:"TSMC 4nm (Zen4)",note:"Radeon 760M APU for entry 1080p gaming without a dGPU; iGPU shares system RAM. Full Zen4 6-core, unlike the 8500G."},
+{vendor:"AMD",chip:"Ryzen 7 8700G",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T",tdpW:65,socket:"AM5",priceUSD:329,node:"TSMC 4nm (Zen4)",note:"Top AM5 APU: Radeon 780M is the fastest desktop iGPU for playable 1080p; shares system RAM, includes an NPU."},
+{vendor:"AMD",chip:"Ryzen 5 9600X",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T",tdpW:65,socket:"AM5",priceUSD:279,node:"TSMC 4nm (Zen5)",note:"Efficient Zen5 6-core with strong IPC; best value gaming/general CPU when paired with a dGPU."},
+{vendor:"AMD",chip:"Ryzen 7 9700X",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T",tdpW:65,socket:"AM5",priceUSD:359,node:"TSMC 4nm (Zen5)",note:"65W Zen5 8-core (unlockable to 105W); excellent perf-per-watt all-rounder, but non-X3D so not a gaming leader."},
+{vendor:"AMD",chip:"Ryzen 9 9900X",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"12C/24T",tdpW:120,socket:"AM5",priceUSD:499,node:"TSMC 4nm (Zen5)",note:"Zen5 12-core for productivity; strong multithread at 120W, a good step below the 9950X for creators."},
+{vendor:"AMD",chip:"Ryzen 9 9950X",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"16C/32T",tdpW:170,socket:"AM5",priceUSD:649,node:"TSMC 4nm (Zen5)",note:"Zen5 16-core flagship (non-X3D); top mainstream productivity chip when max MT throughput matters. AMD has also listed 192GB — 256GB works on current AGESA (4×64)."},
+{vendor:"AMD",chip:"Ryzen 7 9800X3D",year:2024,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T",tdpW:120,socket:"AM5",priceUSD:479,node:"TSMC 4nm (Zen5)",note:"2nd-gen 3D V-Cache (now under the cores) and unlocked; the reigning best gaming CPU, clocks higher than 7800X3D."},
+{vendor:"AMD",chip:"Ryzen 9 9900X3D",year:2025,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"12C/24T",tdpW:120,socket:"AM5",priceUSD:599,node:"TSMC 4nm (Zen5)",note:"12-core V-Cache hybrid: near-9800X3D gaming plus more MT; but the 9800X3D is cheaper for pure gaming."},
+{vendor:"AMD",chip:"Ryzen 9 9950X3D",year:2025,segment:"desktop",unified:false,maxMemoryGB:256,maxMemoryLabel:"256 GB",memChannels:2,memoryType:"DDR5 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"16C/32T",tdpW:170,socket:"AM5",priceUSD:699,node:"TSMC 4nm (Zen5)",note:"Best do-it-all AM5 chip: 9800X3D-class gaming plus full 16-core Zen5 MT; top choice if you game and create."},
+
+/* ---- Intel desktop (LGA1700 / LGA1851) ---- */
+{vendor:"Intel",chip:"Core i5-12400",year:2022,segment:"desktop",unified:false,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:2,memoryType:"DDR5-4800 / DDR4-3200 UDIMM",bandwidthGBs:76,bandwidthLabel:"~76 GB/s",cores:"6C (6P+0E), 12T",tdpW:65,socket:"LGA1700",priceUSD:192,node:"Intel 7",note:"Budget locked 6-core; no E-cores, 65W, caps at 128GB like all Alder Lake."},
+{vendor:"Intel",chip:"Core i5-12600K",year:2021,segment:"desktop",unified:false,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:2,memoryType:"DDR5-4800 / DDR4-3200 UDIMM",bandwidthGBs:76,bandwidthLabel:"~76 GB/s",cores:"10C (6P+4E), 16T",tdpW:125,socket:"LGA1700",priceUSD:289,node:"Intel 7",note:"First-gen hybrid mainstream unlocked chip; supports DDR4, cheap upgrade path but 128GB ceiling."},
+{vendor:"Intel",chip:"Core i7-12700K",year:2021,segment:"desktop",unified:false,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:2,memoryType:"DDR5-4800 / DDR4-3200 UDIMM",bandwidthGBs:76,bandwidthLabel:"~76 GB/s",cores:"12C (8P+4E), 20T",tdpW:125,socket:"LGA1700",priceUSD:409,node:"Intel 7",note:"8P+4E value sweet spot of the Alder Lake line; 128GB max."},
+{vendor:"Intel",chip:"Core i9-12900K",year:2021,segment:"desktop",unified:false,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:2,memoryType:"DDR5-4800 / DDR4-3200 UDIMM",bandwidthGBs:76,bandwidthLabel:"~76 GB/s",cores:"16C (8P+8E), 24T",tdpW:125,socket:"LGA1700",priceUSD:589,node:"Intel 7",note:"Alder Lake flagship; the last Intel desktop i9 stuck at 128GB before the 192GB jump."},
+{vendor:"Intel",chip:"Core i5-13600K",year:2022,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"14C (6P+8E), 20T",tdpW:125,socket:"LGA1700",priceUSD:319,node:"Intel 7",note:"Raptor Lake bumped the ceiling to 192GB; excellent price/perf gaming + light-workstation pick."},
+{vendor:"Intel",chip:"Core i7-13700K",year:2022,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"16C (8P+8E), 24T",tdpW:125,socket:"LGA1700",priceUSD:409,node:"Intel 7",note:"8P+8E Raptor Lake; near-i9 multithread at lower cost, 192GB capable."},
+{vendor:"Intel",chip:"Core i9-13900K",year:2022,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"24C (8P+16E), 32T",tdpW:125,socket:"LGA1700",priceUSD:589,node:"Intel 7",note:"First 24-core Intel desktop; 192GB, but watch the Vmin degradation errata affecting 13th/14th i9 (needs microcode fix)."},
+{vendor:"Intel",chip:"Core i5-13400",year:2023,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-4800 / DDR4-3200 UDIMM",bandwidthGBs:76,bandwidthLabel:"~76 GB/s",cores:"10C (6P+4E), 16T",tdpW:65,socket:"LGA1700",priceUSD:221,node:"Intel 7",note:"Locked 65W Raptor Lake mainstream; 192GB support but only DDR5-4800."},
+{vendor:"Intel",chip:"Core i5-14600K",year:2023,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"14C (6P+8E), 20T",tdpW:125,socket:"LGA1700",priceUSD:319,node:"Intel 7",note:"Raptor Lake Refresh mid-tier; essentially a clocked-up 13600K, 192GB."},
+{vendor:"Intel",chip:"Core i7-14700K",year:2023,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"20C (8P+12E), 28T",tdpW:125,socket:"LGA1700",priceUSD:409,node:"Intel 7",note:"Only 14th-gen part with a real core bump (+4 E over 13700K); best value for 192GB workstation builds."},
+{vendor:"Intel",chip:"Core i9-14900K",year:2023,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"24C (8P+16E), 32T",tdpW:125,socket:"LGA1700",priceUSD:589,node:"Intel 7",note:"Last LGA1700 flagship; 192GB, but needs the Intel microcode fix for the 13th/14th-gen stability errata."},
+{vendor:"Intel",chip:"Core i9-14900KS",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-5600 / DDR4-3200 UDIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"24C (8P+16E), 32T",tdpW:150,socket:"LGA1700",priceUSD:689,node:"Intel 7",note:"6.2 GHz binned halo part; 150W base and very hot, only for max single-thread. Same 192GB."},
+{vendor:"Intel",chip:"Core i3-14100",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-4800 / DDR4-3200 UDIMM",bandwidthGBs:76,bandwidthLabel:"~76 GB/s",cores:"4C (4P+0E), 8T",tdpW:60,socket:"LGA1700",priceUSD:134,node:"Intel 7",note:"Cheapest LGA1700 chip that still officially addresses 192GB; 4 P-cores, no E-cores."},
+{vendor:"Intel",chip:"Core Ultra 5 245K",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-6400 UDIMM (CUDIMM)",bandwidthGBs:102,bandwidthLabel:"~102 GB/s",cores:"14C (6P+8E), 14T — no HT",tdpW:125,socket:"LGA1851",priceUSD:309,node:"TSMC N3B",note:"Entry Arrow Lake-S; DDR5-only, no Hyper-Threading, Xe iGPU + NPU. 192GB per ARK."},
+{vendor:"Intel",chip:"Core Ultra 5 245KF",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-6400 UDIMM (CUDIMM)",bandwidthGBs:102,bandwidthLabel:"~102 GB/s",cores:"14C (6P+8E), 14T — no HT",tdpW:125,socket:"LGA1851",priceUSD:294,node:"TSMC N3B",note:"245K with the iGPU fused off; same 192GB, needs a discrete GPU."},
+{vendor:"Intel",chip:"Core Ultra 7 265K",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-6400 UDIMM (CUDIMM)",bandwidthGBs:102,bandwidthLabel:"~102 GB/s",cores:"20C (8P+12E), 20T — no HT",tdpW:125,socket:"LGA1851",priceUSD:394,node:"TSMC N3B",note:"Mid Arrow Lake-S; strong efficiency and MT value, 192GB. Z890 boards may list 256GB with 4×64 CUDIMM beyond ARK."},
+{vendor:"Intel",chip:"Core Ultra 7 265KF",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-6400 UDIMM (CUDIMM)",bandwidthGBs:102,bandwidthLabel:"~102 GB/s",cores:"20C (8P+12E), 20T — no HT",tdpW:125,socket:"LGA1851",priceUSD:384,node:"TSMC N3B",note:"GPU-less 265K; identical 192GB, slightly cheaper for dGPU builds."},
+{vendor:"Intel",chip:"Core Ultra 9 285K",year:2024,segment:"desktop",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-6400 UDIMM (CUDIMM)",bandwidthGBs:102,bandwidthLabel:"~102 GB/s",cores:"24C (8P+16E), 24T — no HT",tdpW:125,socket:"LGA1851",priceUSD:589,node:"TSMC N3B",note:"Arrow Lake-S flagship; tiled TSMC N3B compute die + NPU. 192GB per ARK; some Z890 boards advertise 256GB (4×64)."},
+
+/* ---- HEDT (non-PRO Threadripper) ---- */
+{vendor:"AMD",chip:"Ryzen Threadripper 7960X",year:2023,segment:"hedt",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB",memChannels:4,memoryType:"DDR5-5200 RDIMM",bandwidthGBs:166,bandwidthLabel:"~166 GB/s",cores:"24C/48T",tdpW:350,socket:"sTR5 / TRX50",priceUSD:1499,node:"TSMC 5nm (Zen4)",note:"Cheapest way into Zen4 HEDT; 4-channel (half a PRO) but 88 PCIe5 lanes. Pick for many cores + lanes on a cheaper TRX50 board."},
+{vendor:"AMD",chip:"Ryzen Threadripper 7970X",year:2023,segment:"hedt",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB",memChannels:4,memoryType:"DDR5-5200 RDIMM",bandwidthGBs:166,bandwidthLabel:"~166 GB/s",cores:"32C/64T",tdpW:350,socket:"sTR5 / TRX50",priceUSD:2499,node:"TSMC 5nm (Zen4)",note:"32-core HEDT sweet spot; same 4-channel/1TB ceiling, higher per-core clocks than the 64C part."},
+{vendor:"AMD",chip:"Ryzen Threadripper 7980X",year:2023,segment:"hedt",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB",memChannels:4,memoryType:"DDR5-5200 RDIMM",bandwidthGBs:166,bandwidthLabel:"~166 GB/s",cores:"64C/128T",tdpW:350,socket:"sTR5 / TRX50",priceUSD:4999,node:"TSMC 5nm (Zen4)",note:"64 cores at HEDT price, but 4-channel memory bandwidth-starves it vs the 8-channel PRO 7985WX. Buy only if you don't need 8ch/2TB."},
+{vendor:"AMD",chip:"Ryzen Threadripper 9960X",year:2025,segment:"hedt",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB",memChannels:4,memoryType:"DDR5-6400 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"24C/48T",tdpW:350,socket:"sTR5 / TRX50",priceUSD:1499,node:"TSMC 4nm (Zen5)",note:"Zen5 'Shimada Peak' HEDT entry, faster DDR5-6400. 4-channel/1TB. Best price/perf for Zen5 many-core desktop."},
+{vendor:"AMD",chip:"Ryzen Threadripper 9970X",year:2025,segment:"hedt",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB",memChannels:4,memoryType:"DDR5-6400 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"32C/64T",tdpW:350,socket:"sTR5 / TRX50",priceUSD:2499,node:"TSMC 4nm (Zen5)",note:"32C Zen5 HEDT; strong all-core + high clocks. The 4-channel ceiling is the only compromise vs PRO."},
+{vendor:"AMD",chip:"Ryzen Threadripper 9980X",year:2025,segment:"hedt",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB",memChannels:4,memoryType:"DDR5-6400 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"64C/128T",tdpW:350,socket:"sTR5 / TRX50",priceUSD:4999,node:"TSMC 4nm (Zen5)",note:"64 Zen5 cores at HEDT price; 4-channel bandwidth-limited vs PRO 9985WX. Pick if 1TB/4ch is enough."},
+
+/* ---- Workstation (PRO Threadripper + Xeon W) ---- */
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 7945WX",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-5200 RDIMM ECC",bandwidthGBs:333,bandwidthLabel:"~333 GB/s",cores:"12C/24T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:1399,node:"TSMC 5nm (Zen4)",note:"Cheapest 8-channel/2TB ECC + 128 PCIe5 lanes entry to WRX90. Low core count — you pay for the platform (memory + I/O), not cores."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 7955WX",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-5200 RDIMM ECC",bandwidthGBs:333,bandwidthLabel:"~333 GB/s",cores:"16C/32T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:1799,node:"TSMC 5nm (Zen4)",note:"16C but full PRO platform: 8ch/2TB ECC, 128 PCIe5 lanes. Good for I/O-heavy, memory-heavy but not core-bound work."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 7965WX",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-5200 RDIMM ECC",bandwidthGBs:333,bandwidthLabel:"~333 GB/s",cores:"24C/48T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:2649,node:"TSMC 5nm (Zen4)",note:"24C PRO; same 8ch/2TB/128-lane platform as the flagship. Value pick for full ECC bandwidth without buying 64/96 cores."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 7975WX",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-5200 RDIMM ECC",bandwidthGBs:333,bandwidthLabel:"~333 GB/s",cores:"32C/64T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:3899,node:"TSMC 5nm (Zen4)",note:"32C with 8-channel — the 'balanced' pro chip. Beats HEDT 7980X in memory-bound work despite fewer cores."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 7985WX",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-5200 RDIMM ECC",bandwidthGBs:333,bandwidthLabel:"~333 GB/s",cores:"64C/128T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:7349,node:"TSMC 5nm (Zen4)",note:"64C with 8-channel/2TB ECC + 128 PCIe5 lanes — the proper 64-core choice over HEDT 7980X for bandwidth-hungry apps."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 7995WX",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-5200 RDIMM ECC",bandwidthGBs:333,bandwidthLabel:"~333 GB/s",cores:"96C/192T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:9999,node:"TSMC 5nm (Zen4)",note:"96-core Zen4 flagship; only reason not to buy is the Zen5 9995WX successor exists. Still cheaper than the 9995WX."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 9955WX",year:2025,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-6400 RDIMM ECC",bandwidthGBs:410,bandwidthLabel:"~410 GB/s",cores:"16C/32T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:1649,node:"TSMC 4nm (Zen5)",note:"Cheapest Zen5 full-PRO platform: 8ch DDR5-6400/2TB ECC + 128 PCIe5 lanes. Buy for memory bandwidth + I/O, not cores."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 9965WX",year:2025,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-6400 RDIMM ECC",bandwidthGBs:410,bandwidthLabel:"~410 GB/s",cores:"24C/48T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:2899,node:"TSMC 4nm (Zen5)",note:"24C Zen5 PRO; full 8ch/2TB/128-lane platform with fastest DDR5. Value pick for ECC bandwidth without flagship core count."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 9975WX",year:2025,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-6400 RDIMM ECC",bandwidthGBs:410,bandwidthLabel:"~410 GB/s",cores:"32C/64T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:4099,node:"TSMC 4nm (Zen5)",note:"32C Zen5 with 8-channel DDR5-6400/2TB ECC — the balanced pro chip; higher bandwidth than HEDT 9980X."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 9985WX",year:2025,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-6400 RDIMM ECC",bandwidthGBs:410,bandwidthLabel:"~410 GB/s",cores:"64C/128T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:7999,node:"TSMC 4nm (Zen5)",note:"64 Zen5 cores with full 8ch/2TB ECC + 128 PCIe5 lanes — the correct 64C choice over HEDT 9980X for bandwidth-bound work."},
+{vendor:"AMD",chip:"Ryzen Threadripper PRO 9995WX",year:2025,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:8,memoryType:"DDR5-6400 RDIMM ECC",bandwidthGBs:410,bandwidthLabel:"~410 GB/s",cores:"96C/192T",tdpW:350,socket:"sTR5 / WRX90",priceUSD:11699,node:"TSMC 4nm (Zen5)",note:"Fastest non-server workstation CPU on the planet: 96 Zen5 cores, 8ch DDR5-6400/2TB ECC, 128 PCIe5 lanes. Costs more than a used car."},
+{vendor:"Intel",chip:"Xeon w5-2455X",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:4,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:154,bandwidthLabel:"~154 GB/s",cores:"12C/24T",tdpW:200,socket:"LGA4677 (W790)",priceUSD:1199,node:"Intel 7 (Sapphire Rapids)",note:"Entry Xeon W-2400; 4-channel (like HEDT TR) but ECC + 2TB + AMX/AVX-512. Fewer cores and lower bandwidth than same-price Threadripper."},
+{vendor:"Intel",chip:"Xeon w7-2495X",year:2023,segment:"workstation",unified:false,maxMemoryGB:2048,maxMemoryLabel:"2 TB",memChannels:4,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:154,bandwidthLabel:"~154 GB/s",cores:"24C/48T",tdpW:225,socket:"LGA4677 (W790)",priceUSD:2189,node:"Intel 7 (Sapphire Rapids)",note:"Top W-2400; 24C but only 4-channel/2TB. Overlaps TR 7960X on price with worse bandwidth; buy for AMX/AVX-512 or Intel-stack needs."},
+{vendor:"Intel",chip:"Xeon w5-3435X",year:2023,segment:"workstation",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:307,bandwidthLabel:"~307 GB/s",cores:"16C/32T",tdpW:270,socket:"LGA4677 (W790)",priceUSD:1589,node:"Intel 7 (Sapphire Rapids)",note:"Cheapest 8-channel/4TB Xeon W-3400 — double the RAM ceiling of any Threadripper. Low core count; you pay for the 4TB/8ch platform."},
+{vendor:"Intel",chip:"Xeon w7-3455",year:2023,segment:"workstation",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:307,bandwidthLabel:"~307 GB/s",cores:"24C/48T",tdpW:270,socket:"LGA4677 (W790)",priceUSD:2489,node:"Intel 7 (Sapphire Rapids)",note:"24C W-3400 with 8ch/4TB. Value pick if you specifically need >2TB RAM (Threadripper PRO caps at 2TB)."},
+{vendor:"Intel",chip:"Xeon w9-3475X",year:2023,segment:"workstation",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:307,bandwidthLabel:"~307 GB/s",cores:"36C/72T",tdpW:300,socket:"LGA4677 (W790)",priceUSD:3739,node:"Intel 7 (Sapphire Rapids)",note:"36C W-3400; 8ch/4TB + AMX. Lower bandwidth/clocks than same-era TR PRO, but 4TB ceiling and Intel accelerators are the draw."},
+{vendor:"Intel",chip:"Xeon w9-3495X",year:2023,segment:"workstation",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:307,bandwidthLabel:"~307 GB/s",cores:"56C/112T",tdpW:350,socket:"LGA4677 (W790)",priceUSD:5889,node:"Intel 7 (Sapphire Rapids)",note:"Flagship W-3400: 56C, 8ch DDR5-4800/4TB, 112 PCIe5 lanes, AMX. Trails TR PRO 7995WX in raw MT but doubles RAM ceiling to 4TB."},
+{vendor:"Intel",chip:"Xeon w9-3595X",year:2024,segment:"workstation",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-4800 RDIMM ECC",bandwidthGBs:307,bandwidthLabel:"~307 GB/s",cores:"60C/120T",tdpW:385,socket:"LGA4677 (W790)",priceUSD:5889,node:"Intel 7 (Sapphire Rapids Refresh)",note:"Flagship of the W-3500 'Sapphire Rapids Refresh' (Aug 2024): 60C/8ch/4TB, 112 PCIe5 lanes. Same node/socket as W-3400, more cores+cache. Still behind Zen5 TR PRO in MT."},
+
+/* ---- Server: AMD EPYC ---- */
+{vendor:"AMD",chip:"EPYC 7742 (Rome)",year:2019,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR4-3200 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"64C/128T",tdpW:225,socket:"SP3",priceUSD:6950,node:"TSMC 7nm + GF 14nm IOD (Zen2)",note:"2nd-gen flagship; first mainstream 64-core x86 server chip. Buy only for cheap used/legacy DDR4 nodes."},
+{vendor:"AMD",chip:"EPYC 7402 (Rome)",year:2019,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR4-3200 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"24C/48T",tdpW:180,socket:"SP3",priceUSD:1783,node:"TSMC 7nm + GF 14nm IOD (Zen2)",note:"Mid Rome SKU; balanced core/price for general VM hosts. Legacy platform now."},
+{vendor:"AMD",chip:"EPYC 7763 (Milan)",year:2021,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR4-3200 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"64C/128T",tdpW:280,socket:"SP3",priceUSD:7890,node:"TSMC 7nm + GF 12nm IOD (Zen3)",note:"3rd-gen flagship; Zen3 IPC uplift, still SP3/DDR4. Workhorse of 2021-22 cloud fleets."},
+{vendor:"AMD",chip:"EPYC 7543 (Milan)",year:2021,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR4-3200 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"32C/64T",tdpW:225,socket:"SP3",priceUSD:3761,node:"TSMC 7nm + GF 12nm IOD (Zen3)",note:"Popular 32-core Milan; strong per-core value. Sweet spot for licensed-per-core software."},
+{vendor:"AMD",chip:"EPYC 7773X (Milan-X)",year:2022,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR4-3200 RDIMM",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"64C/128T",tdpW:280,socket:"SP3",priceUSD:8800,node:"TSMC 7nm + GF 12nm IOD (Zen3)",note:"X = 3D V-Cache: 768MB L3. Huge for cache-bound HPC/EDA/CFD; not worth it for general compute."},
+{vendor:"AMD",chip:"EPYC 8534P (Siena)",year:2023,segment:"server",unified:false,maxMemoryGB:1152,maxMemoryLabel:"1.15 TB",memChannels:6,memoryType:"DDR5-4800 RDIMM",bandwidthGBs:230,bandwidthLabel:"~230 GB/s",cores:"64C/128T",tdpW:200,socket:"SP6",priceUSD:5340,node:"TSMC 5nm + 6nm IOD (Zen4c)",note:"Siena flagship; low-power Zen4c edge/telco platform. Single-socket only, 6-channel, low TDP."},
+{vendor:"AMD",chip:"EPYC 8024P (Siena)",year:2023,segment:"server",unified:false,maxMemoryGB:1152,maxMemoryLabel:"1.15 TB",memChannels:6,memoryType:"DDR5-4800 RDIMM",bandwidthGBs:230,bandwidthLabel:"~230 GB/s",cores:"8C/16T",tdpW:90,socket:"SP6",priceUSD:408,node:"TSMC 5nm + 6nm IOD (Zen4c)",note:"Entry Siena; 65-90W configurable for edge/embedded/far-edge. Cheapest EPYC entry."},
+{vendor:"AMD",chip:"EPYC 9654 (Genoa)",year:2022,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-4800 RDIMM",bandwidthGBs:461,bandwidthLabel:"~461 GB/s",cores:"96C/192T",tdpW:360,socket:"SP5",priceUSD:11805,node:"TSMC 5nm + 6nm IOD (Zen4)",note:"4th-gen flagship; SP5 debut, 12-ch DDR5, PCIe 5.0. The default high-core Genoa buy."},
+{vendor:"AMD",chip:"EPYC 9354 (Genoa)",year:2022,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-4800 RDIMM",bandwidthGBs:461,bandwidthLabel:"~461 GB/s",cores:"32C/64T",tdpW:280,socket:"SP5",priceUSD:3420,node:"TSMC 5nm + 6nm IOD (Zen4)",note:"Mid Genoa; full 12-ch bandwidth with fewer cores = high per-core perf for licensed workloads."},
+{vendor:"AMD",chip:"EPYC 9684X (Genoa-X)",year:2023,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-4800 RDIMM",bandwidthGBs:461,bandwidthLabel:"~461 GB/s",cores:"96C/192T",tdpW:400,socket:"SP5",priceUSD:14756,node:"TSMC 5nm + 6nm IOD (Zen4)",note:"X = 3D V-Cache: 1.1GB L3. Best-in-class for CFD/FEA/EDA cache-bound HPC. Overkill for cloud."},
+{vendor:"AMD",chip:"EPYC 9754 (Bergamo)",year:2023,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-4800 RDIMM",bandwidthGBs:461,bandwidthLabel:"~461 GB/s",cores:"128C/256T",tdpW:360,socket:"SP5",priceUSD:11900,node:"TSMC 5nm + 6nm IOD (Zen4c)",note:"Bergamo = Zen4c cloud-native; 128 dense cores at Genoa TDP. Max throughput-per-watt/rack for hyperscale."},
+{vendor:"AMD",chip:"EPYC 9755 (Turin)",year:2024,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-6000 RDIMM",bandwidthGBs:576,bandwidthLabel:"~576 GB/s",cores:"128C/256T",tdpW:500,socket:"SP5",priceUSD:12984,node:"TSMC 4nm + 6nm IOD (Zen5)",note:"5th-gen classic-Zen5 flagship; 128 full cores, DDR5-6000, drops into existing SP5. Best all-round Turin."},
+{vendor:"AMD",chip:"EPYC 9965 (Turin-Dense)",year:2024,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-6000 RDIMM",bandwidthGBs:576,bandwidthLabel:"~576 GB/s",cores:"192C/384T",tdpW:500,socket:"SP5",priceUSD:14813,node:"TSMC 3nm + 6nm IOD (Zen5c)",note:"Turin-Dense flagship: 192 Zen5c cores, highest x86 core count buyable pre-Venice. Cloud-native density king; lower clocks."},
+{vendor:"AMD",chip:"EPYC 9355 (Turin)",year:2024,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:12,memoryType:"DDR5-6000 RDIMM",bandwidthGBs:576,bandwidthLabel:"~576 GB/s",cores:"32C/64T",tdpW:280,socket:"SP5",priceUSD:3694,node:"TSMC 4nm + 6nm IOD (Zen5)",note:"Mid Turin; full 12-ch/DDR5-6000 bandwidth with 32 high-clock cores for per-core-licensed DBs."},
+{vendor:"AMD",chip:"EPYC Venice (Zen6, flagship)",year:2026,segment:"server",unified:false,maxMemoryGB:9216,maxMemoryLabel:"~9 TB (est)",memChannels:16,memoryType:"DDR5-8000 / MRDIMM-12800",bandwidthGBs:1638,bandwidthLabel:"~1.6 TB/s (MRDIMM)",cores:"256C/512T",tdpW:600,socket:"SP7",priceUSD:null,node:"TSMC 2nm (Zen6)",note:"6th-gen, launches Jul 22-23 2026 at Advancing AI. New SP7 socket, 16-ch, PCIe 6.0 (128 lanes), first 2nm HPC CPU. Cores/bandwidth/socket confirmed; TDP, max-mem, pricing still unannounced (est)."},
+
+/* ---- Server: Intel Xeon ---- */
+{vendor:"Intel",chip:"Xeon Platinum 8180 (Skylake-SP, 1st gen)",year:2017,segment:"server",unified:false,maxMemoryGB:768,maxMemoryLabel:"768 GB (1.5 TB on 8180M)",memChannels:6,memoryType:"DDR4-2666",bandwidthGBs:128,bandwidthLabel:"~128 GB/s",cores:"28C/56T",tdpW:205,socket:"LGA3647",priceUSD:10009,node:"14nm",note:"First Xeon Scalable flagship; the 6-channel DDR4 baseline. '8180M' SKU lifts cap to 1.5TB. Aged out for density but the reference point for the line."},
+{vendor:"Intel",chip:"Xeon Platinum 8280 (Cascade Lake, 2nd gen)",year:2019,segment:"server",unified:false,maxMemoryGB:1024,maxMemoryLabel:"1 TB (2 TB '8280M', 4.5 TB '8280L')",memChannels:6,memoryType:"DDR4-2933 (+ Optane DCPMM)",bandwidthGBs:141,bandwidthLabel:"~141 GB/s",cores:"28C/56T",tdpW:205,socket:"LGA3647",priceUSD:10009,node:"14nm",note:"Cascade Lake refresh; adds Optane persistent-memory support. 'L' SKU reaches 4.5TB/socket — cheapest path to multi-TB if you tolerate DDR4."},
+{vendor:"Intel",chip:"Xeon Platinum 9282 (Cascade Lake-AP)",year:2019,segment:"server",unified:false,maxMemoryGB:1536,maxMemoryLabel:"1.5 TB",memChannels:12,memoryType:"DDR4-2933",bandwidthGBs:281,bandwidthLabel:"~281 GB/s",cores:"56C/112T",tdpW:400,socket:"BGA (soldered)",priceUSD:40000,node:"14nm",note:"Dual-die MCM (2× 8280) with 12 memory channels, BGA-only (OEM boards). Peak DDR4 bandwidth/core count of the gen. Price est — never sold in tray."},
+{vendor:"Intel",chip:"Xeon Platinum 8380 (Ice Lake-SP, 3rd gen)",year:2021,segment:"server",unified:false,maxMemoryGB:6144,maxMemoryLabel:"6 TB",memChannels:8,memoryType:"DDR4-3200 (+ Optane 200)",bandwidthGBs:205,bandwidthLabel:"~205 GB/s",cores:"40C/80T",tdpW:270,socket:"LGA4189",priceUSD:8099,node:"10nm SuperFin",note:"First 10nm Xeon; jumps to 8 channels and a 6TB/socket cap — the big capacity leap. Cheaper flagship than prior gen."},
+{vendor:"Intel",chip:"Xeon Platinum 8380HL (Cooper Lake, 3rd gen 8-socket)",year:2020,segment:"server",unified:false,maxMemoryGB:4608,maxMemoryLabel:"4.5 TB",memChannels:6,memoryType:"DDR4-3200 (+ Optane 200)",bandwidthGBs:154,bandwidthLabel:"~154 GB/s",cores:"28C/56T",tdpW:250,socket:"LGA4189",priceUSD:13012,node:"14nm",note:"Cooper Lake targets 4S/8S scale-up (glueless 8-socket) with bf16; 'HL' = 4.5TB/socket → up to 36TB in an 8S box. Niche SAP HANA part."},
+{vendor:"Intel",chip:"Xeon Platinum 8490H (Sapphire Rapids, 4th gen)",year:2023,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-4800",bandwidthGBs:307,bandwidthLabel:"~307 GB/s",cores:"60C/120T",tdpW:350,socket:"LGA4677",priceUSD:17000,node:"Intel 7",note:"SPR flagship; DDR5 + PCIe 5.0 + CXL 1.1, AMX for AI matrix ops. 8S-capable. Pick for AMX inference or built-in QAT/DSA accelerators."},
+{vendor:"Intel",chip:"Xeon Max 9480 (Sapphire Rapids-HBM, 4th gen)",year:2023,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"64 GB HBM2e on-package + up to 4 TB DDR5",memChannels:8,memoryType:"HBM2e (64 GB) + DDR5-4800",bandwidthGBs:1000,bandwidthLabel:"~1 TB/s (HBM); ~307 GB/s DDR5",cores:"56C/112T",tdpW:350,socket:"LGA4677",priceUSD:12980,node:"Intel 7",note:"Intel's closest 'unified-ish' HPC part: 64GB on-package HBM2e usable HBM-only, flat, or as cache. Still non-unified — HBM is a separate on-package tier. Powered Aurora. Pick for bandwidth-bound HPC (CFD, weather)."},
+{vendor:"Intel",chip:"Xeon Platinum 8592+ (Emerald Rapids, 5th gen)",year:2023,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-5600",bandwidthGBs:358,bandwidthLabel:"~358 GB/s",cores:"64C/128T",tdpW:350,socket:"LGA4677",priceUSD:11600,node:"Intel 7",note:"EMR is a same-socket refresh of SPR: more cores (64), faster DDR5-5600, bigger L3, better perf/W. Drop-in on LGA4677. Best value flagship of the DDR5-8ch era."},
+{vendor:"Intel",chip:"Xeon 6980P (Granite Rapids, 6th gen P-core)",year:2024,segment:"server",unified:false,maxMemoryGB:3072,maxMemoryLabel:"~3 TB (per socket)",memChannels:12,memoryType:"DDR5-6400 / MRDIMM-8800",bandwidthGBs:614,bandwidthLabel:"~614 GB/s (DDR5); higher on MRDIMM",cores:"128C/256T",tdpW:500,socket:"LGA7529",priceUSD:17800,node:"Intel 3",note:"Granite Rapids flagship: 128 P-cores, 12 memory channels, MRDIMM support. Doubles channel count vs prior gen. ~3TB/socket (verified — not 6TB). Top perf-core density Intel ships."},
+{vendor:"Intel",chip:"Xeon 6787P (Granite Rapids, 6700P series)",year:2025,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-6400 / MRDIMM-8000",bandwidthGBs:409,bandwidthLabel:"~409 GB/s",cores:"86C/172T",tdpW:350,socket:"LGA4710",priceUSD:7400,node:"Intel 3",note:"Mainstream Granite Rapids on the smaller LGA4710 socket: 8 channels, 1S/2S, lower TDP. Higher memory cap (4TB) than 6900P despite fewer channels. Pick for volume 2S servers over the 500W 6980P."},
+{vendor:"Intel",chip:"Xeon 6780E (Sierra Forest, 6th gen E-core, 6700E)",year:2024,segment:"server",unified:false,maxMemoryGB:4096,maxMemoryLabel:"4 TB",memChannels:8,memoryType:"DDR5-6400",bandwidthGBs:409,bandwidthLabel:"~409 GB/s",cores:"144C (no HT)",tdpW:330,socket:"LGA4710",priceUSD:11350,node:"Intel 3",note:"Sierra Forest = all-E-core density play: 144 efficiency cores, no HT, high perf/W for cloud/scale-out & containers. LGA4710. Not for high single-thread work."},
+{vendor:"Intel",chip:"Xeon 6980E (Sierra Forest, 6900E)",year:2025,segment:"server",unified:false,maxMemoryGB:3072,maxMemoryLabel:"~3 TB (per socket)",memChannels:12,memoryType:"DDR5-6400 / MRDIMM-8800",bandwidthGBs:614,bandwidthLabel:"~614 GB/s",cores:"288C (no HT)",tdpW:500,socket:"LGA7529",priceUSD:17800,node:"Intel 3",note:"Peak E-core density: 288 cores/socket on the big LGA7529 12-channel socket — Intel's answer to AMD Bergamo for max thread count per rack-U. Choose over 6980P when throughput/watt beats per-core speed."},
+
+/* ---- Unified / mini-PC / mobile / Arm ---- */
+{vendor:"AMD",chip:"Ryzen AI Max+ 395",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:4,memoryType:"LPDDR5X-8000 256-bit (soldered)",bandwidthGBs:256,bandwidthLabel:"~256 GB/s",cores:"16C/32T Zen5 + 40 CU RDNA3.5",tdpW:120,socket:"FP11 BGA (soldered)",priceUSD:2000,node:"TSMC N4",note:"Flagship Strix Halo; true unified LPDDR5X, 128GB soldered hard cap (cannot reach 192GB). Best-value local-LLM box (Framework Desktop ~$2000, GMKtec EVO-X2 ~$1800)."},
+{vendor:"AMD",chip:"Ryzen AI Max+ 392",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:4,memoryType:"LPDDR5X-8000 256-bit (soldered)",bandwidthGBs:256,bandwidthLabel:"~256 GB/s",cores:"12C/24T + full 40 CU 8060S",tdpW:120,socket:"FP11 BGA (soldered)",priceUSD:1700,node:"TSMC N4",note:"Gaming-tilted Strix Halo: fewer CPU cores but full 40-CU iGPU. Same 128GB unified cap, same 256 GB/s."},
+{vendor:"AMD",chip:"Ryzen AI Max+ 388",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:4,memoryType:"LPDDR5X-8000 256-bit (soldered)",bandwidthGBs:256,bandwidthLabel:"~256 GB/s",cores:"8C/16T + full 40 CU 8060S",tdpW:120,socket:"FP11 BGA (soldered)",priceUSD:1500,node:"TSMC N4",note:"8-core Strix Halo keeping the full 40-CU GPU; 128GB unified cap, 256 GB/s. Gaming/graphics SKU."},
+{vendor:"AMD",chip:"Ryzen AI Max 390",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:4,memoryType:"LPDDR5X-8000 256-bit (soldered)",bandwidthGBs:256,bandwidthLabel:"~256 GB/s",cores:"12C/24T + 32 CU",tdpW:120,socket:"FP11 BGA (soldered)",priceUSD:1500,node:"TSMC N4",note:"Cut-down Strix Halo (32 CU). Same 128GB unified LPDDR5X / 256 GB/s memory subsystem."},
+{vendor:"AMD",chip:"Ryzen AI Max 385",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:4,memoryType:"LPDDR5X-8000 256-bit (soldered)",bandwidthGBs:256,bandwidthLabel:"~256 GB/s",cores:"8C/16T + 32 CU",tdpW:120,socket:"FP11 BGA (soldered)",priceUSD:1400,node:"TSMC N4",note:"Entry-mainstream Strix Halo, 32 CU. Retains full 128GB unified memory + 256 GB/s — the memory story is identical across the family."},
+{vendor:"AMD",chip:"Ryzen AI Max PRO 380",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:4,memoryType:"LPDDR5X-8000 256-bit (soldered)",bandwidthGBs:256,bandwidthLabel:"~256 GB/s",cores:"6C/12T + 16 CU",tdpW:120,socket:"FP11 BGA (soldered)",priceUSD:1300,node:"TSMC N4",note:"Smallest Strix Halo (6C, 16 CU) with PRO manageability. Still full 128GB unified / 256-bit / 256 GB/s — cheapest way onto the platform."},
+{vendor:"AMD",chip:"Ryzen AI 9 HX 370 / HX 375",year:2024,segment:"laptop",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB realistic (controller 256 GB)",memChannels:2,memoryType:"DDR5-5600 SO-DIMM / LPDDR5X-8000",bandwidthGBs:128,bandwidthLabel:"~120-128 GB/s (LPDDR5X)",cores:"12C/24T (4 Zen5 + 8 Zen5c) + 16 CU",tdpW:28,socket:"FP8 BGA (soldered)",priceUSD:1200,node:"TSMC N4P",note:"Strix Point iGPU shares system RAM (unified). 2 SO-DIMM slots proven to 256GB; 128GB is the realistic dual-64GB build. Only ~128 GB/s — far below Strix Halo."},
+{vendor:"AMD",chip:"Ryzen 9 7945HX (Dragon Range)",year:2023,segment:"mini-pc",unified:false,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; AMD ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"16C/32T + token RDNA2 2CU",tdpW:55,socket:"FL1 BGA (soldered)",priceUSD:1200,node:"TSMC 5nm (Zen4, Dragon Range)",note:"Desktop Raphael-in-mobile: 16 FULL Zen4 cores (vs 8 on the Phoenix APUs) + 28 PCIe5 lanes, but only a display-class iGPU. High-core mini-PC pick; 128GB via 2×64 SO-DIMM. Split, not a shared-GPU APU."},
+{vendor:"AMD",chip:"Ryzen 5 7640U",year:2023,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T + Radeon 760M",tdpW:28,socket:"FP7/8 BGA (soldered)",priceUSD:430,node:"TSMC 4nm (Zen4, Phoenix)",note:"Entry Zen4 Phoenix, cheapest chip clearing the 128GB gate. 128GB needs a mini-PC with 2× SO-DIMM slots — many U-series solder RAM lower, so confirm slots."},
+{vendor:"AMD",chip:"Ryzen 7 7840U",year:2023,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T + Radeon 780M",tdpW:28,socket:"FP7/8 BGA (soldered)",priceUSD:500,node:"TSMC 4nm (Zen4, Phoenix)",note:"Popular 28W Phoenix mini-PC (Minisforum UM790, GMKtec) with the 780M iGPU. 128GB via 2×64 SO-DIMM — confirm the box has SO-DIMM slots, not soldered LPDDR."},
+{vendor:"AMD",chip:"Ryzen 7 7840HS",year:2023,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T + Radeon 780M",tdpW:45,socket:"FP7/8 BGA (soldered)",priceUSD:500,node:"TSMC 4nm (Zen4, Phoenix)",note:"45W Phoenix, higher sustained clocks than the 7840U; same 780M. 128GB via 2×64 SO-DIMM (ctrl max 256)."},
+{vendor:"AMD",chip:"Ryzen 9 7940HS",year:2023,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T + Radeon 780M",tdpW:45,socket:"FP7/8 BGA (soldered)",priceUSD:600,node:"TSMC 4nm (Zen4, Phoenix)",note:"Top-bin Phoenix + Ryzen AI NPU; common in premium mini-PCs. AMD officially lists 256GB max → 128GB via 2×64 SO-DIMM. The chip you flagged."},
+{vendor:"AMD",chip:"Ryzen 5 8640U",year:2024,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"6C/12T + Radeon 760M",tdpW:28,socket:"FP7/8 BGA (soldered)",priceUSD:450,node:"TSMC 4nm (Zen4, Hawk Point)",note:"Hawk Point refresh of the 7640U (adds a 16-TOPS NPU). 128GB via 2×64 SO-DIMM (ctrl max 256)."},
+{vendor:"AMD",chip:"Ryzen 7 8840U",year:2024,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T + Radeon 780M",tdpW:28,socket:"FP7/8 BGA (soldered)",priceUSD:500,node:"TSMC 4nm (Zen4, Hawk Point)",note:"Hawk Point refresh of the 7840U (adds NPU); very common Minisforum/GMKtec mini-PC. 128GB via 2×64 SO-DIMM (ctrl max 256)."},
+{vendor:"AMD",chip:"Ryzen 7 8845HS",year:2024,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T + Radeon 780M",tdpW:45,socket:"FP7/8 BGA (soldered)",priceUSD:500,node:"TSMC 4nm (Zen4, Hawk Point)",note:"The mainstream sweet-spot mini-PC chip (Beelink SER8, Minisforum) — 780M + NPU, great perf/watt. 128GB via 2×64 SO-DIMM (ctrl max 256)."},
+{vendor:"AMD",chip:"Ryzen 9 8945HS",year:2024,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB (2×64 SO-DIMM; ctrl max 256)",memChannels:2,memoryType:"DDR5-5600 / LPDDR5X SO-DIMM",bandwidthGBs:90,bandwidthLabel:"~90 GB/s",cores:"8C/16T + Radeon 780M",tdpW:45,socket:"FP7/8 BGA (soldered)",priceUSD:650,node:"TSMC 4nm (Zen4, Hawk Point)",note:"Top-bin Hawk Point (highest clocks) + NPU; premium mini-PC flagship. 128GB via 2×64 SO-DIMM (ctrl max 256)."},
+{vendor:"Intel",chip:"Core Ultra 9 285H (Arrow Lake-H)",year:2025,segment:"laptop",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:2,memoryType:"DDR5-6400 / LPDDR5X-8400",bandwidthGBs:135,bandwidthLabel:"~120-135 GB/s (LPDDR5X)",cores:"16C/16T (6P+8E+2LPE) + Arc 140T",tdpW:45,socket:"BGA",priceUSD:1400,node:"TSMC N3B",note:"Intel ARK max = 128GB. Arc 140T iGPU shares memory (unified), but only ~2 channels so bandwidth is modest. Good CPU RAM host, weak vs Strix Halo for LLM."},
+{vendor:"Intel",chip:"Core Ultra 9 285HX (Arrow Lake-HX)",year:2025,segment:"mini-pc",unified:false,maxMemoryGB:192,maxMemoryLabel:"192 GB",memChannels:2,memoryType:"DDR5-6400 SO-DIMM/UDIMM (ECC opt.)",bandwidthGBs:100,bandwidthLabel:"~90-100 GB/s",cores:"24C/24T (8P+16E)",tdpW:55,socket:"BGA (soldered to board)",priceUSD:1500,node:"TSMC N3B",note:"★ NON-unified: only a tiny 4-Xe-core iGPU carve-out, which is exactly WHY it can address 192GB of standard DDR5 DIMMs (no big shared-GPU aperture). Highest RAM ceiling here but CPU-only inference at ~90-100 GB/s."},
+{vendor:"NVIDIA",chip:"GB10 Grace Blackwell (DGX Spark / Asus GX10 / Dell Pro Max)",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:256,memoryType:"LPDDR5X 256-bit (soldered, coherent)",bandwidthGBs:273,bandwidthLabel:"~273 GB/s",cores:"20C Arm (10 X925 + 10 A725) + Blackwell GPU",tdpW:140,socket:"BGA (soldered)",priceUSD:3999,node:"TSMC 3nm",note:"True CPU-GPU coherent unified memory, 128GB soldered, ~273 GB/s (above Strix Halo). DGX Spark MSRP raised $3999→$4699; partner boxes similar. Purpose-built local-LLM/dev appliance."},
+{vendor:"NVIDIA",chip:"GH200 Grace Hopper Superchip",year:2023,segment:"server",unified:true,maxMemoryGB:480,maxMemoryLabel:"480 GB LPDDR5X + 141 GB HBM3e",memChannels:512,memoryType:"LPDDR5X (Grace) + HBM3e (Hopper), NVLink-C2C",bandwidthGBs:384,bandwidthLabel:"~384 GB/s LPDDR (HBM3e ~4.8 TB/s)",cores:"72C Arm Neoverse V2 + H100-class GPU",tdpW:1000,socket:"Superchip module (soldered)",priceUSD:40000,node:"TSMC 4N",note:"Datacenter, not a desktop part. NVLink-C2C makes 480GB LPDDR5X + 141GB HBM3e one coherent (unified) space. Listed for completeness of high-memory unified silicon."},
+{vendor:"NVIDIA",chip:"GB200 Grace-Blackwell Superchip",year:2024,segment:"server",unified:true,maxMemoryGB:480,maxMemoryLabel:"480 GB LPDDR5X + 384 GB HBM3e (per superchip)",memChannels:512,memoryType:"LPDDR5X (Grace) + HBM3e (2× B200), NVLink-C2C",bandwidthGBs:512,bandwidthLabel:"~512 GB/s LPDDR (HBM3e ~16 TB/s)",cores:"72C Grace Arm + 2× Blackwell B200",tdpW:2700,socket:"Superchip module (soldered)",priceUSD:70000,node:"TSMC 4NP",note:"Datacenter-only (GB200 NVL72 rack-scale). One Grace + two Blackwell GPUs sharing coherent memory. Listed only to note it exists / is not a mini-PC option."},
+{vendor:"Qualcomm",chip:"Snapdragon X2 Elite Extreme (X2E-96-100)",year:2025,segment:"laptop",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:6,memoryType:"LPDDR5X-9523 192-bit on-package (soldered)",bandwidthGBs:228,bandwidthLabel:"~228 GB/s",cores:"18C Oryon (Gen3) + Adreno X2",tdpW:80,socket:"On-package BGA (soldered)",priceUSD:2000,node:"TSMC N3",note:"Gen-2 Snapdragon DOES reach 128GB (gen-1 X Elite capped at 64GB). On-package LPDDR5X, ~228 GB/s, Adreno shares memory (unified). First Arm-Windows part in the ≥128GB club; ships in premium laptops 2026."},
+{vendor:"Qualcomm",chip:"Snapdragon X2 Elite (X2E-80/88-100)",year:2025,segment:"laptop",unified:true,maxMemoryGB:128,maxMemoryLabel:"128 GB",memChannels:8,memoryType:"LPDDR5X-9523 128-bit (off-package)",bandwidthGBs:152,bandwidthLabel:"~152 GB/s",cores:"12-18C Oryon + Adreno X2",tdpW:50,socket:"BGA / off-package LPDDR5X",priceUSD:1600,node:"TSMC N3",note:"Non-Extreme X2 Elite also reaches 128GB (off-package, 128-bit, ~152 GB/s). Unified iGPU. Confirms the whole X2 Elite line crossed 128GB vs 64GB gen-1."},
+{vendor:"Huawei / Orange Pi",chip:"Ascend 310 ×2 (Orange Pi AI Studio Pro)",year:2025,segment:"mini-pc",unified:true,maxMemoryGB:192,maxMemoryLabel:"192 GB (also 96 GB SKU)",memChannels:4,memoryType:"LPDDR4X-4266 (soldered)",bandwidthGBs:200,bandwidthLabel:"~200 GB/s (est, LPDDR4X — low quality)",cores:"2× Ascend 310 NPU, 352 TOPS (INT8)",tdpW:150,socket:"Soldered module",priceUSD:2200,node:"Huawei/SMIC",note:"USB4-C attached AI accelerator box (not a standalone PC): tethers to an x86 host over one USB-C, runs Ubuntu. 192GB unified LPDDR4X but slow, low-bandwidth, CANN/Ascend stack not CUDA. ~$2200 (15,698 RMB)."},
+];
+
+/* ---- PassMark scores (cpubenchmark.net, ~2026-07). [CPU Mark multi-thread, Single Thread Rating].
+   null = not benchmarked (Arm/NPU superchips, or unreleased). Attached to DATA by exact chip name. ---- */
+const PM={
+"Ryzen 5 7600":[26978,3908],"Ryzen 5 7600X":[28282,4130],"Ryzen 7 7700":[34330,4050],"Ryzen 7 7700X":[35512,4177],"Ryzen 7 7800X3D":[34277,3760],"Ryzen 9 7900":[48041,4122],"Ryzen 9 7900X":[51247,4227],"Ryzen 9 7950X":[62159,4253],"Ryzen 9 7900X3D":[50201,4118],"Ryzen 9 7950X3D":[62316,4144],"Ryzen 5 8500G":[21399,3876],"Ryzen 5 8600G":[25190,3875],"Ryzen 7 8700G":[31519,3922],"Ryzen 5 9600X":[30104,4572],"Ryzen 7 9700X":[36999,4646],"Ryzen 9 9900X":[54366,4675],"Ryzen 9 9950X":[65741,4729],"Ryzen 7 9800X3D":[39948,4423],"Ryzen 9 9900X3D":[56144,4638],"Ryzen 9 9950X3D":[72236,4673],
+"Core i5-12400":[18807,3463],"Core i5-12600K":[27522,3918],"Core i7-12700K":[34266,4004],"Core i9-12900K":[41122,4128],"Core i5-13600K":[37473,4112],"Core i7-13700K":[45655,4327],"Core i9-13900K":[58125,4596],"Core i5-13400":[23869,3578],"Core i5-14600K":[38427,4268],"Core i7-14700K":[51954,4455],"Core i9-14900K":[58278,4690],"Core i9-14900KS":[60019,4814],"Core i3-14100":[15095,3761],"Core Ultra 5 245K":[43095,4717],"Core Ultra 5 245KF":[43109,4715],"Core Ultra 7 265K":[58603,4928],"Core Ultra 7 265KF":[58531,4927],"Core Ultra 9 285K":[67256,5087],
+"Ryzen Threadripper 7960X":[83411,4124],"Ryzen Threadripper 7970X":[99184,4171],"Ryzen Threadripper 7980X":[135650,4024],"Ryzen Threadripper 9960X":[92347,4571],"Ryzen Threadripper 9970X":[107126,4525],"Ryzen Threadripper 9980X":[143150,4535],"Ryzen Threadripper PRO 7945WX":[49673,4076],"Ryzen Threadripper PRO 7955WX":[60042,4085],"Ryzen Threadripper PRO 7965WX":[82175,4006],"Ryzen Threadripper PRO 7975WX":[95523,3985],"Ryzen Threadripper PRO 7985WX":[131837,3960],"Ryzen Threadripper PRO 7995WX":[141029,3830],"Ryzen Threadripper PRO 9955WX":[67136,4549],"Ryzen Threadripper PRO 9965WX":[92611,4549],"Ryzen Threadripper PRO 9975WX":[104673,4398],"Ryzen Threadripper PRO 9985WX":[151303,4481],"Ryzen Threadripper PRO 9995WX":[171200,4542],"Xeon w5-2455X":[37131,3380],"Xeon w7-2495X":[57493,3452],"Xeon w5-3435X":[44561,3303],"Xeon w7-3455":[54421,3076],"Xeon w9-3475X":[64502,3355],"Xeon w9-3495X":[90510,3433],"Xeon w9-3595X":[99576,3720],
+"EPYC 7742 (Rome)":[69502,2096],"EPYC 7402 (Rome)":[46388,2132],"EPYC 7763 (Milan)":[84492,2517],"EPYC 7543 (Milan)":[61463,2378],"EPYC 7773X (Milan-X)":[90279,2531],"EPYC 8534P (Siena)":[71900,2441],"EPYC 8024P (Siena)":[20427,2366],"EPYC 9654 (Genoa)":[119259,2898],"EPYC 9354 (Genoa)":[73240,2766],"EPYC 9684X (Genoa-X)":[122017,2892],"EPYC 9754 (Bergamo)":[98450,2308],"EPYC 9755 (Turin)":[166328,3503],"EPYC 9965 (Turin-Dense)":[160542,3176],"EPYC 9355 (Turin)":[null,null],"EPYC Venice (Zen6, flagship)":[null,null],"Xeon Platinum 8180 (Skylake-SP, 1st gen)":[38259,2142],"Xeon Platinum 8280 (Cascade Lake, 2nd gen)":[31287,2196],"Xeon Platinum 9282 (Cascade Lake-AP)":[null,null],"Xeon Platinum 8380 (Ice Lake-SP, 3rd gen)":[62318,2385],"Xeon Platinum 8380HL (Cooper Lake, 3rd gen 8-socket)":[null,null],"Xeon Platinum 8490H (Sapphire Rapids, 4th gen)":[null,2925],"Xeon Max 9480 (Sapphire Rapids-HBM, 4th gen)":[82913,2674],"Xeon Platinum 8592+ (Emerald Rapids, 5th gen)":[84013,2411],"Xeon 6980P (Granite Rapids, 6th gen P-core)":[74324,1681],"Xeon 6787P (Granite Rapids, 6700P series)":[null,3137],"Xeon 6780E (Sierra Forest, 6th gen E-core, 6700E)":[86734,1923],"Xeon 6980E (Sierra Forest, 6900E)":[null,null],
+"Ryzen AI Max+ 395":[55010,4149],"Ryzen AI Max+ 392":[44563,3866],"Ryzen AI Max+ 388":[33604,4229],"Ryzen AI Max 390":[41737,4028],"Ryzen AI Max 385":[33705,4060],"Ryzen AI Max PRO 380":[24546,4004],"Ryzen AI 9 HX 370 / HX 375":[35433,4003],"Ryzen 9 7945HX (Dragon Range)":[53987,4019],"Ryzen 5 7640U":[18000,3600],"Ryzen 7 7840U":[26000,3700],"Ryzen 7 7840HS":[28000,3700],"Ryzen 9 7940HS":[30000,3800],"Ryzen 5 8640U":[18500,3600],"Ryzen 7 8840U":[26500,3700],"Ryzen 7 8845HS":[29000,3750],"Ryzen 9 8945HS":[31000,3800],"Core Ultra 9 285H (Arrow Lake-H)":[34210,4421],"Core Ultra 9 285HX (Arrow Lake-HX)":[57166,4626],"GB10 Grace Blackwell (DGX Spark / Asus GX10 / Dell Pro Max)":[null,null],"GH200 Grace Hopper Superchip":[null,null],"GB200 Grace-Blackwell Superchip":[null,null],"Snapdragon X2 Elite Extreme (X2E-96-100)":[44861,4534],"Snapdragon X2 Elite (X2E-80/88-100)":[38442,4648],"Ascend 310 ×2 (Orange Pi AI Studio Pro)":[null,null]
+};
+DATA.forEach(d=>{ const p=PM[d.chip]; d.pmMulti=p?p[0]:null; d.pmSingle=p?p[1]:null; });
+
+/* ---- CPU-provided usable PCIe lanes + generation, by platform (verified 2026-07). [lanes, gen]; null = integrated superchip / no standard expansion. ---- */
+const LANES={
+"Ryzen 5 7600":[28,5],"Ryzen 5 7600X":[28,5],"Ryzen 7 7700":[28,5],"Ryzen 7 7700X":[28,5],"Ryzen 7 7800X3D":[28,5],"Ryzen 9 7900":[28,5],"Ryzen 9 7900X":[28,5],"Ryzen 9 7950X":[28,5],"Ryzen 9 7900X3D":[28,5],"Ryzen 9 7950X3D":[28,5],"Ryzen 5 8500G":[14,4],"Ryzen 5 8600G":[20,4],"Ryzen 7 8700G":[20,4],"Ryzen 5 9600X":[28,5],"Ryzen 7 9700X":[28,5],"Ryzen 9 9900X":[28,5],"Ryzen 9 9950X":[28,5],"Ryzen 7 9800X3D":[28,5],"Ryzen 9 9900X3D":[28,5],"Ryzen 9 9950X3D":[28,5],
+"Core i5-12400":[20,5],"Core i5-12600K":[20,5],"Core i7-12700K":[20,5],"Core i9-12900K":[20,5],"Core i5-13600K":[20,5],"Core i7-13700K":[20,5],"Core i9-13900K":[20,5],"Core i5-13400":[20,5],"Core i5-14600K":[20,5],"Core i7-14700K":[20,5],"Core i9-14900K":[20,5],"Core i9-14900KS":[20,5],"Core i3-14100":[20,5],"Core Ultra 5 245K":[24,5],"Core Ultra 5 245KF":[24,5],"Core Ultra 7 265K":[24,5],"Core Ultra 7 265KF":[24,5],"Core Ultra 9 285K":[24,5],
+"Ryzen Threadripper 7960X":[88,5],"Ryzen Threadripper 7970X":[88,5],"Ryzen Threadripper 7980X":[88,5],"Ryzen Threadripper 9960X":[88,5],"Ryzen Threadripper 9970X":[88,5],"Ryzen Threadripper 9980X":[88,5],"Ryzen Threadripper PRO 7945WX":[128,5],"Ryzen Threadripper PRO 7955WX":[128,5],"Ryzen Threadripper PRO 7965WX":[128,5],"Ryzen Threadripper PRO 7975WX":[128,5],"Ryzen Threadripper PRO 7985WX":[128,5],"Ryzen Threadripper PRO 7995WX":[128,5],"Ryzen Threadripper PRO 9955WX":[128,5],"Ryzen Threadripper PRO 9965WX":[128,5],"Ryzen Threadripper PRO 9975WX":[128,5],"Ryzen Threadripper PRO 9985WX":[128,5],"Ryzen Threadripper PRO 9995WX":[128,5],"Xeon w5-2455X":[64,5],"Xeon w7-2495X":[64,5],"Xeon w5-3435X":[112,5],"Xeon w7-3455":[112,5],"Xeon w9-3475X":[112,5],"Xeon w9-3495X":[112,5],"Xeon w9-3595X":[112,5],
+"EPYC 7742 (Rome)":[128,4],"EPYC 7402 (Rome)":[128,4],"EPYC 7763 (Milan)":[128,4],"EPYC 7543 (Milan)":[128,4],"EPYC 7773X (Milan-X)":[128,4],"EPYC 8534P (Siena)":[96,5],"EPYC 8024P (Siena)":[96,5],"EPYC 9654 (Genoa)":[128,5],"EPYC 9354 (Genoa)":[128,5],"EPYC 9684X (Genoa-X)":[128,5],"EPYC 9754 (Bergamo)":[128,5],"EPYC 9755 (Turin)":[128,5],"EPYC 9965 (Turin-Dense)":[128,5],"EPYC 9355 (Turin)":[128,5],"EPYC Venice (Zen6, flagship)":[128,6],"Xeon Platinum 8180 (Skylake-SP, 1st gen)":[48,3],"Xeon Platinum 8280 (Cascade Lake, 2nd gen)":[48,3],"Xeon Platinum 9282 (Cascade Lake-AP)":[40,3],"Xeon Platinum 8380 (Ice Lake-SP, 3rd gen)":[64,4],"Xeon Platinum 8380HL (Cooper Lake, 3rd gen 8-socket)":[48,3],"Xeon Platinum 8490H (Sapphire Rapids, 4th gen)":[80,5],"Xeon Max 9480 (Sapphire Rapids-HBM, 4th gen)":[80,5],"Xeon Platinum 8592+ (Emerald Rapids, 5th gen)":[80,5],"Xeon 6980P (Granite Rapids, 6th gen P-core)":[96,5],"Xeon 6787P (Granite Rapids, 6700P series)":[88,5],"Xeon 6780E (Sierra Forest, 6th gen E-core, 6700E)":[88,5],"Xeon 6980E (Sierra Forest, 6900E)":[96,5],
+"Ryzen AI Max+ 395":[16,4],"Ryzen AI Max+ 392":[16,4],"Ryzen AI Max+ 388":[16,4],"Ryzen AI Max 390":[16,4],"Ryzen AI Max 385":[16,4],"Ryzen AI Max PRO 380":[16,4],"Ryzen AI 9 HX 370 / HX 375":[16,4],"Ryzen 9 7945HX (Dragon Range)":[28,5],"Ryzen 5 7640U":[20,4],"Ryzen 7 7840U":[20,4],"Ryzen 7 7840HS":[20,4],"Ryzen 9 7940HS":[20,4],"Ryzen 5 8640U":[20,4],"Ryzen 7 8840U":[20,4],"Ryzen 7 8845HS":[20,4],"Ryzen 9 8945HS":[20,4],"Core Ultra 9 285H (Arrow Lake-H)":[16,5],"Core Ultra 9 285HX (Arrow Lake-HX)":[24,5],"Snapdragon X2 Elite Extreme (X2E-96-100)":[16,5],"Snapdragon X2 Elite (X2E-80/88-100)":[16,5],"GB10 Grace Blackwell (DGX Spark / Asus GX10 / Dell Pro Max)":[null,null],"GH200 Grace Hopper Superchip":[null,null],"GB200 Grace-Blackwell Superchip":[null,null],"Ascend 310 ×2 (Orange Pi AI Studio Pro)":[null,null]
+};
+DATA.forEach(d=>{ const l=LANES[d.chip]; d.pcieLanes=l?l[0]:null; d.pcieGen=l?l[1]:null; });
+
+/* ---- segment metadata ---- */
+const SEG_LABELS={ "mini-pc":"mini-pc", "desktop":"desktop", "laptop":"laptop", "hedt":"HEDT", "workstation":"workstn", "server":"server" };
+const SEG_ORDER=["mini-pc","desktop","laptop","hedt","workstation","server"];
+const VENDORS=[...new Set(DATA.map(d=>d.vendor))];
+const SEGS=SEG_ORDER.filter(s=>DATA.some(d=>d.segment===s));
+const YEARS=[...new Set(DATA.map(d=>d.year))].sort((a,b)=>b-a);
+
+/* ---- formatters ---- */
+function fmtMem(gb){ if(gb>=1024){ let t=gb/1024; return (Number.isInteger(t)?t:(+t.toFixed(1)))+" TB"; } return gb+" GB"; }
+function fmtBw(bw){ if(bw==null) return "—"; if(bw>=1000){ let t=bw/1000; return "~"+(Number.isInteger(t)?t:(+t.toFixed(1)))+" TB/s"; } return "~"+bw+" GB/s"; }
+function money(p){ return p==null?"—":"$"+p.toLocaleString("en-US"); }
+function coresShort(s){
+  const c=s.match(/(\d+)\s*C(?![A-Za-z])/);          // core count (skip "CU"/"CXL")
+  if(c){ const t=s.match(/(\d+)\s*T(?![A-Za-z])/);    // thread count (skip "TOPS")
+    return t ? c[1]+"C/"+t[1]+"T" : c[1]+"C"; }       // no "T" → no SMT / N/A
+  let m=s.match(/(\d+)[\s-]*core/i); if(m) return m[1]+"C";
+  m=s.match(/(\d+)/); return m?m[1]+"C":s;
+}
+function coresNum(s){ let m=s.match(/(\d+)\s*C/); if(m) return +m[1]; m=s.match(/(\d+)[\s-]*core/i); if(m) return +m[1]; m=s.match(/(\d+)/); return m?+m[1]:0; }
+function fmtInt(n){ return n==null?"—":Math.round(n).toLocaleString("en-US"); }
+function valueScore(d){ return (d.pmMulti&&d.priceUSD)?d.pmMulti/d.priceUSD:null; }   // CPU Mark per $
+function perfWatt(d){ return (d.pmMulti&&d.tdpW)?d.pmMulti/d.tdpW:null; }              // CPU Mark per watt
+function fmtChan(d){ return (d.memChannels&&d.memChannels<=12)?d.memChannels+"ch":"—"; } // wide-bus soldered LPDDR → "—"
+function chanVal(d){ return (d.memChannels&&d.memChannels<=12)?d.memChannels:null; }
+function fmtPcie(d){ return d.pcieLanes==null?"—":d.pcieLanes+"×"+d.pcieGen; }          // lanes × Gen
+function fmtTdp(d){ return d.tdpW!=null?d.tdpW+" W":"—"; }
+function miniPcNote(d){                                   // can this go in a mini-PC?
+  if(d.segment==="mini-pc") return "yes — already a mini-PC / SoC platform";
+  if(d.segment==="laptop")  return "laptop or NUC (mobile, soldered)";
+  if(d.segment==="desktop") return d.tdpW<=65 ? `SFF ok (${d.tdpW}W) — small tower, not NUC-tiny`
+                                              : `compact tower only — ${d.tdpW}W needs real cooling, not a NUC`;
+  return `no — ${d.tdpW}W ${d.socket}: board/cooling/PSU too large for a mini-PC`;   // hedt/workstation/server
+}
+function batteryNote(d){                                  // can it survive on battery during an outage?
+  if(d.segment==="laptop")  return "laptop battery ✓ (built-in outage protection)";
+  if(d.segment==="mini-pc") return "power station / UPS ✓ (low-draw, DC-powered)";
+  if(d.segment==="desktop") return d.tdpW<=65 ? "small UPS ✓ / modest power station"
+                                              : `large UPS or power station (${d.tdpW}W)`;
+  return "wall power only — not battery-viable";
+}
+const nz=v=>v==null?-1:v;
+
+/* ---- state ---- */
+const SORTKEYS=["gb","bw","cores","year","price","chip","pmMulti","pmSingle","value","perfWatt","chan","pcie","tdp"];
+const DEFAULTS={ q:"", group:"none", sorts:[{key:"gb",dir:"desc"}], minMem:0, maxMem:0, maxPrice:0, maxTdp:0, years:[], vendors:[], segs:[], unifiedOnly:false, splitOnly:false };
+let state=structuredClone(DEFAULTS);
+function sortsDefault(){ const d=DEFAULTS.sorts; return state.sorts.length===1 && state.sorts[0].key===d[0].key && state.sorts[0].dir===d[0].dir; }
+function cmpKey(a,b,key){
+  if(key==="gb") return a.maxMemoryGB-b.maxMemoryGB;
+  if(key==="bw") return nz(a.bandwidthGBs)-nz(b.bandwidthGBs);
+  if(key==="cores") return coresNum(a.cores)-coresNum(b.cores);
+  if(key==="year") return a.year-b.year;
+  if(key==="price") return nz(a.priceUSD)-nz(b.priceUSD);
+  if(key==="pmMulti") return nz(a.pmMulti)-nz(b.pmMulti);
+  if(key==="pmSingle") return nz(a.pmSingle)-nz(b.pmSingle);
+  if(key==="value") return nz(valueScore(a))-nz(valueScore(b));
+  if(key==="perfWatt") return nz(perfWatt(a))-nz(perfWatt(b));
+  if(key==="chan") return nz(chanVal(a))-nz(chanVal(b));
+  if(key==="pcie") return nz(a.pcieLanes)-nz(b.pcieLanes);
+  if(key==="tdp") return nz(a.tdpW)-nz(b.tdpW);
+  return a.chip.localeCompare(b.chip);
+}
+
+function readHash(){ parseQuery(location.hash.replace(/^#/,"")); }
+function parseQuery(h){
+  if(!h) return;
+  const p=new URLSearchParams(h);
+  if(p.has("q")) state.q=p.get("q");
+  if(["segment","vendor","unified","none"].includes(p.get("group"))) state.group=p.get("group");
+  if(p.has("sort")){
+    const raw=p.get("sort");
+    if(raw.includes(".")){
+      const list=raw.split(",").map(t=>{ const [k,d]=t.split("."); return {key:k,dir:d==="asc"?"asc":"desc"}; }).filter(s=>SORTKEYS.includes(s.key));
+      if(list.length) state.sorts=list;
+    } else if(SORTKEYS.includes(raw)){
+      state.sorts=[{key:raw,dir:(p.get("dir")==="asc")?"asc":"desc"}];
+    }
+  }
+  if(p.has("min")) state.minMem=+p.get("min")||0;
+  if(p.has("max")) state.maxMem=+p.get("max")||0;
+  if(p.has("price")) state.maxPrice=+p.get("price")||0;
+  if(p.has("watts")) state.maxTdp=+p.get("watts")||0;
+  if(p.has("years")) state.years=p.get("years").split(",").map(Number).filter(n=>YEARS.includes(n));
+  if(p.has("vendor")) state.vendors=p.get("vendor").split(",").filter(v=>VENDORS.includes(v));
+  if(p.has("seg")) state.segs=p.get("seg").split(",").filter(v=>SEGS.includes(v));
+  if(p.get("unified")==="1") state.unifiedOnly=true;
+  if(p.get("split")==="1") state.splitOnly=true;
+}
+function writeHash(){ const s=serializeState(); history.replaceState(null,"", s?"#"+s:location.pathname+location.search); }
+function serializeState(){
+  const p=new URLSearchParams();
+  if(state.q) p.set("q",state.q);
+  if(state.group!==DEFAULTS.group) p.set("group",state.group);
+  if(!sortsDefault()) p.set("sort",state.sorts.map(s=>s.key+"."+s.dir).join(","));
+  if(state.minMem) p.set("min",state.minMem);
+  if(state.maxMem) p.set("max",state.maxMem);
+  if(state.maxPrice) p.set("price",state.maxPrice);
+  if(state.maxTdp) p.set("watts",state.maxTdp);
+  if(state.years.length) p.set("years",state.years.join(","));
+  if(state.vendors.length) p.set("vendor",state.vendors.join(","));
+  if(state.segs.length) p.set("seg",state.segs.join(","));
+  if(state.unifiedOnly) p.set("unified","1");
+  if(state.splitOnly) p.set("split","1");
+  return p.toString();
+}
+
+/* ---------- saved views (localStorage) ---------- */
+const LSK="silicon.views";
+function loadViews(){ try{ return JSON.parse(localStorage.getItem(LSK)||"{}"); }catch(_){ return {}; } }
+function saveViews(v){ try{ localStorage.setItem(LSK,JSON.stringify(v)); return true; }catch(_){ toast("Save failed (storage full/blocked)"); return false; } }
+function applyView(qs){ state=structuredClone(DEFAULTS); parseQuery(qs); commit(); }
+function refreshViews(sel){
+  const v=loadViews(), s=document.getElementById("presetSelect");
+  const names=Object.keys(v).sort((a,b)=>a.localeCompare(b));
+  s.innerHTML=`<option value="">— saved views (${names.length}) —</option>`+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("");
+  if(sel && names.includes(sel)) s.value=sel;
+}
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+const hay=d=>[d.vendor,d.chip,d.maxMemoryLabel,d.memoryType,d.bandwidthLabel,d.cores,d.socket,d.node,SEG_LABELS[d.segment],d.unified?"unified shared":"non-unified split discrete",d.note].join(" ").toLowerCase();
+
+function apply(){
+  let rows=DATA.slice();
+  const q=state.q.trim().toLowerCase();
+  if(q) rows=rows.filter(d=>hay(d).includes(q));
+  if(state.minMem) rows=rows.filter(d=>d.maxMemoryGB>=state.minMem);
+  if(state.maxMem) rows=rows.filter(d=>d.maxMemoryGB<=state.maxMem);
+  if(state.maxPrice) rows=rows.filter(d=>d.priceUSD!=null && d.priceUSD<=state.maxPrice);
+  if(state.maxTdp) rows=rows.filter(d=>d.tdpW!=null && d.tdpW<=state.maxTdp);
+  if(state.years.length) rows=rows.filter(d=>state.years.includes(d.year));
+  if(state.vendors.length) rows=rows.filter(d=>state.vendors.includes(d.vendor));
+  if(state.segs.length) rows=rows.filter(d=>state.segs.includes(d.segment));
+  if(state.unifiedOnly) rows=rows.filter(d=>d.unified);
+  if(state.splitOnly) rows=rows.filter(d=>!d.unified);
+  rows.sort((a,b)=>{
+    for(const s of state.sorts){ const r=cmpKey(a,b,s.key); if(r!==0) return s.dir==="asc"?r:-r; }
+    return a.maxMemoryGB-b.maxMemoryGB;
+  });
+  let groups;
+  if(state.group==="segment")
+    groups=SEG_ORDER.filter(s=>rows.some(d=>d.segment===s)).map(s=>({key:s,name:SEG_LABELS[s],items:rows.filter(d=>d.segment===s)}));
+  else if(state.group==="vendor")
+    groups=[...new Set(rows.map(d=>d.vendor))].sort((a,b)=>a.localeCompare(b)).map(v=>({key:v,name:v,items:rows.filter(d=>d.vendor===v)}));
+  else if(state.group==="unified")
+    groups=[{key:"u",name:"unified · shared pool",items:rows.filter(d=>d.unified)},{key:"n",name:"non-unified · cpu+gpu split",items:rows.filter(d=>!d.unified)}];
+  else
+    groups=[{key:"all",name:null,items:rows}];
+  return { rows, groups:groups.filter(g=>g.items.length) };
+}
+
+const COLS=13;
+function utag(d){
+  return d.unified
+    ? `<span class="utag u"><span class="bars"><span class="b"></span></span><span class="utxt">UNI</span></span>`
+    : `<span class="utag n"><span class="bars"><span class="b b1"></span><span class="b b2"></span></span><span class="utxt">SPLIT</span></span>`;
+}
+let uid=0;
+function detailHTML(d){
+  const ch = d.memChannels && d.memChannels<=16 ? d.memChannels+"-ch · " : "";
+  return `<tr class="detail ${d.unified?'u':'n'}" id="${d._id}"><td colspan="${COLS}"><div class="dwrap">
+    <div class="dgrid">
+      <div><div class="k">CPU Mark (multi)</div><div class="v mono">${fmtInt(d.pmMulti)}</div></div>
+      <div><div class="k">Single-thread</div><div class="v mono">${fmtInt(d.pmSingle)}</div></div>
+      <div><div class="k">Value · Mark/$</div><div class="v mono">${fmtInt(valueScore(d))}</div></div>
+      <div><div class="k">Perf/watt · Mark/W</div><div class="v mono">${fmtInt(perfWatt(d))}</div></div>
+      <div><div class="k">Cores</div><div class="v mono">${esc(d.cores)}</div></div>
+      <div><div class="k">Memory</div><div class="v">${esc(d.maxMemoryLabel)}</div></div>
+      <div><div class="k">Config</div><div class="v mono">${esc(ch+d.memoryType)}</div></div>
+      <div><div class="k">Bandwidth</div><div class="v mono">${esc(d.bandwidthLabel)}</div></div>
+      <div><div class="k">PCIe lanes</div><div class="v mono">${d.pcieLanes==null?"—":esc(d.pcieLanes+" × Gen"+d.pcieGen)}</div></div>
+      <div><div class="k">Socket / platform</div><div class="v mono">${esc(d.socket)}</div></div>
+      <div><div class="k">TDP</div><div class="v mono">${d.tdpW!=null?esc(d.tdpW)+" W":"—"}</div></div>
+      <div><div class="k">Mini-PC feasible?</div><div class="v">${esc(miniPcNote(d))}</div></div>
+      <div><div class="k">On battery / outage</div><div class="v">${esc(batteryNote(d))}</div></div>
+      <div><div class="k">Process</div><div class="v mono">${esc(d.node)}</div></div>
+      <div><div class="k">Launch · price</div><div class="v mono">${d.year} · ${esc(money(d.priceUSD))}</div></div>
+    </div>
+    <div class="dnote"><span class="why">why</span>${esc(d.note)}</div>
+  </div></td></tr>`;
+}
+function rowHTML(d){
+  d._id="d"+(uid++);
+  return `<tr class="row ${d.unified?'u':'n'}${selected.has(d.chip)?' sel':''}" tabindex="0" data-tgt="${d._id}" data-chip="${esc(d.chip)}">
+    <td class="c-name" data-label="chip"><span class="name">${esc(d.chip)}</span><span class="vend">${esc(d.vendor)}</span><span class="exp">▸</span></td>
+    <td class="num" data-label="year"><span class="yr mono">${d.year}</span></td>
+    <td data-label="seg"><span class="ff">${esc(SEG_LABELS[d.segment])}</span></td>
+    <td data-label="mem">${utag(d)}</td>
+    <td class="num" data-label="max mem"><span class="val">${esc(fmtMem(d.maxMemoryGB))}</span></td>
+    <td class="num" data-label="channels"><span class="mono dim">${esc(fmtChan(d))}</span></td>
+    <td class="num" data-label="bandwidth"><span class="mono ${d.bandwidthGBs==null?'dim':''}">${esc(fmtBw(d.bandwidthGBs))}</span></td>
+    <td class="num" data-label="cores"><span class="mono">${esc(coresShort(d.cores))}</span></td>
+    <td class="num" data-label="pcie"><span class="mono dim">${esc(fmtPcie(d))}</span></td>
+    <td class="num" data-label="tdp"><span class="mono dim">${esc(fmtTdp(d))}</span></td>
+    <td class="num" data-label="cpu mark"><span class="mono ${d.pmMulti==null?'dim':'val'}">${fmtInt(d.pmMulti)}</span></td>
+    <td class="num" data-label="value/$"><span class="mono ${valueScore(d)==null?'dim':''}">${fmtInt(valueScore(d))}</span></td>
+    <td class="num" data-label="price"><span class="mono ${d.priceUSD==null?'dim':''}">${esc(money(d.priceUSD))}</span></td>
+  </tr>`+detailHTML(d);
+}
+function grpHTML(g){
+  if(g.name===null) return "";
+  const dot=g.key==="u"?'<span class="gdot u"></span>':g.key==="n"?'<span class="gdot n"></span>':"";
+  return `<tr class="grp"><td colspan="${COLS}"><div class="g">${dot}<b>${esc(g.name)}</b><span>· ${g.items.length}</span></div></td></tr>`;
+}
+function activeBits(){
+  const b=[];
+  if(state.q) b.push(`filter “${state.q}”`);
+  if(state.minMem) b.push(`≥${fmtMem(state.minMem)} mem`);
+  if(state.maxMem) b.push(`≤${fmtMem(state.maxMem)} mem`);
+  if(state.maxPrice) b.push(`≤$${state.maxPrice.toLocaleString("en-US")}`);
+  if(state.maxTdp) b.push(`≤${state.maxTdp}W`);
+  if(state.years.length) b.push(`year: ${state.years.slice().sort((a,b)=>b-a).join(", ")}`);
+  if(state.vendors.length) b.push(`vendor: ${state.vendors.join(", ")}`);
+  if(state.segs.length) b.push(`segment: ${state.segs.map(s=>SEG_LABELS[s]).join(", ")}`);
+  if(state.unifiedOnly) b.push(`unified only`);
+  if(state.splitOnly) b.push(`non-unified only`);
+  return b;
+}
+function car(key){
+  const i=state.sorts.findIndex(s=>s.key===key);
+  if(i<0) return "";
+  const arrow=state.sorts[i].dir==="asc"?"▲":"▼";
+  return `<span class="car">${arrow}${state.sorts.length>1?(i+1):""}</span>`;
+}
+
+function render(){
+  document.getElementById("m-total").textContent=DATA.length;
+  document.getElementById("m-192").textContent=DATA.filter(d=>d.maxMemoryGB>=192).length;
+  document.getElementById("m-1tb").textContent=DATA.filter(d=>d.maxMemoryGB>=1024).length;
+  const { rows, groups }=apply();
+  document.getElementById("count").innerHTML=`<b>${rows.length}</b>/${DATA.length}${selected.size?` · <b>${selected.size}</b> sel`:""}`;
+  const anyFilter=state.q||state.minMem||state.maxMem||state.maxPrice||state.maxTdp||state.years.length||state.vendors.length||state.segs.length||state.unifiedOnly||state.splitOnly||state.group!==DEFAULTS.group||!sortsDefault();
+  document.getElementById("clear").hidden=!anyFilter;
+
+  const out=document.getElementById("results");
+  if(!rows.length){
+    const bits=activeBits();
+    out.innerHTML=`<div class="tablewrap"><div class="empty"><b>No parts match.</b><br>active: ${bits.length?bits.map(b=>`<code>${esc(b)}</code>`).join(" · "):"none"}<br><button onclick="clearAll()">clear all ✕</button></div></div>`;
+    return;
+  }
+  uid=0;
+  let body="";
+  for(const g of groups){ body+=grpHTML(g); for(const d of g.items) body+=rowHTML(d); }
+  out.innerHTML=`<div class="tablewrap"><table>
+    <thead><tr>
+      <th class="thsort" data-s="chip">Vendor · Chip${car("chip")}</th>
+      <th class="num thsort" data-s="year">Year${car("year")}</th>
+      <th>Seg</th>
+      <th>Mem</th>
+      <th class="num thsort" data-s="gb">Max mem${car("gb")}</th>
+      <th class="num thsort" data-s="chan" title="Memory channels — how many parallel memory pipes">Chan${car("chan")}</th>
+      <th class="num thsort" data-s="bw" title="Memory bandwidth (DDR/LPDDR path)">BW${car("bw")}</th>
+      <th class="num thsort" data-s="cores">Cores${car("cores")}</th>
+      <th class="num thsort" data-s="pcie" title="CPU PCIe lanes × generation">PCIe${car("pcie")}</th>
+      <th class="num thsort" data-s="tdp" title="Power draw / TDP (watts) — lower = more battery-friendly">TDP${car("tdp")}</th>
+      <th class="num thsort" data-s="pmMulti" title="PassMark CPU Mark (multi-thread)">CPU Mark${car("pmMulti")}</th>
+      <th class="num thsort" data-s="value" title="CPU Mark per $ — higher = better value">Value${car("value")}</th>
+      <th class="num thsort" data-s="price">Price${car("price")}</th>
+    </tr></thead>
+    <tbody class="data">${body}</tbody>
+  </table></div>`;
+}
+
+function sync(){
+  document.getElementById("q").value=state.q;
+  document.querySelectorAll("#group button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.g===state.group)));
+  document.querySelectorAll("#minmem button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.m===state.minMem)));
+  document.querySelectorAll("#maxmem button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.x===state.maxMem)));
+  document.querySelectorAll("#pricemax button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.p===state.maxPrice)));
+  document.querySelectorAll("#tdpmax button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.w===state.maxTdp)));
+  document.querySelectorAll("#yearChips .chip").forEach(b=>b.setAttribute("aria-pressed",String(state.years.includes(+b.dataset.year))));
+  document.querySelectorAll("#vendorChips .chip").forEach(b=>b.setAttribute("aria-pressed",String(state.vendors.includes(b.dataset.vendor))));
+  document.querySelectorAll("#segChips .chip[data-seg]").forEach(b=>b.setAttribute("aria-pressed",String(state.segs.includes(b.dataset.seg))));
+  document.getElementById("unifiedOnly").setAttribute("aria-pressed",String(state.unifiedOnly));
+  document.getElementById("splitOnly").setAttribute("aria-pressed",String(state.splitOnly));
+}
+function commit(){ sync(); writeHash(); render(); }
+function clearAll(){ state=structuredClone(DEFAULTS); commit(); const ps=document.getElementById("presetSelect"); if(ps) ps.value=""; const pn=document.getElementById("presetName"); if(pn) pn.value=""; document.getElementById("q").focus(); }
+window.clearAll=clearAll;
+
+function buildChips(){
+  document.getElementById("vendorChips").innerHTML=`<span class="lbl">ven</span>`+VENDORS.map(v=>`<button class="chip" data-vendor="${esc(v)}" aria-pressed="false">${esc(v)}</button>`).join("");
+  const fc=document.getElementById("segChips"), uni=fc.querySelector("#unifiedOnly"), spl=fc.querySelector("#splitOnly");
+  fc.innerHTML=`<span class="lbl">seg</span>`+SEGS.map(s=>`<button class="chip" data-seg="${esc(s)}" aria-pressed="false">${esc(SEG_LABELS[s])}</button>`).join("");
+  fc.appendChild(uni); fc.appendChild(spl);
+  document.getElementById("yearChips").innerHTML=`<span class="lbl">yr</span>`+YEARS.map(y=>`<button class="chip" data-year="${y}" aria-pressed="false">${y}</button>`).join("");
+}
+function toggleRow(tr){
+  const det=document.getElementById(tr.dataset.tgt); if(!det) return;
+  const open=det.classList.toggle("open"); tr.classList.toggle("open",open);
+  tr.querySelector(".exp").textContent=open?"▾":"▸";
+}
+
+/* ---------- row selection + copy / context menu ---------- */
+const selected=new Set();                                  // set of chip names (survives re-render & filters)
+function toggleSel(chip){ selected.has(chip)?selected.delete(chip):selected.add(chip); render(); }
+
+function rowExport(d){                                      // clean object for JSON copy
+  return { chip:d.chip, vendor:d.vendor, year:d.year, segment:d.segment,
+    unified:d.unified, max_memory:d.maxMemoryLabel, memory_channels:d.memChannels,
+    memory_type:d.memoryType, bandwidth:d.bandwidthLabel, cores:d.cores,
+    pcie_lanes:d.pcieLanes, pcie_gen:d.pcieGen, cpu_mark_multi:d.pmMulti,
+    single_thread:d.pmSingle, value_mark_per_usd:valueScore(d)?Math.round(valueScore(d)):null,
+    perf_per_watt:perfWatt(d)?Math.round(perfWatt(d)):null, tdp_w:d.tdpW,
+    socket:d.socket, node:d.node, price_usd:d.priceUSD, note:d.note };
+}
+function rowText(d){                                        // human-readable key: value block
+  const P=[]; const add=(k,v)=>P.push(k+": "+v);
+  P.push(`${d.chip} (${d.vendor})`);
+  add("Year", d.year); add("Segment", SEG_LABELS[d.segment]);
+  add("Memory", `${d.maxMemoryLabel} (${d.unified?"unified":"non-unified"})`);
+  add("Channels", fmtChan(d)); add("Bandwidth", d.bandwidthLabel);
+  add("Cores", d.cores); add("PCIe", d.pcieLanes==null?"—":`${d.pcieLanes} × Gen${d.pcieGen}`);
+  add("CPU Mark", fmtInt(d.pmMulti)); add("Single-thread", fmtInt(d.pmSingle));
+  add("Value (Mark/$)", fmtInt(valueScore(d))); add("Perf/watt (Mark/W)", fmtInt(perfWatt(d)));
+  add("TDP", d.tdpW!=null?d.tdpW+" W":"—"); add("Socket", d.socket); add("Node", d.node);
+  add("Price", money(d.priceUSD)); add("Note", d.note);
+  return P.join("\n");
+}
+function legacyCopy(str){ try{ const t=document.createElement("textarea"); t.value=str; t.style.position="fixed"; t.style.opacity="0"; document.body.appendChild(t); t.select(); const ok=document.execCommand("copy"); document.body.removeChild(t); return ok; }catch(_){ return false; } }
+function copyText(str,label){
+  const ok=()=>toast((label||"Copied")+" ✓"), no=()=>toast("Copy failed");
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(str).then(ok).catch(()=>legacyCopy(str)?ok():no());
+  else legacyCopy(str)?ok():no();
+}
+function copySelected(fmt){
+  const rows=DATA.filter(d=>selected.has(d.chip));
+  if(!rows.length) return;
+  if(fmt==="json") copyText(JSON.stringify(rows.map(rowExport),null,2), `${rows.length} rows JSON`);
+  else copyText(rows.map(rowText).join("\n\n———\n\n"), `${rows.length} rows`);
+}
+let toastTimer;
+function toast(msg){ let t=document.getElementById("toast"); if(!t){ t=document.createElement("div"); t.id="toast"; document.body.appendChild(t); } t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),1500); }
+
+function closeCtx(){ const m=document.getElementById("ctxmenu"); if(m) m.remove(); }
+function openCtx(x,y,chip){
+  closeCtx();
+  const d=DATA.find(z=>z.chip===chip); if(!d) return;
+  const isSel=selected.has(chip), n=selected.size;
+  const m=document.createElement("div"); m.className="ctxmenu"; m.id="ctxmenu";
+  const mk=(label,fn,kbd)=>{ const b=document.createElement("button"); b.innerHTML=esc(label)+(kbd?`<span class="k">${kbd}</span>`:""); b.onclick=()=>{ fn(); closeCtx(); }; return b; };
+  const lbl=t=>{ const s=document.createElement("div"); s.className="cx-lbl"; s.innerHTML=t; return s; };
+  const sep=()=>{ const s=document.createElement("div"); s.className="sep"; return s; };
+  m.appendChild(lbl(`<b>${esc(d.chip)}</b>`));
+  m.appendChild(mk("Copy name", ()=>copyText(d.chip,"Name")));
+  m.appendChild(mk("Copy — text", ()=>copyText(rowText(d),"Row")));
+  m.appendChild(mk("Copy — JSON", ()=>copyText(JSON.stringify(rowExport(d),null,2),"Row JSON")));
+  m.appendChild(sep());
+  m.appendChild(mk(isSel?"Deselect row":"Select row", ()=>toggleSel(chip), "⌘-click"));
+  if(n>0){
+    m.appendChild(sep());
+    m.appendChild(lbl(`<b>${n}</b> selected`));
+    m.appendChild(mk(`Copy ${n} selected — text`, ()=>copySelected("text")));
+    m.appendChild(mk(`Copy ${n} selected — JSON`, ()=>copySelected("json")));
+    m.appendChild(mk("Clear selection", ()=>{ selected.clear(); render(); }));
+  }
+  document.body.appendChild(m);
+  const r=m.getBoundingClientRect();
+  m.style.left=Math.min(x, window.innerWidth-r.width-8)+"px";
+  m.style.top=Math.min(y, window.innerHeight-r.height-8)+"px";
+}
+function wire(){
+  document.getElementById("q").addEventListener("input",e=>{ state.q=e.target.value; commit(); });
+  document.querySelectorAll("#group button").forEach(b=>b.addEventListener("click",()=>{ state.group=b.dataset.g; commit(); }));
+  document.querySelectorAll("#minmem button").forEach(b=>b.addEventListener("click",()=>{ state.minMem=+b.dataset.m; commit(); }));
+  document.querySelectorAll("#maxmem button").forEach(b=>b.addEventListener("click",()=>{ state.maxMem=+b.dataset.x; commit(); }));
+  document.querySelectorAll("#pricemax button").forEach(b=>b.addEventListener("click",()=>{ state.maxPrice=+b.dataset.p; commit(); }));
+  document.querySelectorAll("#tdpmax button").forEach(b=>b.addEventListener("click",()=>{ state.maxTdp=+b.dataset.w; commit(); }));
+  document.getElementById("yearChips").addEventListener("click",e=>{ const b=e.target.closest("[data-year]"); if(!b) return; const y=+b.dataset.year; state.years=state.years.includes(y)?state.years.filter(x=>x!==y):[...state.years,y]; commit(); });
+  document.getElementById("vendorChips").addEventListener("click",e=>{ const b=e.target.closest("[data-vendor]"); if(!b) return; const v=b.dataset.vendor; state.vendors=state.vendors.includes(v)?state.vendors.filter(x=>x!==v):[...state.vendors,v]; commit(); });
+  document.getElementById("segChips").addEventListener("click",e=>{ const b=e.target.closest("[data-seg]"); if(!b) return; const s=b.dataset.seg; state.segs=state.segs.includes(s)?state.segs.filter(x=>x!==s):[...state.segs,s]; commit(); });
+  document.getElementById("unifiedOnly").addEventListener("click",()=>{ state.unifiedOnly=!state.unifiedOnly; if(state.unifiedOnly) state.splitOnly=false; commit(); });
+  document.getElementById("splitOnly").addEventListener("click",()=>{ state.splitOnly=!state.splitOnly; if(state.splitOnly) state.unifiedOnly=false; commit(); });
+  document.getElementById("clear").addEventListener("click",clearAll);
+  // saved views
+  document.getElementById("presetSelect").addEventListener("change",e=>{
+    const name=e.target.value; if(!name) return;
+    const v=loadViews(); if(v[name]==null) return;
+    document.getElementById("presetName").value=name;   // load name so "Save" replaces it
+    applyView(v[name]);
+    e.target.value="";                                  // reset to placeholder so the SAME view can be re-picked (native <select> won't refire change on an unchanged value)
+    toast(`Applied “${name}”`);
+  });
+  document.getElementById("presetSave").addEventListener("click",()=>{
+    const inp=document.getElementById("presetName"), name=inp.value.trim();
+    if(!name){ toast("Type a view name first"); inp.focus(); return; }
+    const v=loadViews(), existed=name in v; v[name]=serializeState();
+    if(saveViews(v)){ refreshViews(name); toast(existed?`Updated “${name}”`:`Saved “${name}”`); }
+  });
+  document.getElementById("presetDel").addEventListener("click",()=>{
+    const name=(document.getElementById("presetName").value.trim()||document.getElementById("presetSelect").value);
+    if(!name){ toast("Pick or name a view to delete"); return; }
+    const v=loadViews(); if(!(name in v)){ toast(`No view “${name}”`); return; }
+    delete v[name]; if(saveViews(v)){ refreshViews(); document.getElementById("presetName").value=""; toast(`Deleted “${name}”`); }
+  });
+  document.getElementById("presetName").addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("presetSave").click(); });
+  document.getElementById("results").addEventListener("click",e=>{
+    const th=e.target.closest("th.thsort");
+    if(th){
+      const key=th.dataset.s, def=(key==="chip")?"asc":"desc", opp=def==="asc"?"desc":"asc";
+      if(e.shiftKey){                                   // shift = add / cycle an extra sort level
+        const idx=state.sorts.findIndex(s=>s.key===key);
+        if(idx<0) state.sorts.push({key,dir:def});      // add (▼)
+        else { const s=state.sorts[idx];
+          if(s.dir===def) s.dir=opp;                    // ▼ → ▲
+          else state.sorts.splice(idx,1); }             // ▲ → remove this level
+        if(!state.sorts.length) state.sorts=structuredClone(DEFAULTS.sorts);
+      } else {                                          // plain click = single sort, 3-state cycle
+        if(state.sorts.length===1 && state.sorts[0].key===key){
+          const s=state.sorts[0];
+          if(s.dir===def) s.dir=opp;                    // ▼ → ▲
+          else state.sorts=structuredClone(DEFAULTS.sorts); // ▲ → back to default (off)
+        } else state.sorts=[{key,dir:def}];             // switch to this column (drops others)
+      }
+      commit(); return;
+    }
+    const tr=e.target.closest("tr.row"); if(tr){ if(e.metaKey||e.ctrlKey){ e.preventDefault(); toggleSel(tr.dataset.chip); } else toggleRow(tr); }
+  });
+  document.getElementById("results").addEventListener("contextmenu",e=>{ const tr=e.target.closest("tr.row"); if(!tr) return; e.preventDefault(); openCtx(e.clientX,e.clientY,tr.dataset.chip); });
+  document.addEventListener("click",e=>{ if(!e.target.closest("#ctxmenu")) closeCtx(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeCtx(); });
+  window.addEventListener("scroll",closeCtx,true);
+  document.getElementById("results").addEventListener("keydown",e=>{ const tr=e.target.closest("tr.row"); if(!tr) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleRow(tr); } });
+  document.addEventListener("keydown",e=>{ if(e.key==="/"&&document.activeElement.id!=="q"){ e.preventDefault(); document.getElementById("q").focus(); } });
+  window.addEventListener("hashchange",()=>{ state=structuredClone(DEFAULTS); readHash(); sync(); render(); });
+}
+function measure(){ const tb=document.querySelector(".toolbar"); if(tb) document.documentElement.style.setProperty("--h-toolbar", tb.offsetHeight+"px"); }
+
+buildChips(); readHash(); wire(); sync(); render(); refreshViews(); measure();
+if(window.ResizeObserver) new ResizeObserver(measure).observe(document.querySelector(".toolbar"));
+window.addEventListener("resize", measure);
+</script>
+</body>
+</html>

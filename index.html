@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>≥128 GB Silicon — a non-Apple high-memory machine hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f8;--panel:#fff;--ink:#16181c;--muted:#5d6772;--faint:#98a0ab;
+    --line:#e4e6ea;--line2:#eef0f2;--zebra:#fafbfc;
+    --uni:#1668c8;--uni-bg:#eaf1fb;--non:#8a6212;--non-bg:#f6efdf;--ok:#1a7f4b;--ok-bg:#e5f4ec;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  a{color:var(--uni);text-decoration:none} a:hover{text-decoration:underline}
+
+  .sitenav{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 18px;background:var(--ink)}
+  .sitenav .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.03em;color:#fff;text-decoration:none}
+  .sitenav .navlinks{display:flex;gap:4px}
+  .sitenav .navlinks a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#c7ccd2;padding:5px 12px;border-radius:5px;text-decoration:none}
+  .sitenav .navlinks a:hover{background:rgba(255,255,255,.12);color:#fff}
+  .sitenav .navlinks a.active{background:#fff;color:var(--ink);font-weight:600}
+
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px 64px}
+  .hero{padding:46px 0 30px;border-bottom:1px solid var(--line)}
+  .kick{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  h1{font-size:clamp(26px,5vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.05;margin:0}
+  h1 b{color:var(--uni)}
+  .lede{color:var(--muted);font-size:16px;margin:16px 0 0;max-width:62ch}
+
+  .stats{display:flex;flex-wrap:wrap;gap:26px;margin:24px 0 0}
+  .stat .n{font-family:"IBM Plex Mono",monospace;font-size:24px;font-weight:600;color:var(--ink)}
+  .stat .l{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:30px 0}
+  .card{display:block;background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:22px 22px;color:inherit;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--uni);text-decoration:none;transform:translateY(-2px)}
+  .card .tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--uni);font-weight:600}
+  .card h3{margin:8px 0 6px;font-size:20px;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--muted);font-size:13.5px}
+  .card .go{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--uni);font-weight:600;margin-top:14px;display:inline-block}
+
+  .section{margin:34px 0 0}
+  h2{font-size:20px;letter-spacing:-.01em;margin:0 0 4px}
+  .section .note{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .decision{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 22px}
+  .decision li{margin:14px 0;font-size:14px;color:var(--muted)}
+  .decision b{color:var(--ink)}
+  .pill{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;padding:2px 9px;border-radius:999px;background:var(--uni-bg);color:var(--uni);font-weight:600}
+  .pill.ok{background:var(--ok-bg);color:var(--ok)}
+  .pill.non{background:var(--non-bg);color:var(--non)}
+
+  .steps{list-style:none;padding:0;margin:14px 0 0;counter-reset:s}
+  .steps li{position:relative;padding:10px 0 10px 40px;border-bottom:1px solid var(--line2);font-size:13.5px;color:var(--muted)}
+  .steps li:last-child{border-bottom:0}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:"IBM Plex Mono",monospace;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .steps b{color:var(--ink)}
+
+  footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);line-height:1.7}
+  .stamp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+  @media (max-width:680px){ .cards{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<nav class="sitenav">
+  <a class="brand" href="index.html">◧ SILICON&nbsp;·&nbsp;≥128GB</a>
+  <div class="navlinks">
+    <a href="index.html" class="active">Home</a>
+    <a href="table.html">Reference Table</a>
+    <a href="395-buy-guide.html">395 Buy Guide</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="kick">A high-memory, non-Apple machine hunt · Hong Kong</p>
+    <h1>Finding a <b>≥128 GB</b> dev box<br>that survives power cuts.</h1>
+    <p class="lede">A research project: catalogue every non-Apple CPU/APU/SoC that reaches 128 GB+, benchmark and price them, then turn that into an actual purchase in Hong Kong. Two tools came out of it — a full reference table and a where-to-buy guide.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">113</div><div class="l">chips catalogued</div></div>
+      <div class="stat"><div class="n">17</div><div class="l">data columns</div></div>
+      <div class="stat"><div class="n">6 TB</div><div class="l">max memory (EPYC)</div></div>
+      <div class="stat"><div class="n">HK + CN</div><div class="l">price research</div></div>
+    </div>
+  </section>
+
+  <div class="cards">
+    <a class="card" href="table.html">
+      <span class="tag">Tool 01</span>
+      <h3>Reference Table →</h3>
+      <p>113 non-Apple chips ≥128 GB — desktop, HEDT, workstation, server, mini-PC, laptop. Filter by memory, price, power, vendor, segment; sort by CPU Mark, value, bandwidth, cores; save views; copy rows. Full specs + benchmarks + why-pick notes per chip.</p>
+      <span class="go">Open the table →</span>
+    </a>
+    <a class="card" href="395-buy-guide.html">
+      <span class="tag">Tool 02</span>
+      <h3>395 Buy Guide →</h3>
+      <p>Where to buy the Ryzen AI Max+ 395 (128 GB) — every HK retailer + mainland-China channel, with live stock, direct links, and HK-retail vs Taobao/JD pricing. Includes the ~HK$10k mainland-savings math and a pre-purchase checklist.</p>
+      <span class="go">Open the guide →</span>
+    </a>
+  </div>
+
+  <section class="section">
+    <h2>The decision, so far</h2>
+    <p class="note">What the research converged on for this specific use case.</p>
+    <div class="decision">
+      <ul>
+        <li><span class="pill">Workload</span> &nbsp;Dev — many Docker containers, Go/Node, hundreds of tabs. <b>Capacity + cores + native x86 matter; GPU/LLM bandwidth doesn't.</b> → points to <span class="pill non">non-unified</span> or an efficient APU, not a wide-bandwidth unified part.</li>
+        <li><span class="pill">Constraint</span> &nbsp;Frequent power outages. <b>Low TDP + battery/UPS-friendliness is decisive.</b> The big desktop/HEDT/server chips (125–350 W) are ruled out.</li>
+        <li><span class="pill ok">Leaning</span> &nbsp;<b>AMD Ryzen AI Max+ 395 (128 GB) mini-PC</b> — native x86, efficient, compact, ~half the price of an equivalent Mac. <b>Pair it with a UPS / 300–500 Wh power station</b> (mini-PCs have no battery).</li>
+        <li><span class="pill">Runner-up</span> &nbsp;<b>MacBook Pro 16" M5 Max (128 GB)</b> — faster, ~614 GB/s, its own 100 Wh battery = best outage survival + LLM speed, but ~2× the price and an x86-Docker emulation tax. The one to pick if budget allows and Docker is multi-arch.</li>
+        <li><span class="pill">Also valid</span> &nbsp;For &lt;128 GB battery-first builds, the efficient Phoenix/Hawk Point mini-PC chips (7840U → 8945HS, 28–45 W) — see the table's <a href="table.html#seg=mini-pc&watts=65&sort=pmMulti.desc">mini-PC ≤65 W view</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>How this got built</h2>
+    <ol class="steps">
+      <li><b>Catalogued</b> 113 non-Apple chips that support ≥128 GB, verified against vendor spec sheets &amp; Intel ARK.</li>
+      <li><b>Enriched</b> each with PassMark CPU Mark, PCIe lanes, memory channels, TDP, socket, node, and a computed value (CPU Mark ÷ price) and perf/watt.</li>
+      <li><b>Narrowed</b> to the workload (dev + outages) → the Ryzen AI Max+ 395 mini-PC route.</li>
+      <li><b>Priced</b> it across Hong Kong retail and mainland China (Taobao/JD), including freight-forwarder and warranty trade-offs.</li>
+    </ol>
+  </section>
+
+  <footer>
+    Two static pages, no framework, no tracking — just IBM Plex + vanilla JS. Manufacturer maximums &amp; benchmarks are from vendor sheets / cpubenchmark.net (~Jul 2026); prices from live listings + tech press, snapshotted 2026-07-22 — verify before buying.
+    <div class="stamp">Non-Apple · non-OEM · barebone / mini-PC route · HK: Golden Arcade · Wan Chai · Mong Kok · rev 2026-07-22</div>
+  </footer>
+</div>
+</body>
+</html>

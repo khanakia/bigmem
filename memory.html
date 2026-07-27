@@ -140,6 +140,18 @@
   </div>
   <div class="callout"><b>The 30-second rule:</b> for a <b>desktop</b>, buy <b>“DDR5 UDIMM”</b>. For a <b>395 mini-PC</b>, buy <b>nothing</b> — the RAM (LPDDR5X) is soldered in, you just pick the 128 GB model. Everything else (RDIMM, ECC, MRDIMM…) is server/workstation gear you'll likely never touch.</div>
 
+  <h2>What does “DDR5-5600” / “MT/s” mean?</h2>
+  <p class="note">The number after the type (DDR5-<b>5600</b>, DDR5-<b>6000</b>, LPDDR5X-<b>8000</b>) is the <b>speed rating</b>. Here's how to read it.</p>
+  <div class="rules">
+    <ul>
+      <li><b>MT/s = Mega-Transfers per second</b> — millions of data transfers per second. It's just the RAM's speed; <b>bigger number = faster</b>. So DDR5-6000 is faster than DDR5-5600 (by about <b>7%</b>).</li>
+      <li><b>Why "MT/s" and not "MHz"?</b> DDR = <b>Double Data Rate</b> — it moves data <b>twice per clock tick</b>. So DDR5-6000 runs on a 3,000 MHz clock but does 6,000 transfers/s. People loosely say "6000 MHz," but the correct label is <b>6000 MT/s</b>.</li>
+      <li><b>Rough bandwidth:</b> DDR5-6000 ≈ <b>~48 GB/s</b> per 64-bit channel; a normal dual-channel desktop ≈ <b>~90–96 GB/s</b>. Higher MT/s = more bandwidth.</li>
+      <li><b>Which speed should you buy?</b> For a <b>dev box</b> (capacity-hungry, not bandwidth-hungry) the 5600-vs-6000 gap is <b>unnoticeable</b> — <b>get the 128 GB first, take whichever kit is cheaper.</b> <b>DDR5-5600</b> is usually the CPU's <i>officially guaranteed</i>, rock-solid speed (great with 4 sticks); <b>DDR5-6000</b> is a mild step up that needs <b>EXPO/XMP</b> enabled in BIOS.</li>
+      <li><b>On the 395 mini-PC:</b> you don't choose — its soldered <b>LPDDR5X-8000</b> is fixed (and its wide 256-bit bus makes it fast regardless).</li>
+    </ul>
+  </div>
+
   <h2><span class="dot sys"></span> System RAM — the DDR SDRAM timeline</h2>
   <p class="note">The main memory you plug in as sticks (DIMMs). Each generation ~doubles bandwidth and lowers voltage. Bandwidth shown is per 64-bit channel (one typical DIMM). Not physically interchangeable between generations — the notch moves.</p>
   <div class="tblwrap">

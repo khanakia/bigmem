@@ -42,6 +42,18 @@
   .fam .w{font-size:12px;color:var(--muted);margin-top:5px}
   .fam.sys{border-top:4px solid var(--sys)} .fam.lp{border-top:4px solid var(--lp)} .fam.gddr{border-top:4px solid var(--gddr)} .fam.hbm{border-top:4px solid var(--hbm)}
 
+  .picker{background:var(--panel);border:1.5px solid var(--ink);border-radius:10px;padding:16px 18px;margin:14px 0 4px}
+  .pbtns{display:flex;flex-wrap:wrap;gap:8px}
+  .pbtn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;padding:8px 14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:7px;cursor:pointer}
+  .pbtn:hover{border-color:var(--uni)}
+  .pbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pans{margin-top:14px;padding:16px 18px;border-radius:8px;background:var(--uni-bg);border-left:4px solid var(--uni)}
+  .pans .type{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:600;color:var(--uni)}
+  .pans .buy{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 9px;border-radius:999px;margin-left:8px;white-space:nowrap}
+  .pans .buy.no{background:var(--ok-bg);color:var(--ok)} .pans .buy.yes{background:#e7e9ec;color:var(--muted)}
+  .pans .cfg{margin-top:10px;font-size:14px} .pans .cfg b{color:var(--ink)}
+  .pans .why{margin-top:7px;font-size:13px;color:var(--muted)}
+
   h2{font-size:21px;letter-spacing:-.01em;margin:36px 0 4px;display:flex;align-items:center;gap:10px}
   h2 .dot{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
   .dot.sys{background:var(--sys)}.dot.lp{background:var(--lp)}.dot.gddr{background:var(--gddr)}.dot.hbm{background:var(--hbm)}
@@ -96,6 +108,37 @@
     <div class="fam gddr"><div class="t">GDDR</div><div class="w">Graphics VRAM — soldered on the GPU. Very high bandwidth.</div></div>
     <div class="fam hbm"><div class="t">HBM</div><div class="w">3D-stacked, on-package — AI accelerators &amp; HPC. The fastest.</div></div>
   </div>
+
+  <h2>Which RAM do I buy?</h2>
+  <p class="note">Pick your machine — it tells you the exact type + config. You never choose the RAM type freely; the machine decides it. (The answer is always <b>DDR5</b> in 2026 — just in different packages.)</p>
+  <div class="picker">
+    <div class="pbtns">
+      <button class="pbtn" data-p="desktop">🖥️ Desktop build</button>
+      <button class="pbtn" data-p="minipc">📦 Mini-PC (395 / Strix Halo)</button>
+      <button class="pbtn" data-p="laptop">💻 Laptop</button>
+      <button class="pbtn" data-p="workstation">🏗️ Workstation (Threadripper / Xeon)</button>
+    </div>
+    <div class="pans" id="pans"></div>
+  </div>
+
+  <h2>RAM jargon, decoded</h2>
+  <p class="note">The "so many types" are all <b>DDR5</b> in different packages. Here's what each name means in plain English — and who actually uses it.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Term</th><th>In plain English</th><th>Who uses it</th></tr></thead>
+      <tbody>
+        <tr><td class="g">DIMM</td><td>Just <b>"a RAM stick"</b> — the thing you hold and plug in. That's all it means.</td><td>The base word for all sticks</td></tr>
+        <tr><td class="g">UDIMM</td><td><b>U = Unbuffered</b> — a plain, normal RAM stick; the CPU talks straight to it. <b>This is the only one most people ever buy.</b></td><td><b>Desktops</b> (Ryzen 9950X, Core 285K)</td></tr>
+        <tr><td class="g">SO-DIMM</td><td><b>Small Outline</b> — a physically smaller stick, same idea.</td><td>Laptops, some mini-PCs (285HX)</td></tr>
+        <tr><td class="g">RDIMM</td><td><b>R = Registered</b> — a stick with a "traffic-controller" chip so you can plug in <i>lots</i> of them (servers hold terabytes).</td><td>Servers, workstations (Threadripper PRO, Xeon)</td></tr>
+        <tr><td class="g">ECC</td><td><b>Error-Correcting</b> — extra chips that automatically detect &amp; fix random memory errors (reliability insurance).</td><td>Servers, workstations</td></tr>
+        <tr><td class="g">LPDDR5X</td><td><b>Low-Power, soldered</b> — not a stick at all; chips glued to the board, <b>can't remove or upgrade</b>.</td><td>Phones, Strix Halo (395), Apple, GB10</td></tr>
+        <tr><td class="g">CUDIMM</td><td><b>Clocked UDIMM</b> — a desktop stick with a small clock chip to run very fast (DDR5-6400+).</td><td>High-speed desktops (Arrow Lake)</td></tr>
+        <tr><td class="g">MRDIMM</td><td><b>Multiplexed-Rank</b> — newest server stick, roughly double the bandwidth.</td><td>Newest Intel Xeon 6 servers</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>The 30-second rule:</b> for a <b>desktop</b>, buy <b>“DDR5 UDIMM”</b>. For a <b>395 mini-PC</b>, buy <b>nothing</b> — the RAM (LPDDR5X) is soldered in, you just pick the 128 GB model. Everything else (RDIMM, ECC, MRDIMM…) is server/workstation gear you'll likely never touch.</div>
 
   <h2><span class="dot sys"></span> System RAM — the DDR SDRAM timeline</h2>
   <p class="note">The main memory you plug in as sticks (DIMMs). Each generation ~doubles bandwidth and lowers voltage. Bandwidth shown is per 64-bit channel (one typical DIMM). Not physically interchangeable between generations — the notch moves.</p>
@@ -241,6 +284,35 @@
     th.addEventListener("click", () => { dir = -dir; apply(); });
     apply();                                            // sort latest → old on load
   });
+})();
+
+/* "Which RAM do I buy?" picker */
+(function(){
+  const PICKS = {
+    desktop:     { type:"DDR5 UDIMM", buy:"buy sticks", no:false,
+      cfg:"<b>128 GB as 2×64 GB</b> (or 4×32). Speed DDR5-5600 or 6000 is the value sweet spot.",
+      why:"Normal desktop RAM. 2×64 leaves 2 slots free to reach 256 GB later. Don't overpay for high-speed kits — your workload wants capacity, not bandwidth." },
+    minipc:      { type:"LPDDR5X — soldered, included", buy:"buy nothing", no:true,
+      cfg:"Just pick the <b>128 GB model</b> of the mini-PC. The RAM comes fixed inside.",
+      why:"Strix Halo / 395 solders the memory on-package — it's not a stick and can't be upgraded. You choose the capacity when you buy the box, and that's the only decision." },
+    laptop:      { type:"DDR5 SO-DIMM  —or—  LPDDR5X (soldered)", buy:"depends on model", no:false,
+      cfg:"SO-DIMM slots → buy <b>2×64 GB SO-DIMM</b> (upgradeable). Soldered LPDDR5X → buy the <b>128 GB</b> config up front.",
+      why:"Thin/light laptops solder the RAM (fixed); thicker ones have SO-DIMM slots you can upgrade later. Check the exact model's spec sheet." },
+    workstation: { type:"DDR5 RDIMM ECC", buy:"buy sticks", no:false,
+      cfg:"<b>128–256 GB+</b> across 4–8 RDIMM ECC sticks.",
+      why:"Server-grade registered + error-correcting RAM — needed for huge capacity (>256 GB) and reliability. Pricier, and only works in Threadripper PRO / Xeon-W boards (NOT a desktop board)." }
+  };
+  const pans = document.getElementById("pans");
+  function pick(key, btn){
+    document.querySelectorAll(".pbtn").forEach(x => x.classList.remove("active"));
+    btn.classList.add("active");
+    const p = PICKS[key];
+    pans.innerHTML = `<div><span class="type">${p.type}</span><span class="buy ${p.no?'no':'yes'}">${p.buy}</span></div>`
+      + `<div class="cfg">${p.cfg}</div><div class="why">${p.why}</div>`;
+  }
+  const btns = [...document.querySelectorAll(".pbtn")];
+  btns.forEach(b => b.addEventListener("click", () => pick(b.dataset.p, b)));
+  if(btns[0]) pick(btns[0].dataset.p, btns[0]);   // default: Desktop build
 })();
 </script>
 </body>

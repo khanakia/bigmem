@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storage &amp; Drives Explained — HDD, SATA SSD, NVMe, M.2, PCIe Gen Timeline — BigMem</title>
+<meta name="description" content="Every type of computer storage explained: HDD vs SSD vs NVMe, SATA vs PCIe, M.2 form factors, PCIe Gen3/4/5 speed tiers, NAND flash (SLC/MLC/TLC/QLC), endurance (TBW), a launch-year timeline, rough prices per TB, and which drive to buy for a dev box or video editing.">
+<meta name="theme-color" content="#16181c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f8;--panel:#fff;--ink:#16181c;--muted:#5d6772;--faint:#98a0ab;
+    --line:#e4e6ea;--line2:#eef0f2;--zebra:#fafbfc;
+    --uni:#1668c8;--uni-bg:#eaf1fb;--non:#8a6212;--non-bg:#f6efdf;--ok:#1a7f4b;--ok-bg:#e5f4ec;
+    --hdd:#8a6212;--sata:#1668c8;--nvme:#1a7f4b;--opt:#8e3ac0;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 18px 60px}
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  a{color:var(--uni);text-decoration:none} a:hover{text-decoration:underline}
+
+  .sitenav{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 18px;background:var(--ink)}
+  .sitenav .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.03em;color:#fff;text-decoration:none}
+  .sitenav .navlinks{display:flex;gap:4px;flex-wrap:wrap}
+  .sitenav .navlinks a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#c7ccd2;padding:5px 12px;border-radius:5px;text-decoration:none}
+  .sitenav .navlinks a:hover{background:rgba(255,255,255,.12);color:#fff;text-decoration:none}
+  .sitenav .navlinks a.active{background:#fff;color:var(--ink);font-weight:600}
+
+  header{padding:34px 0 20px;border-bottom:2px solid var(--ink)}
+  .kick{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  h1{font-size:clamp(24px,4.4vw,36px);font-weight:700;letter-spacing:-.02em;margin:0}
+  h1 b{color:var(--uni)}
+  .sub{color:var(--muted);margin:12px 0 0;max-width:72ch}
+
+  .families{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+  .fam{border:1.5px solid var(--line);border-radius:9px;padding:14px 15px;background:var(--panel)}
+  .fam .t{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px}
+  .fam .w{font-size:12px;color:var(--muted);margin-top:5px}
+  .fam.hdd{border-top:4px solid var(--hdd)} .fam.sata{border-top:4px solid var(--sata)} .fam.nvme{border-top:4px solid var(--nvme)} .fam.opt{border-top:4px solid var(--opt)}
+
+  .picker{background:var(--panel);border:1.5px solid var(--ink);border-radius:10px;padding:16px 18px;margin:14px 0 4px}
+  .pbtns{display:flex;flex-wrap:wrap;gap:8px}
+  .pbtn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;padding:8px 14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:7px;cursor:pointer}
+  .pbtn:hover{border-color:var(--uni)}
+  .pbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pans{margin-top:14px;padding:16px 18px;border-radius:8px;background:var(--uni-bg);border-left:4px solid var(--uni)}
+  .pans .type{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:600;color:var(--uni)}
+  .pans .buy{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 9px;border-radius:999px;margin-left:8px;white-space:nowrap;background:var(--ok-bg);color:var(--ok)}
+  .pans .cfg{margin-top:10px;font-size:14px} .pans .cfg b{color:var(--ink)}
+  .pans .why{margin-top:7px;font-size:13px;color:var(--muted)}
+
+  h2{font-size:21px;letter-spacing:-.01em;margin:36px 0 4px;display:flex;align-items:center;gap:10px}
+  h2 .dot{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
+  .dot.hdd{background:var(--hdd)}.dot.sata{background:var(--sata)}.dot.nvme{background:var(--nvme)}.dot.opt{background:var(--opt)}
+  .note{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:720px}
+  th{background:var(--ink);color:#fff;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 12px}
+  th.num,td.num{text-align:right}
+  td{padding:10px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--zebra)}
+  .g{font-weight:600;white-space:nowrap}
+  .yr{font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+  .cur{font-family:"IBM Plex Mono",monospace;font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:1px 6px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-left:6px}
+  .soon{background:var(--uni-bg);color:var(--uni)}
+  .dead{background:#f0e4e4;color:#a23b3b}
+  .price{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap}
+  .yes{color:var(--ok);font-weight:600}
+  .no{color:var(--faint)}
+
+  .callout{border-left:4px solid var(--uni);background:var(--uni-bg);padding:14px 16px;border-radius:0 6px 6px 0;margin:20px 0}
+  .callout.warn{border-left-color:var(--non);background:var(--non-bg)}
+  .callout b{color:var(--ink)}
+
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 20px}
+  .rules li{margin:12px 0;font-size:13px;color:var(--muted)}
+  .rules b{color:var(--ink)}
+
+  footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);line-height:1.6}
+  .stamp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+  @media (max-width:760px){ .families{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<nav class="sitenav">
+  <a class="brand" href="index.html">◧ BigMem</a>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="table.html">Reference Table</a>
+    <a href="memory.html">RAM Types</a>
+    <a href="storage.html" class="active">Storage</a>
+    <a href="build-guide.html">Build Guide</a>
+    <a href="motherboards.html">Motherboards</a>
+    <a href="395-buy-guide.html">395 Buy Guide</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <p class="kick">Storage reference · every drive type explained</p>
+    <h1>Every type of <b>storage &amp; drive</b> — HDD, SSD, NVMe, decoded.</h1>
+    <p class="sub">The whole storage family: spinning HDDs vs flash SSDs, the SATA vs NVMe split, M.2 form factors, the PCIe Gen3/4/5 speed tiers, NAND flash types (TLC/QLC), endurance (TBW), a launch-year timeline, rough prices per TB, and a picker that tells you exactly what to buy for a dev box or video editing.</p>
+  </header>
+
+  <div class="families">
+    <div class="fam hdd"><div class="t">HDD</div><div class="w">Spinning magnetic disk. Slow, cheap, huge capacity. Bulk storage &amp; backup.</div></div>
+    <div class="fam sata"><div class="t">SATA SSD</div><div class="w">Flash on the old SATA connector. ~10× faster than HDD, but capped at ~550 MB/s.</div></div>
+    <div class="fam nvme"><div class="t">NVMe SSD (M.2)</div><div class="w">Flash on the PCIe bus. The fast modern drive — 7,000 MB/s+. What you boot from.</div></div>
+    <div class="fam opt"><div class="t">Optane / other</div><div class="w">Persistent memory, external, optical — niche or legacy. Know they exist.</div></div>
+  </div>
+
+  <div class="callout">
+    <b>Clear up the #1 confusion — "SSD or NVMe?" is not either/or.</b> <b>NVMe is a <i>kind of</i> SSD.</b> Storage splits into <b>HDD</b> (spinning disk) and <b>SSD</b> (flash, no moving parts). SSDs then split by connector: <b>SATA SSD</b> (old, ~550 MB/s) vs <b>NVMe SSD</b> (PCIe, ~7,000 MB/s). So an NVMe drive <i>is</i> an SSD — just the fast kind. The full spec of the one you want reads: <b>"2 TB M.2 NVMe Gen4 SSD"</b> → SSD (flash) · M.2 (shape) · NVMe (fast protocol) · Gen4 (speed tier).
+  </div>
+
+  <h2>Which storage do I buy?</h2>
+  <p class="note">Pick your use — it tells you the exact drive. For your machine you'll want <b>two</b>: a fast NVMe for the OS/work, and optionally a big cheap drive for backup.</p>
+  <div class="picker">
+    <div class="pbtns">
+      <button class="pbtn" data-p="boot">🖥️ OS / boot drive</button>
+      <button class="pbtn" data-p="dev">🧰 Dev box (Docker / VMs)</button>
+      <button class="pbtn" data-p="video">🎬 Video editing (scratch / media)</button>
+      <button class="pbtn" data-p="bulk">💾 Bulk backup / archive / NAS</button>
+    </div>
+    <div class="pans" id="pans"></div>
+  </div>
+
+  <h2>Storage jargon, decoded</h2>
+  <p class="note">Every word you'll see on a listing, in plain English — and who actually cares about it.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Term</th><th>In plain English</th><th>Who uses it</th></tr></thead>
+      <tbody>
+        <tr><td class="g">HDD</td><td><b>Hard Disk Drive</b> — a spinning metal platter with a read head. Mechanical, slow, but cheap per TB and huge.</td><td>Bulk storage, backup, NAS</td></tr>
+        <tr><td class="g">SSD</td><td><b>Solid-State Drive</b> — storage on flash chips, <b>no moving parts</b>. The whole fast category. NVMe and SATA SSDs are both SSDs.</td><td>Everyone — boot + apps</td></tr>
+        <tr><td class="g">SATA</td><td>The <b>old, slow connector</b> (a cable). Caps any drive at <b>~550 MB/s</b> — fine for HDDs, a bottleneck for flash.</td><td>HDDs, budget/older SSDs</td></tr>
+        <tr><td class="g">NVMe</td><td>The <b>fast protocol</b> flash uses over PCIe. ~7,000 MB/s (Gen4). <b>This is what "fast SSD" means.</b></td><td>Modern boot/work drives</td></tr>
+        <tr><td class="g">M.2</td><td>The <b>shape/slot</b> — the little gumstick that screws onto the board. Just a form factor. (There is <b>no "NVMe 2"</b> — people mean M.2.)</td><td>Nearly all modern SSDs</td></tr>
+        <tr><td class="g">PCIe Gen4/5</td><td>The <b>speed tier</b> of the PCIe bus. Gen4 ≈ 7 GB/s, Gen5 ≈ 12+ GB/s. Higher = faster (and hotter).</td><td>NVMe SSD speed rating</td></tr>
+        <tr><td class="g">TLC / QLC</td><td>How many bits are crammed per flash cell. <b>TLC = 3 bits</b> (fast, durable, buy this); <b>QLC = 4 bits</b> (cheaper, bigger, less durable).</td><td>TLC = main drive · QLC = bulk</td></tr>
+        <tr><td class="g">DRAM cache</td><td>A little RAM chip on the SSD that keeps it fast under load. <b>"DRAM-less"</b> drives are cheaper but slow down on big writes.</td><td>Want DRAM for a work drive</td></tr>
+        <tr><td class="g">TBW</td><td><b>Terabytes Written</b> — the drive's total write endurance (warranty). A 2 TB TLC drive ≈ 600–1,200 TBW → years of heavy use.</td><td>Heavy writers (VMs, video)</td></tr>
+        <tr><td class="g">U.2 / U.3</td><td>Enterprise NVMe in a 2.5" case (hot-swap, big capacity). Server gear, not desktop.</td><td>Servers, storage arrays</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>The 30-second rule:</b> buy a <b>2 TB M.2 NVMe Gen4 SSD, TLC, with DRAM</b> for your OS + work — one purchase covers 95% of people. Add a <b>second NVMe</b> for VM/video scratch, and a big cheap <b>HDD</b> only if you need bulk backup. Skip SATA SSDs (obsolete), Gen5 (hot, pricey, no real-world gain for you), and QLC for anything you write to a lot.</div>
+
+  <h2><span class="dot nvme"></span> The speed tiers — what you actually choose between</h2>
+  <p class="note">Same physical M.2 stick, wildly different speed depending on interface + PCIe generation. Prices are rough <b>2026 Hong Kong estimates per TB</b> — verify live; flash prices swing a lot.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Type</th><th>Interface</th><th class="num">Seq. speed</th><th>Launched</th><th class="num">~HK$/TB</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td class="g">HDD (3.5")</td><td>SATA</td><td class="num">~150–250 MB/s</td><td class="yr">1956</td><td class="num price">~150</td><td>Bulk backup, archive, media library, NAS</td></tr>
+        <tr><td class="g">SATA SSD</td><td>SATA</td><td class="num">~550 MB/s</td><td class="yr">2007</td><td class="num price">~450</td><td class="no">Legacy — skip unless reusing an old bay</td></tr>
+        <tr><td class="g">NVMe Gen3</td><td>PCIe 3.0 ×4</td><td class="num">~3,500 MB/s</td><td class="yr">2015</td><td class="num price">~400</td><td>Budget boot drive; fine for most</td></tr>
+        <tr><td class="g">NVMe Gen4<span class="cur">buy this</span></td><td>PCIe 4.0 ×4</td><td class="num">~7,000 MB/s</td><td class="yr">2019</td><td class="num price">~550</td><td class="yes">🏆 OS + Docker + video scratch — the sweet spot</td></tr>
+        <tr><td class="g">NVMe Gen5</td><td>PCIe 5.0 ×4</td><td class="num">~12,000–14,000 MB/s</td><td class="yr">2023</td><td class="num price">~1,000</td><td>Overkill for you; runs hot, needs a heatsink</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="dot opt"></span> Storage technology timeline</h2>
+  <p class="note">How storage evolved — from a fridge-sized 5 MB disk to a fingernail NVMe stick. Click the <b>Launched</b> header to re-sort by year.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Technology</th><th>Launched</th><th>What it was / changed</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="g">HDD (magnetic disk)</td><td class="yr">1956</td><td>IBM RAMAC — first hard drive, 5 MB, the size of a fridge. Spinning platters still power bulk storage today.</td><td>Alive (bulk)</td></tr>
+        <tr><td class="g">Floppy disk</td><td class="yr">1971</td><td>Removable magnetic disk; the original "save icon". KB–MB capacity.</td><td>Dead</td></tr>
+        <tr><td class="g">CD-ROM</td><td class="yr">1982</td><td>Optical disc, ~700 MB. Software &amp; music distribution.</td><td>Legacy</td></tr>
+        <tr><td class="g">DVD</td><td class="yr">1995</td><td>Optical, ~4.7–8.5 GB. Movies, installers.</td><td>Legacy</td></tr>
+        <tr><td class="g">USB flash drive</td><td class="yr">2000</td><td>Pocket flash storage over USB — killed the floppy.</td><td>Alive</td></tr>
+        <tr><td class="g">SATA (interface)</td><td class="yr">2003</td><td>Serial ATA replaced ribbon cables; became the standard drive connector for a decade+.</td><td>Alive (HDD)</td></tr>
+        <tr><td class="g">Blu-ray</td><td class="yr">2006</td><td>Optical, ~25–100 GB. HD movies, archival.</td><td>Niche</td></tr>
+        <tr><td class="g">SATA SSD (consumer)</td><td class="yr">2007</td><td>Flash in a 2.5" drive — the big leap over spinning disks, but capped by SATA at ~550 MB/s.</td><td>Legacy</td></tr>
+        <tr><td class="g">mSATA</td><td class="yr">2009</td><td>Mini SATA SSD for laptops — precursor to M.2.</td><td>Dead</td></tr>
+        <tr><td class="g">NVMe (protocol)</td><td class="yr">2013</td><td>A flash-native protocol over PCIe — ditched slow disk-era overhead. Made SSDs many times faster.</td><td>Alive (current)</td></tr>
+        <tr><td class="g">M.2 (form factor)</td><td class="yr">2013</td><td>The tiny gumstick slot that replaced mSATA — carries SATA <i>or</i> NVMe drives.</td><td>Alive (current)</td></tr>
+        <tr><td class="g">3D NAND</td><td class="yr">2013</td><td>Stacking flash cells vertically — massive density &amp; capacity gains, lower cost/GB.</td><td>Alive (current)</td></tr>
+        <tr><td class="g">U.2</td><td class="yr">2015</td><td>Enterprise NVMe in a hot-swappable 2.5" case.</td><td>Alive (server)</td></tr>
+        <tr><td class="g">PCIe Gen3 SSD</td><td class="yr">2015</td><td>First mainstream NVMe tier — ~3,500 MB/s.</td><td>Budget</td></tr>
+        <tr><td class="g">Intel Optane / 3D XPoint</td><td class="yr">2017</td><td>Ultra-low-latency persistent memory between RAM &amp; SSD. Impressive, expensive.</td><td>Discontinued 2022</td></tr>
+        <tr><td class="g">QLC NAND</td><td class="yr">2018</td><td>4 bits/cell — cheaper, bigger drives; lower endurance &amp; slower sustained writes.</td><td>Alive (bulk)</td></tr>
+        <tr><td class="g">PCIe Gen4 SSD<span class="cur">current</span></td><td class="yr">2019</td><td>~7,000 MB/s — arrived with Ryzen 3000 / X570. Today's sweet spot.</td><td>Alive (buy)</td></tr>
+        <tr><td class="g">PCIe Gen5 SSD</td><td class="yr">2023</td><td>~12,000–14,000 MB/s. Fast, hot, pricey; little real-world gain for desktops yet.</td><td>Alive (high-end)</td></tr>
+        <tr><td class="g">PLC NAND</td><td class="yr">~2025</td><td>5 bits/cell — cheapest, lowest endurance. Emerging for cold/bulk storage.</td><td>Emerging</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>NAND flash types — bits per cell</h2>
+  <p class="note">Inside every SSD, data is stored as electrical charge in cells. How many bits you cram per cell trades speed &amp; endurance for capacity &amp; price.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Type</th><th>Bits/cell</th><th>Speed &amp; endurance</th><th>Cost/GB</th><th>Used in</th></tr></thead>
+      <tbody>
+        <tr><td class="g">SLC</td><td>1</td><td class="yes">Fastest, most durable</td><td>Very high</td><td>Enterprise cache; SSD write buffers</td></tr>
+        <tr><td class="g">MLC</td><td>2</td><td>Fast, durable</td><td>High</td><td>Older high-end / pro SSDs</td></tr>
+        <tr><td class="g">TLC</td><td>3</td><td><b>Great balance</b> — fast, durable enough</td><td>Moderate</td><td><b>Mainstream — buy this for OS/work</b></td></tr>
+        <tr><td class="g">QLC</td><td>4</td><td>Slower sustained writes, lower endurance</td><td>Low</td><td>Cheap high-capacity / bulk drives</td></tr>
+        <tr><td class="g">PLC</td><td>5</td><td class="no">Slowest, least durable</td><td>Lowest</td><td>Emerging — cold/archive only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Form factors — the physical shapes</h2>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Form factor</th><th>What it is</th><th>Used in</th></tr></thead>
+      <tbody>
+        <tr><td class="g">3.5"</td><td>Big desktop drive bay</td><td>Desktop HDDs (bulk/NAS)</td></tr>
+        <tr><td class="g">2.5"</td><td>Laptop-size bay</td><td>Laptop HDDs, SATA SSDs</td></tr>
+        <tr><td class="g">M.2 2280</td><td>22 mm × 80 mm gumstick — <b>the standard</b></td><td>Almost all desktop/laptop NVMe SSDs</td></tr>
+        <tr><td class="g">M.2 2242 / 2260 / 22110</td><td>Shorter/longer M.2 variants (42/60/110 mm)</td><td>Compact laptops; 22110 in servers</td></tr>
+        <tr><td class="g">U.2 / U.3</td><td>Enterprise NVMe in a 2.5" hot-swap case</td><td>Servers, storage arrays</td></tr>
+        <tr><td class="g">Add-in card (AIC)</td><td>NVMe on a PCIe expansion card</td><td>Workstations wanting many/fast SSDs</td></tr>
+        <tr><td class="g">EDSFF (E1.S / E3.S)</td><td>"Ruler" datacenter SSD form factor</td><td>Hyperscale servers</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Endurance &amp; the terms that scare people</h2>
+  <div class="rules">
+    <ul>
+      <li><b>TBW (Terabytes Written)</b> = how much total data you can write before the warranty ends. A 2 TB TLC drive is typically <b>600–1,200 TBW</b>. Even writing 100 GB/day, that's <b>15+ years</b> — so for normal dev/editing you will almost never wear one out. Heavy VM churn or 4K video capture eats it faster, so size up (bigger drive = more TBW).</li>
+      <li><b>DWPD (Drive Writes Per Day)</b> = enterprise version of the same idea — how many times you can rewrite the whole drive daily for the warranty period. Consumer drives don't advertise it; ignore unless buying server SSDs.</li>
+      <li><b>DRAM vs DRAM-less:</b> a work drive should have a <b>DRAM cache</b> — it stays fast during big/sustained writes (compiling, copying VMs). DRAM-less drives are cheaper and fine for a boot/media drive but stutter under heavy load.</li>
+      <li><b>SLC cache (pseudo-cache):</b> most TLC/QLC drives run a fast SLC-mode buffer for bursts. When it fills on a huge write, speed drops to the drive's "native" rate — much lower on QLC. Another reason to prefer <b>TLC</b> for heavy work.</li>
+      <li><b>Heat / heatsink:</b> Gen4 is fine bare or with the board's built-in heatsink. <b>Gen5 runs hot</b> and often needs an active heatsink — one more reason Gen4 is the practical pick.</li>
+    </ul>
+  </div>
+
+  <h2>So which is fastest — and what should YOU buy?</h2>
+  <div class="callout">
+    <b>Speed ranking:</b> NVMe Gen5 (~12–14 GB/s) &gt; NVMe Gen4 (~7 GB/s) &gt; NVMe Gen3 (~3.5 GB/s) &gt; SATA SSD (~0.55 GB/s) &gt; HDD (~0.2 GB/s). But <b>fastest ≠ best for you</b> — beyond Gen4, real-world app/boot times barely change; you'd only feel Gen5 moving giant files all day. <b>Your setup:</b> a <b>2 TB Gen4 TLC NVMe</b> for OS + Docker, a <b>second 2–4 TB Gen4 NVMe</b> for VM/video scratch, and — only if you archive lots of footage — a big cheap <b>HDD</b> for backup. That combo beats one giant expensive drive.
+  </div>
+
+  <div class="callout warn">
+    <b>Note on the 395 mini-PC:</b> most 395 boxes have <b>1–2 M.2 NVMe slots</b> you <i>can</i> upgrade (unlike the soldered RAM). So even on the sealed mini-PC, storage is the one part you can add to — check the model has a free M.2 slot before buying. On your desktop build, storage is fully open: add drives anytime.
+  </div>
+
+  <footer>
+    A plain-language storage reference to go with the <a href="build-guide.html">Build Guide</a> and <a href="memory.html">RAM Types</a> page. Launch years are first-availability of the technology; sequential speeds and prices per TB are approximate 2026 Hong Kong estimates and move with the flash market — verify on the live listing before buying. NVMe is a type of SSD; "fast SSD" = NVMe Gen4.
+    <div class="stamp">BigMem · storage family tree · HDD · SATA · NVMe · PCIe Gen3/4/5 · rev 2026-07-27 · click any "Launched" header to re-sort by year</div>
+  </footer>
+</div>
+
+<script>
+/* Make every timeline table (any table with a "Launched" column) sortable by year, latest → oldest. */
+(function(){
+  const yearOf = s => { const m = (s||"").match(/\d{4}/); return m ? +m[0] : 0; };
+  document.querySelectorAll("table").forEach(tbl => {
+    if(!tbl.tHead || !tbl.tBodies[0]) return;
+    const ths = [...tbl.tHead.rows[0].cells];
+    const ci = ths.findIndex(th => th.textContent.trim().toLowerCase() === "launched");
+    if(ci < 0) return;
+    const th = ths[ci], label = "Launched", tb = tbl.tBodies[0];
+    let dir = -1;
+    th.style.cursor = "pointer";
+    th.title = "Click to sort by year";
+    function apply(){
+      [...tb.rows]
+        .sort((a,b) => (yearOf(a.cells[ci].textContent) - yearOf(b.cells[ci].textContent)) * dir)
+        .forEach(r => tb.appendChild(r));
+      th.textContent = label + (dir < 0 ? "  ▼" : "  ▲");
+    }
+    th.addEventListener("click", () => { dir = -dir; apply(); });
+    apply();
+  });
+})();
+
+/* "Which storage do I buy?" picker */
+(function(){
+  const PICKS = {
+    boot:  { type:"2 TB M.2 NVMe Gen4 · TLC · DRAM", buy:"one drive",
+      cfg:"A single <b>2 TB Gen4 TLC</b> NVMe with a DRAM cache for Windows/Linux + apps.",
+      why:"Gen4 is the sweet spot — boot and app launches feel instant, and you won't notice Gen5. TLC + DRAM keeps it fast for years." },
+    dev:   { type:"2× 2 TB M.2 NVMe Gen4 · TLC · DRAM", buy:"two drives",
+      cfg:"One <b>2 TB Gen4</b> for OS, a second <b>2 TB Gen4</b> for Docker images, VMs &amp; repos. Both TLC with DRAM cache.",
+      why:"Splitting OS from working data keeps builds snappy and makes reinstalls painless. TLC + DRAM survives heavy container/VM write churn; check the board has 2 free M.2 slots." },
+    video: { type:"2–4 TB M.2 NVMe Gen4 · TLC · high TBW", buy:"dedicated scratch drive",
+      cfg:"A separate <b>2–4 TB Gen4 TLC</b> drive as your media/scratch disk, apart from the OS.",
+      why:"4K editing hammers sustained writes — TLC + a high TBW rating handle it; QLC would slow down mid-export. Keep media off the OS drive so Premiere's cache isn't fighting the system." },
+    bulk:  { type:"HDD (big) — or QLC NVMe", buy:"cheap capacity",
+      cfg:"A large <b>HDD (8–24 TB)</b> for backup/archive, or a <b>QLC NVMe</b> if you want it quiet &amp; fast-ish.",
+      why:"For cold data you want cheap TB, not speed — HDDs are ~3× cheaper per TB. Only bother if you archive lots of footage or run a NAS; otherwise skip and just keep two NVMe drives." }
+  };
+  const pans = document.getElementById("pans");
+  function pick(key, btn){
+    document.querySelectorAll(".pbtn").forEach(x => x.classList.remove("active"));
+    btn.classList.add("active");
+    const p = PICKS[key];
+    pans.innerHTML = `<div><span class="type">${p.type}</span><span class="buy">${p.buy}</span></div>`
+      + `<div class="cfg">${p.cfg}</div><div class="why">${p.why}</div>`;
+  }
+  const btns = [...document.querySelectorAll(".pbtn")];
+  btns.forEach(b => b.addEventListener("click", () => pick(b.dataset.p, b)));
+  if(btns[0]) pick(btns[0].dataset.p, btns[0]);
+})();
+</script>
+</body>
+</html>

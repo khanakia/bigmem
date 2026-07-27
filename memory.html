@@ -214,8 +214,34 @@
 
   <footer>
     A plain-language memory reference to decode the "memory type" and "bandwidth" columns across the <a href="table.html">Reference Table</a>. Launch years are JEDEC/product first-availability; bandwidth figures are approximate and depend on channels, bus width and speed bin. Upcoming standards (DDR6, LPDDR6, HBM4) are flagged "expected" and their specs are targets, not final.
-    <div class="stamp">BigMem · memory family tree · DDR · LPDDR · GDDR · HBM · rev 2026-07-23</div>
+    <div class="stamp">BigMem · memory family tree · DDR · LPDDR · GDDR · HBM · rev 2026-07-23 · click any “Launched” header to re-sort by year</div>
   </footer>
 </div>
+
+<script>
+/* Make every timeline table (any table with a "Launched" column) sortable by year,
+   defaulting to latest → oldest. Click the "Launched" header to toggle direction. */
+(function(){
+  const yearOf = s => { const m = (s||"").match(/\d{4}/); return m ? +m[0] : 0; };  // first 4-digit year, handles "~1997", "2023–24", "~2027"
+  document.querySelectorAll("table").forEach(tbl => {
+    if(!tbl.tHead || !tbl.tBodies[0]) return;
+    const ths = [...tbl.tHead.rows[0].cells];
+    const ci = ths.findIndex(th => th.textContent.trim().toLowerCase() === "launched");
+    if(ci < 0) return;                                  // not a year table (e.g. the form-factor table) → skip
+    const th = ths[ci], label = "Launched", tb = tbl.tBodies[0];
+    let dir = -1;                                       // -1 = newest first (default), +1 = oldest first
+    th.style.cursor = "pointer";
+    th.title = "Click to sort by year";
+    function apply(){
+      [...tb.rows]
+        .sort((a,b) => (yearOf(a.cells[ci].textContent) - yearOf(b.cells[ci].textContent)) * dir)
+        .forEach(r => tb.appendChild(r));
+      th.textContent = label + (dir < 0 ? "  ▼" : "  ▲");
+    }
+    th.addEventListener("click", () => { dir = -dir; apply(); });
+    apply();                                            // sort latest → old on load
+  });
+})();
+</script>
 </body>
 </html>

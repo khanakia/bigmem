@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC Build Guide — Every Component for a High-Memory Desktop/Workstation — BigMem</title>
+<meta name="description" content="Every component you need to build a high-memory desktop or workstation from parts — case, motherboard, CPU, RAM, cooler, PSU, storage, GPU — with what to match, HK$ price ranges, compatibility rules, and two sample builds.">
+<meta name="theme-color" content="#16181c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f8;--panel:#fff;--ink:#16181c;--muted:#5d6772;--faint:#98a0ab;
+    --line:#e4e6ea;--line2:#eef0f2;--zebra:#fafbfc;
+    --uni:#1668c8;--uni-bg:#eaf1fb;--non:#8a6212;--non-bg:#f6efdf;--ok:#1a7f4b;--ok-bg:#e5f4ec;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 60px}
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  a{color:var(--uni);text-decoration:none} a:hover{text-decoration:underline}
+
+  .sitenav{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 18px;background:var(--ink)}
+  .sitenav .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.03em;color:#fff;text-decoration:none}
+  .sitenav .navlinks{display:flex;gap:4px;flex-wrap:wrap}
+  .sitenav .navlinks a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#c7ccd2;padding:5px 12px;border-radius:5px;text-decoration:none}
+  .sitenav .navlinks a:hover{background:rgba(255,255,255,.12);color:#fff;text-decoration:none}
+  .sitenav .navlinks a.active{background:#fff;color:var(--ink);font-weight:600}
+
+  header{padding:34px 0 20px;border-bottom:2px solid var(--ink)}
+  .kick{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  h1{font-size:clamp(24px,4.4vw,36px);font-weight:700;letter-spacing:-.02em;margin:0}
+  h1 b{color:var(--uni)}
+  .sub{color:var(--muted);margin:12px 0 0;max-width:70ch}
+
+  .callout{border-left:4px solid var(--uni);background:var(--uni-bg);padding:14px 16px;border-radius:0 6px 6px 0;margin:20px 0}
+  .callout.warn{border-left-color:var(--non);background:var(--non-bg)}
+  .callout b{color:var(--ink)}
+
+  h2{font-size:21px;letter-spacing:-.01em;margin:34px 0 4px}
+  .note{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
+  th{background:var(--ink);color:#fff;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 12px}
+  th.num,td.num{text-align:right}
+  td{padding:11px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--zebra)}
+  .part{font-weight:600;white-space:nowrap}
+  .req{font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+  .req.ess{background:var(--ok-bg);color:var(--ok)}
+  .req.opt{background:var(--uni-bg);color:var(--uni)}
+  .req.periph{background:#eef0f2;color:var(--muted)}
+  .price{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap}
+
+  .builds{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .build{background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:18px 20px}
+  .build h3{margin:0 0 2px;font-size:17px}
+  .build .for{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);margin:0 0 12px}
+  .build ul{list-style:none;margin:0;padding:0}
+  .build li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dotted var(--line2);font-size:13px}
+  .build li:last-of-type{border-bottom:0}
+  .build li .p{font-family:"IBM Plex Mono",monospace;color:var(--muted);white-space:nowrap}
+  .build .total{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:2px solid var(--ink);font-weight:700}
+  .build .total .p{font-family:"IBM Plex Mono",monospace;color:var(--ink)}
+
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 20px}
+  .rules li{margin:12px 0;font-size:13px;color:var(--muted)}
+  .rules b{color:var(--ink)}
+
+  footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);line-height:1.6}
+  .stamp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+  @media (max-width:680px){ .builds{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<nav class="sitenav">
+  <a class="brand" href="index.html">◧ BigMem</a>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="table.html">Reference Table</a>
+    <a href="build-guide.html" class="active">Build Guide</a>
+    <a href="395-buy-guide.html">395 Buy Guide</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <p class="kick">Build guide · desktop &amp; workstation · from parts</p>
+    <h1>Every component to <b>build</b> a high-memory desktop or workstation.</h1>
+    <p class="sub">The full parts list — case, motherboard, CPU, RAM, cooler, PSU, storage, GPU — what each does, what must match, rough Hong Kong prices, and two sample builds. For <b>socketed</b> CPUs (AM5 Ryzen, Threadripper, Xeon-W); pick your chip from the <a href="table.html">Reference Table</a>.</p>
+  </header>
+
+  <div class="callout warn">
+    <b>⚠️ The one big exception:</b> the <b>Ryzen AI Max+ 395 (and all Strix Halo / mini-PC APUs) can't be built from parts</b> — the chip and its 128 GB RAM are <b>soldered</b> to the board, sold as one sealed unit. There's no socket and no RAM slots. If you want a 395, you <a href="395-buy-guide.html">buy a finished mini-PC</a>, not parts. This build guide is for the <b>socketed</b> route (9950X, Threadripper, Xeon-W), where you *can* mix and match — and get more RAM headroom + upgradability in exchange for size and power draw.
+  </div>
+
+  <h2>The components</h2>
+  <p class="note">✅ = essential (won't boot without it) · ◆ = optional / workstation-grade · ○ = peripheral (not "in the box"). HK$ ranges are Sham Shui Po ballparks, 2026 — <b>estimates, verify live</b> (DDR5 especially spiked in 2026).</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Component</th><th>Type</th><th>What it is / does</th><th>What to match</th><th class="num">~HK$</th></tr></thead>
+      <tbody>
+        <tr><td class="part">CPU</td><td><span class="req ess">Essential</span></td><td>The processor — the brains. Pick from the Reference Table by cores / RAM ceiling / value.</td><td>Its <b>socket</b> must match the motherboard (AM5 / sTR5 / LGA4677).</td><td class="price">2,000–12,000+</td></tr>
+        <tr><td class="part">Motherboard</td><td><span class="req ess">Essential</span></td><td>The board everything plugs into — sockets the CPU, holds RAM slots, M.2, PCIe, I/O.</td><td>Socket + chipset for your CPU; <b>DIMM slot count</b> sets max RAM (2 slots ≈128 GB, 4 ≈192–256 GB); form factor.</td><td class="price">1,000–8,000</td></tr>
+        <tr><td class="part">RAM (memory)</td><td><span class="req ess">Essential</span></td><td>System memory — where running programs/containers live. This is BigMem's whole point.</td><td><b>DDR5</b> (UDIMM for desktop, <b>RDIMM ECC</b> for Threadripper/Xeon-W). Match the CPU's channels; 128 GB = 4×32 or 2×64.</td><td class="price">2,500–8,000</td></tr>
+        <tr><td class="part">CPU cooler</td><td><span class="req ess">Essential</span></td><td>Keeps the CPU from overheating — big air tower or an AIO liquid cooler.</td><td>Socket bracket + <b>TDP rating ≥ CPU TDP</b>; case clearance. Threadripper needs a TR-specific large cooler.</td><td class="price">600–1,800</td></tr>
+        <tr><td class="part">Storage (SSD)</td><td><span class="req ess">Essential</span></td><td>Where the OS + files live. NVMe M.2 (fast) is standard; add more for data.</td><td><b>M.2 NVMe Gen4/5</b>; board must have enough M.2 slots. 2 TB typical.</td><td class="price">1,000–3,000</td></tr>
+        <tr><td class="part">PSU (power supply)</td><td><span class="req ess">Essential</span></td><td>Converts wall power to the DC the parts need.</td><td><b>Wattage</b> ≥ total draw + headroom (desktop 650–850 W; workstation 1000 W+); 80+ Gold; ATX/SFX size for the case.</td><td class="price">700–2,500</td></tr>
+        <tr><td class="part">Case (the "box")</td><td><span class="req ess">Essential</span></td><td>The chassis that holds it all + airflow.</td><td><b>Form factor</b> must fit the board (ATX / mATX / ITX / E-ATX for workstation) + cooler/GPU clearance.</td><td class="price">500–2,000</td></tr>
+        <tr><td class="part">Operating system</td><td><span class="req ess">Essential</span></td><td>Windows 11 or a Linux distro.</td><td>Windows license, or free Linux (great for a dev box).</td><td class="price">0–1,000</td></tr>
+        <tr><td class="part">GPU (graphics card)</td><td><span class="req opt">Optional*</span></td><td>Graphics / GPU compute. *Needed if the CPU has no iGPU.</td><td>AMD Ryzen desktop has a basic display iGPU (fine headless/light); <b>Threadripper/Xeon-W have NO iGPU → a GPU is mandatory</b> just to get video.</td><td class="price">1,000–20,000+</td></tr>
+        <tr><td class="part">Case fans</td><td><span class="req opt">Optional</span></td><td>Extra airflow (some come with the case).</td><td>120/140 mm; more for hot workstation parts.</td><td class="price">100–400</td></tr>
+        <tr><td class="part">Wi-Fi / Bluetooth</td><td><span class="req opt">Optional</span></td><td>Wireless — often already on the motherboard.</td><td>M.2 Wi-Fi card if the board lacks it.</td><td class="price">120–300</td></tr>
+        <tr><td class="part">10 GbE NIC</td><td><span class="req opt">Optional</span></td><td>Fast networking for a workstation / homelab.</td><td>PCIe card if not on-board; uses PCIe lanes.</td><td class="price">500–1,200</td></tr>
+        <tr><td class="part">UPS / power station</td><td><span class="req opt">Optional</span></td><td><b>Outage protection</b> — a desktop has no battery, so this is your "laptop battery".</td><td>UPS/EPS mode; size in Wh for runtime (≈500 Wh ≈ 4–5 h). See the power notes.</td><td class="price">1,300–6,000</td></tr>
+        <tr><td class="part">Monitor · keyboard · mouse</td><td><span class="req periph">Peripheral</span></td><td>What you see/type on — not part of the "box".</td><td>Any; reuse what you have.</td><td class="price">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Compatibility rules (the things that must match)</h2>
+  <div class="rules">
+    <ul>
+      <li><b>Socket:</b> CPU socket = motherboard socket. AM5 (Ryzen desktop), sTR5 (Threadripper), LGA4677 (Xeon-W). Wrong socket = won't fit.</li>
+      <li><b>RAM type + capacity:</b> DDR5 only (current). Desktop uses <b>UDIMM</b>; Threadripper/Xeon-W use <b>RDIMM (ECC)</b> — not interchangeable. <b>Max RAM is set by the board's DIMM slots</b>, not just the CPU: 2 slots ≈ 128 GB, 4 slots ≈ 192–256 GB. Want 192 GB on a desktop → get a 4-slot board.</li>
+      <li><b>PSU wattage:</b> add up the parts (CPU TDP + GPU + rest) and add ~30% headroom. A 170 W CPU + a GPU wants ~750–850 W; a Threadripper workstation wants 1000 W+.</li>
+      <li><b>Case form factor:</b> the case must accept the board size (ITX &lt; mATX &lt; ATX &lt; E-ATX). Also check <b>cooler height</b> and <b>GPU length</b> clearance.</li>
+      <li><b>Cooler ↔ CPU:</b> the cooler needs the right socket bracket and a TDP rating at/above the CPU. Threadripper needs a physically larger TR cooler.</li>
+      <li><b>iGPU or not:</b> Ryzen desktop chips have a small display iGPU (you can boot without a graphics card). <b>Threadripper and Xeon-W have none — you MUST add a GPU</b> just to get a picture.</li>
+    </ul>
+  </div>
+
+  <h2>Two sample builds (HK$, estimates)</h2>
+  <p class="note">Ballpark Sham Shui Po parts pricing, 2026 — verify live, DDR5 prices move.</p>
+  <div class="builds">
+    <div class="build">
+      <h3>A · 128 GB AM5 dev desktop</h3>
+      <p class="for">Docker / builds / many tabs · upgradable · no battery</p>
+      <ul>
+        <li>Ryzen 9 9950X (16C, iGPU) <span class="p">~5,000</span></li>
+        <li>B650/X670 board (4 DIMM) <span class="p">~1,300</span></li>
+        <li>128 GB DDR5 (2×64, room for 256) <span class="p">~3,000</span></li>
+        <li>360 mm AIO cooler <span class="p">~1,000</span></li>
+        <li>2 TB NVMe Gen4 <span class="p">~1,200</span></li>
+        <li>750 W 80+ Gold PSU <span class="p">~900</span></li>
+        <li>ATX case <span class="p">~700</span></li>
+        <li>Windows 11 (or Linux $0) <span class="p">~1,000</span></li>
+      </ul>
+      <div class="total"><span>Total</span><span class="p">~HK$14,100</span></div>
+    </div>
+    <div class="build">
+      <h3>B · Threadripper workstation</h3>
+      <p class="for">256 GB+ · 8-channel · tons of PCIe lanes · ECC</p>
+      <ul>
+        <li>Threadripper 7960X (24C) <span class="p">~12,000</span></li>
+        <li>TRX50 board (8 DIMM) <span class="p">~5,000</span></li>
+        <li>256 GB DDR5 RDIMM ECC <span class="p">~8,000</span></li>
+        <li>TR-rated AIO cooler <span class="p">~1,500</span></li>
+        <li>2 TB NVMe Gen4 <span class="p">~1,200</span></li>
+        <li>1000 W 80+ Gold PSU <span class="p">~1,800</span></li>
+        <li>E-ATX full-tower case <span class="p">~1,500</span></li>
+        <li>Entry GPU (no iGPU!) + Win <span class="p">~2,500</span></li>
+      </ul>
+      <div class="total"><span>Total</span><span class="p">~HK$33,500</span></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>Reality check vs a pre-built 395 mini-PC:</b> the 128 GB AM5 build (~HK$14,100) lands near a pre-built <a href="395-buy-guide.html">395 mini-PC (~HK$16k from mainland)</a> — and gives you <b>upgradability + a 256 GB RAM ceiling + a real GPU slot</b>. The trade-offs: it's <b>big, draws ~170 W+, and has no battery</b> (add a UPS for your outages), whereas the 395 box is tiny, efficient, and unified-memory. Pick the build if you value expandability; pick the mini-PC if you value size/efficiency.
+  </div>
+
+  <footer>
+    A parts checklist for socketed high-memory builds. Prices are Hong Kong ballpark estimates (2026) — verify on the live listing before buying; DDR5 pricing is volatile. The Ryzen AI Max+ 395 is excluded here because it can't be self-built (soldered chip + RAM) — see the <a href="395-buy-guide.html">395 Buy Guide</a>.
+    <div class="stamp">BigMem · non-Apple / non-OEM / barebone route · HK: Golden Arcade · Wan Chai · Mong Kok · rev 2026-07-23</div>
+  </footer>
+</div>
+</body>
+</html>

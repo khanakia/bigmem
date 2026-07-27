@@ -55,6 +55,7 @@
   .req.opt{background:var(--uni-bg);color:var(--uni)}
   .req.periph{background:#eef0f2;color:var(--muted)}
   .price{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap}
+  .yes{color:var(--ok);font-weight:600}
 
   .builds{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
   .build{background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:18px 20px}
@@ -122,6 +123,10 @@
         <tr><td class="part">Monitor · keyboard · mouse</td><td><span class="req periph">Peripheral</span></td><td>What you see/type on — not part of the "box".</td><td>Any; reuse what you have.</td><td class="price">—</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="callout">
+    <b>Storage jargon, decoded (M.2 ≠ NVMe):</b> <b>M.2</b> is the <i>shape/slot</i> (the little gumstick on the board). <b>NVMe</b> is the <i>speed protocol</i> — how fast it talks. Same M.2 shape can be slow (SATA, ~550 MB/s) or fast (NVMe). Within NVMe the tiers are the <b>PCIe generation</b>: Gen3 ~3,500 MB/s · <b>Gen4 ~7,000 MB/s (buy this)</b> · Gen5 ~12,000+ (overkill/hot). There is <b>no product called "NVMe 2"</b> — that's just the <b>M.2</b> slot. So the whole instruction is: <b>"2 TB M.2 NVMe Gen4"</b>. "2 M.2 slots" = room for two such sticks (OS + media/scratch).
   </div>
 
   <h2>Compatibility rules (the things that must match)</h2>
@@ -220,9 +225,42 @@
     <b>Reality check vs a pre-built 395 mini-PC:</b> the 128 GB AM5 build (~HK$14,100) lands near a pre-built <a href="395-buy-guide.html">395 mini-PC (~HK$16k from mainland)</a> — and gives you <b>upgradability + a 256 GB RAM ceiling + a real GPU slot</b>. The trade-offs: it's <b>big, draws ~170 W+, and has no battery</b> (add a UPS for your outages), whereas the 395 box is tiny, efficient, and unified-memory. Pick the build if you value expandability; pick the mini-PC if you value size/efficiency.
   </div>
 
+  <h2>Add video editing later — build it once, bolt on the GPU</h2>
+  <p class="note">You don't buy the GPU now. The trick to <b>never swapping the board or accessories</b> is to buy the <b>hard-to-replace</b> parts future-ready <i>today</i>, and leave the graphics slot empty. Your Ryzen's built-in iGPU drives the monitor fine until you add a card — then it's plug-in-and-done, no other changes.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Part</th><th>Buy now?</th><th>What to get so you NEVER swap it later</th></tr></thead>
+      <tbody>
+        <tr><td class="part">PSU (power)</td><td><span class="req ess">Now</span></td><td>Get <b>850 W 80+ Gold</b> now (not 750 W). Sized for a future RTX 5070 Ti / 5080. Swapping a PSU later means unplugging every cable — buy the headroom once. <b>+~HK$200 over the dev build.</b></td></tr>
+        <tr><td class="part">Case</td><td><span class="req ess">Now</span></td><td>ATX case with <b>≥330 mm GPU clearance</b> + good airflow (front intake fans). Big cards + a hot GPU need room and air.</td></tr>
+        <tr><td class="part">Motherboard</td><td><span class="req ess">Now</span></td><td>Already has a <b>PCIe x16 slot</b> — every AM5 board does. A B650E/B850/X670E is plenty; PCIe 4.0 x16 runs any GPU with no real loss. Nothing to change later.</td></tr>
+        <tr><td class="part">CPU + RAM</td><td><span class="req ess">Now</span></td><td>9950X + 128 GB DDR5 as planned. Both already suit editing; the socket takes Zen 6/7 later too.</td></tr>
+        <tr><td class="part">Cooling</td><td><span class="req opt">Now</span></td><td>Decent case airflow now; a GPU adds heat. One or two extra intake fans are cheap insurance.</td></tr>
+        <tr><td class="part">GPU</td><td><span class="req periph">Later</span></td><td>Slot sits <b>empty</b> — the iGPU handles your display meanwhile. Drop in the card the day you start editing. <b>No board / RAM / case / PSU change.</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:26px 0 4px;font-size:17px">The GPU to add later (NVIDIA — Premiere loves NVENC + CUDA)</h3>
+  <p class="note">For later — rough HK$ estimates, verify live. 16 GB VRAM is the line that matters for comfortable 4K.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>GPU</th><th>VRAM</th><th>Best for</th><th class="num">~HK$</th></tr></thead>
+      <tbody>
+        <tr><td class="part">NVIDIA RTX 5070</td><td>12 GB</td><td>1080p / light 4K editing</td><td class="num price">~4,500</td></tr>
+        <tr><td class="part">NVIDIA RTX 5070 Ti</td><td>16 GB</td><td><span class="yes">🏆 4K sweet spot</span> — effects + fast NVENC export</td><td class="num price">~6,500</td></tr>
+        <tr><td class="part">NVIDIA RTX 5080</td><td>16 GB</td><td>Heavy 4K / multicam / colour</td><td class="num price">~9,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <b>Why this rules out the 395 mini-PC for video:</b> it's a <b>sealed box</b> — no PCIe slot, so you can <b>never add a graphics card</b>, and its built-in iGPU has no NVENC/CUDA (Premiere's happiest path). The whole "add the GPU later" plan is only possible on the <b>socketed desktop build</b>. If pro video is anywhere in your future, build the desktop.
+  </div>
+
   <footer>
     A parts checklist for socketed high-memory builds. Prices are Hong Kong ballpark estimates (2026) — verify on the live listing before buying; DDR5 pricing is volatile. The Ryzen AI Max+ 395 is excluded here because it can't be self-built (soldered chip + RAM) — see the <a href="395-buy-guide.html">395 Buy Guide</a>.
-    <div class="stamp">BigMem · non-Apple / non-OEM / barebone route · HK: Golden Arcade · Wan Chai · Mong Kok · rev 2026-07-23</div>
+    <div class="stamp">BigMem · non-Apple / non-OEM / barebone route · HK: Golden Arcade · Wan Chai · Mong Kok · rev 2026-07-27</div>
   </footer>
 </div>
 </body>

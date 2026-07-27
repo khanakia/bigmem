@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAM &amp; Memory Types Explained — DDR, LPDDR, GDDR, HBM Timeline — BigMem</title>
+<meta name="description" content="Every type of computer memory explained: the DDR, LPDDR, GDDR and HBM families with launch years and speeds, module form factors (UDIMM, SO-DIMM, RDIMM, MRDIMM, CAMM2, HBM), what's used where, and which is fastest.">
+<meta name="theme-color" content="#16181c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f8;--panel:#fff;--ink:#16181c;--muted:#5d6772;--faint:#98a0ab;
+    --line:#e4e6ea;--line2:#eef0f2;--zebra:#fafbfc;
+    --uni:#1668c8;--uni-bg:#eaf1fb;--non:#8a6212;--non-bg:#f6efdf;--ok:#1a7f4b;--ok-bg:#e5f4ec;
+    --sys:#1668c8;--lp:#1a7f4b;--gddr:#8a6212;--hbm:#8e3ac0;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 18px 60px}
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  a{color:var(--uni);text-decoration:none} a:hover{text-decoration:underline}
+
+  .sitenav{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 18px;background:var(--ink)}
+  .sitenav .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.03em;color:#fff;text-decoration:none}
+  .sitenav .navlinks{display:flex;gap:4px;flex-wrap:wrap}
+  .sitenav .navlinks a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#c7ccd2;padding:5px 12px;border-radius:5px;text-decoration:none}
+  .sitenav .navlinks a:hover{background:rgba(255,255,255,.12);color:#fff;text-decoration:none}
+  .sitenav .navlinks a.active{background:#fff;color:var(--ink);font-weight:600}
+
+  header{padding:34px 0 20px;border-bottom:2px solid var(--ink)}
+  .kick{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  h1{font-size:clamp(24px,4.4vw,36px);font-weight:700;letter-spacing:-.02em;margin:0}
+  h1 b{color:var(--uni)}
+  .sub{color:var(--muted);margin:12px 0 0;max-width:72ch}
+
+  .families{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+  .fam{border:1.5px solid var(--line);border-radius:9px;padding:14px 15px;background:var(--panel)}
+  .fam .t{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px}
+  .fam .w{font-size:12px;color:var(--muted);margin-top:5px}
+  .fam.sys{border-top:4px solid var(--sys)} .fam.lp{border-top:4px solid var(--lp)} .fam.gddr{border-top:4px solid var(--gddr)} .fam.hbm{border-top:4px solid var(--hbm)}
+
+  h2{font-size:21px;letter-spacing:-.01em;margin:36px 0 4px;display:flex;align-items:center;gap:10px}
+  h2 .dot{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
+  .dot.sys{background:var(--sys)}.dot.lp{background:var(--lp)}.dot.gddr{background:var(--gddr)}.dot.hbm{background:var(--hbm)}
+  .note{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:720px}
+  th{background:var(--ink);color:#fff;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 12px}
+  th.num,td.num{text-align:right}
+  td{padding:10px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--zebra)}
+  .g{font-weight:600;white-space:nowrap}
+  .yr{font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+  .cur{font-family:"IBM Plex Mono",monospace;font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:1px 6px;border-radius:999px;background:var(--ok-bg);color:var(--ok);margin-left:6px}
+  .soon{background:var(--uni-bg);color:var(--uni)}
+
+  .callout{border-left:4px solid var(--uni);background:var(--uni-bg);padding:14px 16px;border-radius:0 6px 6px 0;margin:20px 0}
+  .callout b{color:var(--ink)}
+
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 20px}
+  .rules li{margin:12px 0;font-size:13px;color:var(--muted)}
+  .rules b{color:var(--ink)}
+
+  footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);line-height:1.6}
+  .stamp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+  @media (max-width:760px){ .families{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<nav class="sitenav">
+  <a class="brand" href="index.html">◧ BigMem</a>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="table.html">Reference Table</a>
+    <a href="memory.html" class="active">RAM Types</a>
+    <a href="build-guide.html">Build Guide</a>
+    <a href="395-buy-guide.html">395 Buy Guide</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <p class="kick">Memory reference · every RAM type explained</p>
+    <h1>Every type of <b>RAM &amp; memory</b> — the full family tree.</h1>
+    <p class="sub">The four memory families (system DDR, mobile LPDDR, graphics GDDR, high-bandwidth HBM) with launch years and speeds, the module form factors (UDIMM, SO-DIMM, RDIMM, MRDIMM, CAMM2, on-package…), what's used where, and which is fastest. This is the "memory type" column of the <a href="table.html">Reference Table</a>, decoded.</p>
+  </header>
+
+  <div class="families">
+    <div class="fam sys"><div class="t">DDR SDRAM</div><div class="w">Main system RAM — desktops, laptops, servers. The sticks you buy.</div></div>
+    <div class="fam lp"><div class="t">LPDDR</div><div class="w">Low-power, soldered — phones, thin laptops, Strix Halo, Apple, GB10.</div></div>
+    <div class="fam gddr"><div class="t">GDDR</div><div class="w">Graphics VRAM — soldered on the GPU. Very high bandwidth.</div></div>
+    <div class="fam hbm"><div class="t">HBM</div><div class="w">3D-stacked, on-package — AI accelerators &amp; HPC. The fastest.</div></div>
+  </div>
+
+  <h2><span class="dot sys"></span> System RAM — the DDR SDRAM timeline</h2>
+  <p class="note">The main memory you plug in as sticks (DIMMs). Each generation ~doubles bandwidth and lowers voltage. Bandwidth shown is per 64-bit channel (one typical DIMM). Not physically interchangeable between generations — the notch moves.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Generation</th><th>Launched</th><th>Voltage</th><th>Data rate (MT/s)</th><th class="num">~BW /channel</th><th>Used where · key change</th></tr></thead>
+      <tbody>
+        <tr><td class="g">SDRAM (SDR)</td><td class="yr">~1997</td><td>3.3 V</td><td>66–133</td><td class="num">~0.5–1.1 GB/s</td><td>1990s PCs. First RAM synchronised to the bus clock.</td></tr>
+        <tr><td class="g">DDR (DDR1)</td><td class="yr">2000</td><td>2.5 V</td><td>200–400</td><td class="num">1.6–3.2 GB/s</td><td>Early-2000s PCs. "Double data rate" — transfers on both clock edges.</td></tr>
+        <tr><td class="g">DDR2</td><td class="yr">2003</td><td>1.8 V</td><td>400–1066</td><td class="num">3.2–8.5 GB/s</td><td>Mid-2000s. 4n prefetch, lower voltage/heat.</td></tr>
+        <tr><td class="g">DDR3</td><td class="yr">2007</td><td>1.5 V</td><td>800–2133</td><td class="num">6.4–17 GB/s</td><td>2008–2015 PCs/servers. 8n prefetch, big density jump.</td></tr>
+        <tr><td class="g">DDR4</td><td class="yr">2014</td><td>1.2 V</td><td>1600–3200 (OC 4000+)</td><td class="num">12.8–25.6 GB/s</td><td>2015–2022 mainstream. Bank groups; up to 64 GB/module.</td></tr>
+        <tr><td class="g">DDR5<span class="cur">current</span></td><td class="yr">2020</td><td>1.1 V</td><td>4800–8400+</td><td class="num">38–70 GB/s</td><td>Current desktops/servers. Two 32-bit sub-channels per DIMM, on-DIMM power (PMIC), up to 128 GB/module. <b>This is what nearly every chip in the table uses.</b></td></tr>
+        <tr><td class="g">DDR6<span class="cur soon">expected</span></td><td class="yr">~2027</td><td>~1.0 V</td><td>~8800–17600 (target)</td><td class="num">~2× DDR5</td><td>In JEDEC development. More sub-channels, higher speed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="dot lp"></span> LPDDR — low-power, soldered (mobile &amp; APUs)</h2>
+  <p class="note">Low-Power DDR. Soldered on-package (not upgradeable), sipping power. A wide bus makes it fast in APUs — this is why the Ryzen AI Max+ 395 has huge bandwidth but a fixed, non-upgradeable 128 GB.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Generation</th><th>Launched</th><th>Data rate (MT/s)</th><th>Used where</th></tr></thead>
+      <tbody>
+        <tr><td class="g">LPDDR2</td><td class="yr">2009</td><td>~1066</td><td>Early smartphones.</td></tr>
+        <tr><td class="g">LPDDR3</td><td class="yr">2012</td><td>~2133</td><td>Phones, early ultrabooks.</td></tr>
+        <tr><td class="g">LPDDR4</td><td class="yr">2014</td><td>~3200–4266</td><td>Phones, tablets.</td></tr>
+        <tr><td class="g">LPDDR4X</td><td class="yr">2017</td><td>~4266</td><td>Phones, thin laptops, <b>Orange Pi Ascend box</b> (lower I/O voltage).</td></tr>
+        <tr><td class="g">LPDDR5</td><td class="yr">2019</td><td>~5500–6400</td><td>Flagship phones, laptops.</td></tr>
+        <tr><td class="g">LPDDR5X<span class="cur">current</span></td><td class="yr">2021</td><td>~8000–10700</td><td>Phones, <b>Strix Halo / Ryzen AI Max</b>, Apple Silicon, <b>Nvidia GB10</b>. Wide 256-bit bus → ~256 GB/s in APUs.</td></tr>
+        <tr><td class="g">LPDDR5T</td><td class="yr">2023</td><td>~9600</td><td>"Turbo" bin — flagship phones.</td></tr>
+        <tr><td class="g">LPDDR6<span class="cur soon">expected</span></td><td class="yr">~2025–26</td><td>~10667–14400</td><td>New architecture; next-gen phones/APUs.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="dot gddr"></span> GDDR — graphics memory (GPU VRAM)</h2>
+  <p class="note">Graphics DDR. Soldered around the GPU, tuned for massive bandwidth over latency. Not user-replaceable — it's the GPU's VRAM.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Generation</th><th>Launched</th><th>Per-pin speed</th><th>Used where</th></tr></thead>
+      <tbody>
+        <tr><td class="g">GDDR3</td><td class="yr">2004</td><td>~0.8–2.5 Gbps</td><td>Older GPUs, PS3 / Xbox 360.</td></tr>
+        <tr><td class="g">GDDR5</td><td class="yr">2008</td><td>~4–8 Gbps</td><td>A decade of GPUs; still on budget cards.</td></tr>
+        <tr><td class="g">GDDR5X</td><td class="yr">2016</td><td>~10–12 Gbps</td><td>GTX 1080 / 1080 Ti.</td></tr>
+        <tr><td class="g">GDDR6</td><td class="yr">2018</td><td>~14–20 Gbps</td><td>RTX 20/30/40, AMD RDNA. Mainstream now.</td></tr>
+        <tr><td class="g">GDDR6X</td><td class="yr">2020</td><td>~19–24 Gbps</td><td>RTX 3080/3090/4080/4090 (Micron, PAM4 signalling).</td></tr>
+        <tr><td class="g">GDDR7<span class="cur">current</span></td><td class="yr">2024–25</td><td>~28–32 Gbps</td><td>RTX 50-series &amp; newest GPUs (PAM3). ~1 TB/s+ across the bus.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="dot hbm"></span> HBM — high-bandwidth 3D-stacked (AI &amp; HPC)</h2>
+  <p class="note">High Bandwidth Memory — DRAM dies stacked vertically and placed on-package next to the processor via an interposer. The fastest memory made; extremely expensive. Powers AI accelerators &amp; supercomputers — e.g. the <b>Nvidia GH200</b> in the table pairs 141 GB HBM3e with 480 GB LPDDR5X.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Generation</th><th>Launched</th><th class="num">~BW / stack</th><th>Used where</th></tr></thead>
+      <tbody>
+        <tr><td class="g">HBM</td><td class="yr">2015</td><td class="num">~128 GB/s</td><td>AMD Radeon Fury X (first).</td></tr>
+        <tr><td class="g">HBM2</td><td class="yr">2016</td><td class="num">~256 GB/s</td><td>Tesla V100, Radeon Vega.</td></tr>
+        <tr><td class="g">HBM2E</td><td class="yr">2019</td><td class="num">~460 GB/s</td><td>Nvidia A100, Intel Xeon Max (on-package).</td></tr>
+        <tr><td class="g">HBM3</td><td class="yr">2022</td><td class="num">~819 GB/s</td><td>Nvidia H100.</td></tr>
+        <tr><td class="g">HBM3E<span class="cur">current</span></td><td class="yr">2023–24</td><td class="num">~1.2 TB/s</td><td>H200, <b>GH200/GB200</b>, AMD MI300X.</td></tr>
+        <tr><td class="g">HBM4<span class="cur soon">expected</span></td><td class="yr">~2026</td><td class="num">~1.6+ TB/s</td><td>Next-gen AI accelerators.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Module form factors — the physical "sticks"</h2>
+  <p class="note">The <i>same</i> DDR5 chips come on different modules depending on the machine. This is the "extension" / package — and it decides whether you can upgrade it.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Form factor</th><th>Full name</th><th>Used in</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="g">UDIMM</td><td>Unbuffered DIMM</td><td>Desktops (AM5, LGA1700/1851)</td><td>The standard full-size desktop stick.</td></tr>
+        <tr><td class="g">SO-DIMM</td><td>Small Outline DIMM</td><td>Laptops, mini-PCs (e.g. 285HX)</td><td>Compact, upgradeable; up to 64–96 GB/stick.</td></tr>
+        <tr><td class="g">RDIMM</td><td>Registered DIMM</td><td>Servers, Threadripper PRO, Xeon-W</td><td>A register buffers address/command → more sticks &amp; capacity; ECC. Not usable in desktop boards.</td></tr>
+        <tr><td class="g">LRDIMM</td><td>Load-Reduced DIMM</td><td>High-capacity servers</td><td>Buffers data too → the biggest capacities (TBs).</td></tr>
+        <tr><td class="g">ECC UDIMM</td><td>Error-Correcting UDIMM</td><td>Workstations (Xeon-W, some AM5)</td><td>Unbuffered but with error correction.</td></tr>
+        <tr><td class="g">MRDIMM</td><td>Multiplexed Rank DIMM</td><td>Newest servers — Intel Xeon 6 / Granite Rapids</td><td>Multiplexes two ranks → ~8800+ MT/s, big bandwidth gain.</td></tr>
+        <tr><td class="g">CUDIMM</td><td>Clocked Unbuffered DIMM</td><td>Arrow Lake / high-speed DDR5 desktop</td><td>Adds a clock driver (CKD) to hit DDR5-6400+ reliably.</td></tr>
+        <tr><td class="g">CAMM2 / LPCAMM2</td><td>Compression-Attached Memory Module</td><td>New laptops (2024+)</td><td>Flat module that replaces SO-DIMM; <b>LPCAMM2 makes LPDDR5X upgradeable</b> (rare for LPDDR).</td></tr>
+        <tr><td class="g">On-package / BGA</td><td>Soldered</td><td>Phones, Strix Halo, Apple, GB10</td><td><b>Not upgradeable</b> — fixed at manufacture. Why the 395 is locked at 128 GB.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Which memory is used where</h2>
+  <div class="rules">
+    <ul>
+      <li><b>Desktop PC:</b> DDR5 <b>UDIMM</b> (CUDIMM for the fastest kits). Upgradeable.</li>
+      <li><b>Laptop:</b> DDR5 <b>SO-DIMM</b> or <b>LPCAMM2</b> (upgradeable), or <b>LPDDR5X soldered</b> (thin/light, fixed).</li>
+      <li><b>Mini-PC / APU (Strix Halo, GB10):</b> <b>LPDDR5X soldered</b> — unified with the iGPU, fast, but fixed capacity.</li>
+      <li><b>Workstation / server:</b> DDR5 <b>RDIMM / LRDIMM (ECC)</b>; <b>MRDIMM</b> on the newest Intel Xeon 6.</li>
+      <li><b>Graphics card:</b> <b>GDDR6 / 6X / 7</b> soldered on the GPU (or HBM on datacenter GPUs).</li>
+      <li><b>AI accelerator / supercomputer:</b> <b>HBM3E</b> on-package.</li>
+      <li><b>Phone:</b> <b>LPDDR5X</b> on-package.</li>
+      <li><b>CPU cache (L1/L2/L3):</b> <b>SRAM</b> — not "RAM you buy"; it's built into the chip (see below).</li>
+    </ul>
+  </div>
+
+  <h2>Other memory worth knowing</h2>
+  <div class="rules">
+    <ul>
+      <li><b>SRAM (Static RAM):</b> the CPU's on-chip <b>cache</b> (L1/L2/L3) and AMD's "3D V-Cache". Fastest &amp; lowest-latency memory, but tiny and expensive per bit — you never buy it separately.</li>
+      <li><b>Optane / 3D XPoint (Intel DCPMM):</b> <b>persistent</b> memory that sat between RAM and SSD (survives power loss). Used on some Xeons for huge in-memory DBs — <b>discontinued in 2022</b>.</li>
+      <li><b>Emerging non-volatile RAM — MRAM, ReRAM, FeRAM:</b> retain data without power; used in niche/embedded/industrial roles, not mainstream PCs yet.</li>
+      <li><b>Not RAM (common confusion):</b> <b>NAND flash</b> (SSDs/USB) is <i>storage</i>, not memory — it's slower, non-volatile, and byte-addressing works differently. RAM loses its contents when powered off; storage doesn't.</li>
+    </ul>
+  </div>
+
+  <h2>So which is fastest?</h2>
+  <div class="callout">
+    Two different "fast": <b>latency</b> (how quickly it responds) vs <b>bandwidth</b> (how much it moves per second). Ranking by <b>bandwidth</b>: <b>HBM3E</b> (~1.2 TB/s per stack, multi-TB/s aggregate) &gt; <b>GDDR7</b> (~1 TB/s across a GPU) &gt; <b>LPDDR5X in a wide-bus APU</b> (~256 GB/s, e.g. Strix Halo) &gt; <b>DDR5</b> (~50–70 GB/s per channel; more with 8–12 channels on servers). By <b>latency</b>, on-chip <b>SRAM cache</b> wins by far. For CPU work (the whole point of the table) you want <b>capacity + enough DDR5 bandwidth</b>; for LLMs you want <b>bandwidth</b> (unified LPDDR5X or HBM); for graphics you want <b>GDDR</b>.
+  </div>
+
+  <footer>
+    A plain-language memory reference to decode the "memory type" and "bandwidth" columns across the <a href="table.html">Reference Table</a>. Launch years are JEDEC/product first-availability; bandwidth figures are approximate and depend on channels, bus width and speed bin. Upcoming standards (DDR6, LPDDR6, HBM4) are flagged "expected" and their specs are targets, not final.
+    <div class="stamp">BigMem · memory family tree · DDR · LPDDR · GDDR · HBM · rev 2026-07-23</div>
+  </footer>
+</div>
+</body>
+</html>

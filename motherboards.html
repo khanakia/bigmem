@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AM5 Motherboard Chooser — Chipsets, Prices &amp; What to Buy — BigMem</title>
+<meta name="description" content="How to choose an AMD AM5 motherboard for a high-memory build: chipset tiers (A620 / B650 / B850 / X670E / X870E) decoded, a comparison table of representative boards with Hong Kong price estimates, the 2-stick vs 4-stick DDR5 speed gotcha, and picks for a 128 GB Ryzen 9 9950X3D dev machine. AM5 supported through 2029.">
+<meta name="theme-color" content="#16181c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f8;--panel:#fff;--ink:#16181c;--muted:#5d6772;--faint:#98a0ab;
+    --line:#e4e6ea;--line2:#eef0f2;--zebra:#fafbfc;
+    --uni:#1668c8;--uni-bg:#eaf1fb;--non:#8a6212;--non-bg:#f6efdf;--ok:#1a7f4b;--ok-bg:#e5f4ec;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 60px}
+  .mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  a{color:var(--uni);text-decoration:none} a:hover{text-decoration:underline}
+
+  .sitenav{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:10px 18px;background:var(--ink)}
+  .sitenav .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.03em;color:#fff;text-decoration:none}
+  .sitenav .navlinks{display:flex;gap:4px;flex-wrap:wrap}
+  .sitenav .navlinks a{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#c7ccd2;padding:5px 12px;border-radius:5px;text-decoration:none}
+  .sitenav .navlinks a:hover{background:rgba(255,255,255,.12);color:#fff;text-decoration:none}
+  .sitenav .navlinks a.active{background:#fff;color:var(--ink);font-weight:600}
+
+  header{padding:34px 0 20px;border-bottom:2px solid var(--ink)}
+  .kick{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  h1{font-size:clamp(24px,4.4vw,36px);font-weight:700;letter-spacing:-.02em;margin:0}
+  h1 b{color:var(--uni)}
+  .sub{color:var(--muted);margin:12px 0 0;max-width:72ch}
+
+  .callout{border-left:4px solid var(--uni);background:var(--uni-bg);padding:14px 16px;border-radius:0 6px 6px 0;margin:20px 0}
+  .callout.warn{border-left-color:var(--non);background:var(--non-bg)}
+  .callout.ok{border-left-color:var(--ok);background:var(--ok-bg)}
+  .callout b{color:var(--ink)}
+
+  h2{font-size:21px;letter-spacing:-.01em;margin:34px 0 4px}
+  .note{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:860px}
+  th{background:var(--ink);color:#fff;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 11px}
+  th.num,td.num{text-align:right}
+  td{padding:10px 11px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--zebra)}
+  .part{font-weight:600}
+  .price{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap}
+  .req{font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .req.ess{background:var(--ok-bg);color:var(--ok)}
+  .req.opt{background:var(--uni-bg);color:var(--uni)}
+  .req.periph{background:#eef0f2;color:var(--muted)}
+  .req.warn{background:var(--non-bg);color:var(--non)}
+  .yes{color:var(--ok);font-weight:600}
+  .no{color:var(--faint)}
+
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 20px}
+  .rules li{margin:12px 0;font-size:13px;color:var(--muted)}
+  .rules b{color:var(--ink)}
+
+  .builds{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0}
+  .build{background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:18px 20px}
+  .build.hot{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok-bg)}
+  .build h3{margin:0 0 2px;font-size:16px}
+  .build .for{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);margin:0 0 12px}
+  .build ul{list-style:none;margin:0;padding:0}
+  .build li{padding:5px 0;border-bottom:1px dotted var(--line2);font-size:12.5px;color:var(--muted)}
+  .build li:last-of-type{border-bottom:0}
+  .build .pick{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--ink);font-size:13px}
+  .build .amt{font-family:"IBM Plex Mono",monospace;font-weight:700;color:var(--ink);margin-top:8px;display:block}
+
+  footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);line-height:1.6}
+  .stamp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+  @media (max-width:860px){ .builds{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<nav class="sitenav">
+  <a class="brand" href="index.html">◧ BigMem</a>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="table.html">Reference Table</a>
+    <a href="memory.html">RAM Types</a>
+    <a href="build-guide.html">Build Guide</a>
+    <a href="motherboards.html" class="active">Motherboards</a>
+    <a href="395-buy-guide.html">395 Buy Guide</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <p class="kick">Motherboard chooser · AMD AM5 · high-memory desktop</p>
+    <h1>Which <b>AM5 motherboard</b> should you buy?</h1>
+    <p class="sub">Chipset tiers decoded, a comparison table of representative boards with rough Hong Kong prices, the DDR5 speed trap most people miss, and concrete picks for a <b>128 GB Ryzen 9 9950X3D</b> dev machine. Good news up front: AMD has committed to the <b>AM5 socket through 2029</b> (Zen 6 &amp; likely Zen 7) — buy the board once, upgrade the CPU for years.</p>
+  </header>
+
+  <div class="callout">
+    <b>First, clear up the confusion:</b> <b>chipset ≠ motherboard.</b> The chipset is one small chip <i>soldered onto</i> the motherboard — you can't remove or buy it separately. Every board below uses the <b>same AM5 socket</b>, so every one of them physically fits every AM5 Ryzen (9950X3D today, Zen 6/7 later). The chipset name (B650, X870E…) is just the label for the board's <b>feature tier</b> — like naming a car by its engine. <b>It does not change which CPU fits.</b>
+  </div>
+
+  <h2>The AM5 chipset tiers — cheapest to most</h2>
+  <p class="note">Two families exist on the same socket: 600-series (2022, Zen 4 launch) and 800-series (2024, Zen 5 launch). Same socket, newer I/O. "E" = <b>Extreme</b> — adds PCIe 5.0 on the graphics slot; that's basically the only difference from the non-E version.</p>
+  <div class="tblwrap">
+    <table>
+      <thead>
+        <tr><th>Chipset</th><th>Tier</th><th>What it adds</th><th>For your 9950X3D + 128 GB dev box?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="part">A620</td><td><span class="req warn">Entry</span></td><td>Basic I/O, fewer USB/SSD slots, no CPU overclock, weaker power stages</td><td><span class="no">Skip</span> — VRM often too weak for a 170 W 9950X3D</td></tr>
+        <tr><td class="part">B650</td><td><span class="req ess">Mainstream</span></td><td>Plenty USB, 2–3 M.2, RAM overclock, good VRMs on the better models</td><td class="yes">✔ The value sweet spot</td></tr>
+        <tr><td class="part">B650E</td><td><span class="req ess">Mainstream+</span></td><td>Same + PCIe 5.0 graphics slot</td><td class="yes">✔ Fine — small premium</td></tr>
+        <tr><td class="part">B850</td><td><span class="req ess">Mainstream (2024)</span></td><td>Newer B650 successor; PCIe 5.0 SSD standard, often USB4</td><td class="yes">✔ Newest-gen value pick</td></tr>
+        <tr><td class="part">X670 / X670E</td><td><span class="req opt">High</span></td><td>Dual-chipset: more USB/SSD/PCIe lanes, best overclock</td><td>Overkill unless you want 10GbE / lots of M.2</td></tr>
+        <tr><td class="part">X870 / X870E</td><td><span class="req opt">Enthusiast (2024)</span></td><td>Mandatory USB4 + PCIe 5.0 graphics; X870E = max lanes</td><td>Nice-to-have; you're paying for features you likely won't use</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>How to decide — the only 4 things that matter</h2>
+  <div class="rules">
+    <ul>
+      <li><b>1. RAM slots — get 4, not 2.</b> Max RAM is set by the board's slots, not the CPU. A 2-slot board caps you at 128 GB (2×64). A <b>4-slot board</b> reaches 256 GB — your headroom for later. Nearly all ATX B650/B850/X670E boards have 4; cheap mATX A620 boards often have 2.</li>
+      <li><b>2. Power delivery (VRM) — must handle ~170 W.</b> The 9950X3D is a 16-core, ~170 W chip. The cheapest boards throttle or run hot under it. Buy a <b>mid-range or better</b> board (Tomahawk / TUF / AORUS Elite class), not the bottom-shelf A620/B650.</li>
+      <li><b>3. M.2 (NVMe SSD) slots — want 2+.</b> One for your OS, one for data/VMs. Most decent B650+ boards have 2–4.</li>
+      <li><b>4. Chipset = features, not CPU support.</b> A B650 runs the exact same CPUs — including future Zen 6/7 — as an X870E. Pay more <i>only</i> for extra USB4 / 10GbE / PCIe 5.0 / more M.2, <b>never</b> for compatibility or upgrade-longevity. Those come free with the AM5 socket.</li>
+      <li><b>5. BIOS readiness.</b> Any board sold new in 2026 boots a 9950X3D out of the box. Older B650 stock may need a BIOS update first — look for <b>"BIOS Flashback"</b> (lets you update with no CPU installed). 800-series boards never have this problem.</li>
+    </ul>
+  </div>
+
+  <h2>Comparison table — representative AM5 boards, every tier</h2>
+  <p class="note">A curated set across all tiers (not every SKU on earth — there are thousands, and they change monthly). Prices are <b>rough Hong Kong estimates, 2026</b> — verify on the live listing (Sham Shui Po / Price.com.hk); board prices move. Tell me a specific model and I'll add its row.</p>
+  <div class="tblwrap">
+    <table>
+      <thead>
+        <tr><th>Board</th><th>Chipset</th><th>RAM slots<br>(max)</th><th>M.2</th><th>PCIe 5.0</th><th>Power (VRM)<br>for 170 W</th><th class="num">~HK$</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="part">ASRock A620M-HDV/M.2</td><td>A620</td><td>2 (128 GB)</td><td>2</td><td><span class="no">No</span></td><td><span class="req warn">Weak</span></td><td class="num price">~700</td></tr>
+        <tr><td class="part">ASUS TUF Gaming B650-PLUS WiFi</td><td>B650</td><td>4 (256 GB)</td><td>2</td><td>SSD</td><td><span class="req ess">Good</span></td><td class="num price">~1,400</td></tr>
+        <tr><td class="part">Gigabyte B650 AORUS Elite AX</td><td>B650</td><td>4 (256 GB)</td><td>3</td><td>SSD</td><td><span class="req ess">Good</span></td><td class="num price">~1,500</td></tr>
+        <tr><td class="part">MSI B650 Tomahawk WiFi</td><td>B650</td><td>4 (256 GB)</td><td>3</td><td>SSD</td><td><span class="req ess">Strong</span></td><td class="num price">~1,700</td></tr>
+        <tr><td class="part">ASUS ROG Strix B650E-F Gaming</td><td>B650E</td><td>4 (256 GB)</td><td>3</td><td>GPU + SSD</td><td><span class="req ess">Strong</span></td><td class="num price">~2,000</td></tr>
+        <tr><td class="part">ASUS TUF Gaming B850-PLUS WiFi</td><td>B850</td><td>4 (256 GB)</td><td>2</td><td>SSD</td><td><span class="req ess">Good</span></td><td class="num price">~1,600</td></tr>
+        <tr><td class="part">MSI B850 Tomahawk WiFi</td><td>B850</td><td>4 (256 GB)</td><td>3</td><td>GPU + SSD</td><td><span class="req ess">Strong</span></td><td class="num price">~1,900</td></tr>
+        <tr><td class="part">MSI MPG X670E Carbon WiFi</td><td>X670E</td><td>4 (256 GB)</td><td>4</td><td>GPU + SSD</td><td><span class="req ess">Excellent</span></td><td class="num price">~3,300</td></tr>
+        <tr><td class="part">ASUS ProArt X670E-Creator</td><td>X670E</td><td>4 (256 GB)</td><td>4</td><td>GPU + SSD</td><td><span class="req ess">Excellent</span></td><td class="num price">~3,700</td></tr>
+        <tr><td class="part">ASUS ROG Strix X870-A Gaming WiFi</td><td>X870</td><td>4 (256 GB)</td><td>3</td><td>GPU + SSD</td><td><span class="req ess">Excellent</span></td><td class="num price">~2,600</td></tr>
+        <tr><td class="part">ASUS ProArt X870E-Creator</td><td>X870E</td><td>4 (256 GB)</td><td>4</td><td>GPU + SSD</td><td><span class="req ess">Excellent</span></td><td class="num price">~4,200</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note"><b>ProArt boards</b> (X670E/X870E-Creator) add <b>10 GbE networking + USB4/Thunderbolt</b> — genuinely useful if you run lots of VMs or move big files over the network; otherwise you're paying extra for it.</p>
+
+  <div class="callout warn">
+    <b>⚠️ The DDR5 speed trap — read this before buying RAM.</b> A 4-slot board does <b>not</b> mean "fill all 4 for best performance." On AM5, running <b>4 sticks</b> forces the memory controller to <b>slow down</b> (~3600–4400 MT/s) vs <b>2 sticks</b> at full EXPO speed (~6000 MT/s). So for <b>128 GB, buy 2×64 GB</b> (two sticks) → full speed, and leave 2 slots empty. You still <i>have</i> the slots for a future 256 GB jump — just know that filling all four trades speed for capacity. For a Docker/compile/many-tabs workload, memory <b>bandwidth</b> matters, so 2×64 is the right call.
+  </div>
+
+  <h2>What to actually buy — for a 9950X3D + 128 GB dev box</h2>
+  <div class="builds">
+    <div class="build hot">
+      <h3>🏆 Value pick</h3>
+      <p class="for">best bang for buck</p>
+      <ul>
+        <li class="pick">ASUS TUF B650-PLUS WiFi<br>or MSI B650 Tomahawk</li>
+        <li>4 DIMM → 256 GB headroom</li>
+        <li>VRM easily handles 170 W</li>
+        <li>Same socket = Zen 6/7 later</li>
+        <li>BIOS Flashback for safety</li>
+      </ul>
+      <span class="amt">~HK$1,400–1,700</span>
+    </div>
+    <div class="build">
+      <h3>Newest-gen</h3>
+      <p class="for">latest 800-series board</p>
+      <ul>
+        <li class="pick">MSI B850 Tomahawk WiFi</li>
+        <li>4 DIMM → 256 GB</li>
+        <li>Strong VRM, PCIe 5.0 SSD</li>
+        <li>USB4, ships Zen 5-ready</li>
+        <li>No BIOS-update worries</li>
+      </ul>
+      <span class="amt">~HK$1,900</span>
+    </div>
+    <div class="build">
+      <h3>Workstation-ish</h3>
+      <p class="for">if you want 10GbE + max M.2</p>
+      <ul>
+        <li class="pick">ASUS ProArt X670E-Creator</li>
+        <li>4 DIMM → 256 GB</li>
+        <li>10 GbE + USB4/Thunderbolt</li>
+        <li>4× M.2 for many VMs/drives</li>
+        <li>Overkill for pure dev</li>
+      </ul>
+      <span class="amt">~HK$3,700</span>
+    </div>
+  </div>
+
+  <div class="callout ok">
+    <b>💡 Money tip on the CPU itself:</b> the <b>9950X3D</b>'s 3D V-Cache mainly helps <b>gaming</b> and a few cache-heavy apps. For <b>Docker / compiling / 100+ tabs</b>, what matters is cores + RAM + memory bandwidth — where the plain <b>9950X</b> (same 16 cores, slightly higher clocks, cheaper) is often the smarter dev buy. If you're not gaming, you can put the savings toward more RAM or a better board. Both are 16-core AM5 chips, so the motherboard advice above is identical either way.
+  </div>
+
+  <div class="callout">
+    <b>Ties back to your upgrade worry:</b> no motherboard takes every CPU — socket + chipset + RAM type are a matched set by design. But <b>AM5 is committed through 2029</b> (<a href="https://www.amd.com/en/blogs/2026/amd-computex-2026-10-years-of-am4-am5-support-through.html">AMD, Computex 2026</a>), spanning Zen 6 and likely Zen 7. So a ~HK$1,500 B650/B850 board + 2×64 GB DDR5 bought now lets you drop in a newer Ryzen years from today and <b>keep the board and RAM</b> — the exact opposite of the sealed <a href="395-buy-guide.html">395 mini-PC</a>. Pick your chip from the <a href="table.html">Reference Table</a>, then the parts around it from the <a href="build-guide.html">Build Guide</a>.
+  </div>
+
+  <footer>
+    A curated AM5 motherboard chooser for high-memory desktop builds. Board prices are Hong Kong ballpark estimates (2026) — verify on the live listing before buying; motherboard and DDR5 pricing is volatile. Chipset tiers and slot/VRM notes reflect typical models per tier, not every SKU. AM5 socket support confirmed through 2029 per AMD (Computex 2026). For soldered mini-PCs (Ryzen AI Max+ 395) there is no motherboard to choose — see the <a href="395-buy-guide.html">395 Buy Guide</a>.
+    <div class="stamp">BigMem · AMD AM5 · non-Apple / non-OEM route · HK: Golden Arcade · Wan Chai · Mong Kok · rev 2026-07-27</div>
+  </footer>
+</div>
+</body>
+</html>
